@@ -16,6 +16,10 @@ const Register = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        phone: data.phone,
+        address: data.address,
+        dateOfBirth: data.dateOfBirth,
+        idNumber: data.idNumber
       });
       
       if (response.success) {
@@ -45,6 +49,30 @@ const Register = () => {
       type: "password",
       placeholder: "Create a password",
     },
+    {
+      id: "phone",
+      label: "Phone Number",
+      type: "tel",
+      placeholder: "Enter your phone number",
+    },
+    {
+      id: "address",
+      label: "Address",
+      type: "text",
+      placeholder: "Enter your address",
+    },
+    {
+      id: "dateOfBirth",
+      label: "Date of Birth",
+      type: "date",
+      placeholder: "Select your date of birth",
+    },
+    {
+      id: "idNumber",
+      label: "ID Number",
+      type: "text",
+      placeholder: "Enter your ID number",
+    }
   ];
 
   return (
