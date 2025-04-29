@@ -11,16 +11,8 @@ const mockUsers = [
   },
 ];
 
-// Mock function to register users
-export const registerUser = (userData: {
-  email: string;
-  password: string;
-  name: string;
-  phone?: string;
-  address?: string;
-  dateOfBirth?: string;
-  idNumber?: string;
-}) => {
+// Mock function to register users with extended data
+export const registerUser = (userData: Record<string, any>) => {
   return new Promise<{ success: boolean; message: string }>((resolve) => {
     // Simulate network delay
     setTimeout(() => {
@@ -28,8 +20,8 @@ export const registerUser = (userData: {
       
       if (existingUser) {
         toast({
-          title: "Registration Failed",
-          description: "Email already in use. Please try again with a different email.",
+          title: "Kayıt Başarısız",
+          description: "Bu e-posta adresi zaten kullanılmaktadır. Lütfen farklı bir e-posta adresi deneyin.",
           variant: "destructive",
         });
         resolve({ success: false, message: "Email already in use" });
@@ -48,8 +40,8 @@ export const registerUser = (userData: {
       localStorage.setItem("currentUser", JSON.stringify(newUser));
       
       toast({
-        title: "Registration Successful",
-        description: "Your account has been created successfully!",
+        title: "Kayıt Başarılı",
+        description: "Hesabınız başarıyla oluşturuldu!",
       });
       
       resolve({ success: true, message: "Registration successful" });
@@ -73,15 +65,15 @@ export const loginUser = (credentials: { email: string; password: string }) => {
           localStorage.setItem("currentUser", JSON.stringify(user));
           
           toast({
-            title: "Login Successful",
-            description: `Welcome back, ${user.name}!`,
+            title: "Giriş Başarılı",
+            description: `Hoş geldiniz, ${user.name}!`,
           });
           
           resolve({ success: true, message: "Login successful", user });
         } else {
           toast({
-            title: "Login Failed",
-            description: "Invalid email or password. Please try again.",
+            title: "Giriş Başarısız",
+            description: "Geçersiz e-posta veya şifre. Lütfen tekrar deneyin.",
             variant: "destructive",
           });
           
