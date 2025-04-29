@@ -16,6 +16,10 @@ export const registerUser = (userData: {
   email: string;
   password: string;
   name: string;
+  phone?: string;
+  address?: string;
+  dateOfBirth?: string;
+  idNumber?: string;
 }) => {
   return new Promise<{ success: boolean; message: string }>((resolve) => {
     // Simulate network delay
