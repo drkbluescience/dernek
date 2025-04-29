@@ -1,8 +1,17 @@
 
 import { toast } from "@/components/ui/use-toast";
 
+// Define an interface for our user data
+interface User {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  [key: string]: any; // Allow for additional fields from the form
+}
+
 // Mock data for demonstration purposes
-const mockUsers = [
+const mockUsers: User[] = [
   {
     email: "demo@example.com",
     password: "password123",
@@ -29,9 +38,14 @@ export const registerUser = (userData: Record<string, any>) => {
       }
       
       // In a real app, we would save this to a database
-      const newUser = {
-        ...userData,
+      const newUser: User = {
+        email: userData.email || "user@example.com", // Provide defaults for required fields
+        password: userData.password || "defaultpassword",
+        name: userData.firstName && userData.lastName ? 
+              `${userData.firstName} ${userData.lastName}` : 
+              userData.name || "New User",
         id: `user-${mockUsers.length + 1}`,
+        ...userData, // Include all other form data
       };
       
       mockUsers.push(newUser);
