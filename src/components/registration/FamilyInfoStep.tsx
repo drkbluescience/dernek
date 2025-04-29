@@ -27,10 +27,11 @@ interface FamilyInfoStepProps {
 }
 
 const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
-  const [hasSpouse, setHasSpouse] = useState(initialData.hasSpouse !== false);
+  const isMarried = initialData.maritalStatus === "married";
+  const [hasSpouse, setHasSpouse] = useState(isMarried && initialData.hasSpouse !== false);
   
   const [formData, setFormData] = useState({
-    hasSpouse: initialData.hasSpouse !== false,
+    hasSpouse: isMarried && initialData.hasSpouse !== false,
     spouseFirstName: initialData.spouseFirstName || "",
     spouseLastName: initialData.spouseLastName || "",
     spouseBirthPlace: initialData.spouseBirthPlace || "",
@@ -65,6 +66,21 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
     e.preventDefault();
     onSubmit(formData);
   };
+
+  if (!isMarried) {
+    // If not married, automatically submit with no spouse data and move to the next step
+    setTimeout(() => {
+      onSubmit({ hasSpouse: false });
+    }, 0);
+    
+    return (
+      <div className="text-center p-6 bg-gray-50 rounded-lg">
+        <p className="text-gray-500">
+          Medeni durumunuz evli olmadığı için eş bilgileri adımı atlanıyor.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form id="form-family" onSubmit={handleSubmit}>

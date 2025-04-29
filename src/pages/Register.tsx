@@ -13,7 +13,16 @@ const Register = () => {
   const handleRegisterComplete = async (formData: Record<string, any>) => {
     setLoading(true);
     try {
-      const response = await registerUser(formData);
+      // Make sure there's at least a default email for authentication
+      const userData = {
+        ...formData,
+        // Use entered email or generate a placeholder if not provided
+        email: formData.email || `user_${Date.now()}@example.com`,
+        // Set a default password if not in registration flow
+        password: formData.password || "defaultPassword123",
+      };
+      
+      const response = await registerUser(userData);
       
       if (response.success) {
         toast({

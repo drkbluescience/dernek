@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface PersonalInfoStepProps {
   initialData: Record<string, any>;
@@ -37,6 +38,11 @@ const PersonalInfoStep = ({ initialData, onSubmit }: PersonalInfoStepProps) => {
     fatherName: initialData.fatherName || "",
     gender: initialData.gender || "",
     nationality: initialData.nationality || "",
+    // Optional fields
+    email: initialData.email || "",
+    phone: initialData.phone || "",
+    overseasResidence: initialData.overseasResidence || false,
+    overseasAddress: initialData.overseasAddress || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +56,10 @@ const PersonalInfoStep = ({ initialData, onSubmit }: PersonalInfoStepProps) => {
 
   const handleDateChange = (date: Date | undefined) => {
     setFormData((prev) => ({ ...prev, birthDate: date }));
+  };
+
+  const handleCheckboxChange = (field: string, checked: boolean) => {
+    setFormData((prev) => ({ ...prev, [field]: checked }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -216,6 +226,59 @@ const PersonalInfoStep = ({ initialData, onSubmit }: PersonalInfoStepProps) => {
               <SelectItem value="other">Diğer</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        {/* Optional Fields */}
+        <div className="space-y-2">
+          <Label htmlFor="email">E-posta (Opsiyonel):</Label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="E-posta adresiniz"
+            className="auth-input"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="phone">Telefon (Opsiyonel):</Label>
+          <Input
+            id="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Telefon numaranız"
+            className="auth-input"
+          />
+        </div>
+
+        <div className="md:col-span-2 space-y-4 border-t pt-4 mt-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="overseasResidence" 
+              checked={formData.overseasResidence}
+              onCheckedChange={(checked) => handleCheckboxChange("overseasResidence", !!checked)}
+            />
+            <Label 
+              htmlFor="overseasResidence" 
+              className="text-sm font-medium cursor-pointer"
+            >
+              Yurtdışında ikamet ediyorum
+            </Label>
+          </div>
+
+          {formData.overseasResidence && (
+            <div className="space-y-2 pl-6">
+              <Label htmlFor="overseasAddress">Yurtdışı Adres:</Label>
+              <Input
+                id="overseasAddress"
+                value={formData.overseasAddress}
+                onChange={handleChange}
+                placeholder="Yurtdışı adresiniz"
+                className="auth-input"
+              />
+            </div>
+          )}
         </div>
       </div>
     </form>
