@@ -24,7 +24,7 @@ const SelectionFields = ({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="maritalStatus">Medeni Durum:</Label>
+        <Label htmlFor="maritalStatus" className="text-society-dark-text">Medeni Durum:</Label>
         <Select 
           value={maritalStatus}
           onValueChange={(value) => onSelectChange("maritalStatus", value)}
@@ -32,7 +32,7 @@ const SelectionFields = ({
           <SelectTrigger className="auth-input">
             <SelectValue placeholder="Seçiniz" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             <SelectItem value="single">Bekar</SelectItem>
             <SelectItem value="married">Evli</SelectItem>
             <SelectItem value="divorced">Boşanmış</SelectItem>
@@ -42,7 +42,7 @@ const SelectionFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="gender">Cinsiyet:</Label>
+        <Label htmlFor="gender" className="text-society-dark-text">Cinsiyet:</Label>
         <Select 
           value={gender}
           onValueChange={(value) => onSelectChange("gender", value)}
@@ -50,7 +50,7 @@ const SelectionFields = ({
           <SelectTrigger className="auth-input">
             <SelectValue placeholder="Seçiniz" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             <SelectItem value="male">Erkek</SelectItem>
             <SelectItem value="female">Kadın</SelectItem>
             <SelectItem value="other">Diğer</SelectItem>
@@ -59,7 +59,7 @@ const SelectionFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="nationality">Uyruk:</Label>
+        <Label htmlFor="nationality" className="text-society-dark-text">Uyruk:</Label>
         <Select 
           value={nationality}
           onValueChange={(value) => onSelectChange("nationality", value)}
@@ -67,7 +67,7 @@ const SelectionFields = ({
           <SelectTrigger className="auth-input">
             <SelectValue placeholder="Seçiniz" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             <SelectItem value="tr">Türkiye</SelectItem>
             <SelectItem value="de">Almanya</SelectItem>
             <SelectItem value="at">Avusturya</SelectItem>

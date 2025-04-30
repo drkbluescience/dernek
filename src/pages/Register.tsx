@@ -46,7 +46,7 @@ const Register = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container bg-gradient-to-br from-white to-society-soft-purple/20">
       <div className="flex justify-between items-center mb-4">
         <Header title={t("register.title")} showBackButton />
         <LanguageSwitcher className="mr-4" />

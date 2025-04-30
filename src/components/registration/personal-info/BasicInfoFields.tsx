@@ -24,7 +24,7 @@ const BasicInfoFields = ({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="firstName">Ad:</Label>
+        <Label htmlFor="firstName" className="text-society-dark-text">Ad:</Label>
         <Input
           id="firstName"
           value={firstName}
@@ -37,7 +37,7 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="lastName">Soyad:</Label>
+        <Label htmlFor="lastName" className="text-society-dark-text">Soyad:</Label>
         <Input
           id="lastName"
           value={lastName}
@@ -50,7 +50,7 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="birthPlace">Doğum Yeri:</Label>
+        <Label htmlFor="birthPlace" className="text-society-dark-text">Doğum Yeri:</Label>
         <Input
           id="birthPlace"
           value={birthPlace}
@@ -63,7 +63,7 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="birthName">Doğum Adı:</Label>
+        <Label htmlFor="birthName" className="text-society-dark-text">Doğum Adı:</Label>
         <Input
           id="birthName"
           value={birthName}

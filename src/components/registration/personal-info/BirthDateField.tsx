@@ -19,7 +19,7 @@ interface BirthDateFieldProps {
 const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
   return (
     <div className="space-y-2">
-      <Label htmlFor="birthDate">Doğum Tarihi:</Label>
+      <Label htmlFor="birthDate" className="text-society-dark-text">Doğum Tarihi:</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -34,7 +34,7 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent 
-          className="w-auto p-0" 
+          className="w-auto p-0 bg-white" 
           align="start"
           side="bottom"
           sideOffset={4}

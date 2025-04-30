@@ -43,6 +43,16 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Society Colors */
+    --society-neutral-gray: 213 6% 57%;
+    --society-primary-purple: 259 83% 74%;
+    --society-secondary-purple: 262 25% 54%;
+    --society-tertiary-purple: 264 29% 50%;
+    --society-dark-purple: 222 25% 14%;
+    --society-light-purple: 270 89% 86%;
+    --society-soft-purple: 259 83% 97%;
+    --society-dark-text: 222 25% 14%;
   }
 
   .dark {
@@ -109,5 +119,26 @@
 
   .auth-link {
     @apply text-society-purple hover:text-opacity-80 font-medium transition-colors;
+  }
+
+  /* Society Design System */
+  .society-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200;
+  }
+
+  .society-gradient {
+    @apply bg-gradient-to-br from-white to-society-soft-purple/20;
+  }
+
+  .society-input {
+    @apply w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-society-dark-text focus:outline-none focus:ring-2 focus:ring-society-purple focus:border-transparent;
+  }
+
+  .society-button-primary {
+    @apply bg-society-purple hover:bg-opacity-90 text-white font-medium py-2 px-4 rounded-lg transition-all;
+  }
+
+  .society-button-secondary {
+    @apply bg-society-soft-purple hover:bg-society-light-purple text-society-purple font-medium py-2 px-4 rounded-lg transition-all;
   }
 }
