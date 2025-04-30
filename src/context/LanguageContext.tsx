@@ -18,8 +18,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const translations: Record<string, Record<Language, string>> = {
   // Welcome page
   "welcome.title": {
-    tr: "Zsu",
-    de: "Zsu"
+    tr: "Sosyal dayanisma Dernegi",
+    de: "Zentrum für Soziale Unterstützung e.V"
   },
   "welcome.description": {
     tr: "Hoşgeldiniz",
@@ -34,8 +34,8 @@ export const translations: Record<string, Record<Language, string>> = {
     de: "Registrieren"
   },
   "welcome.copyright": {
-    tr: "© 2025 Society Connect. Tüm hakları saklıdır.",
-    de: "© 2025 Society Connect. Alle Rechte vorbehalten."
+    tr: "© 2025 Zsu e.V. Tüm hakları saklıdır.",
+    de: "© 2025 Zsu e.V. Alle Rechte vorbehalten."
   },
   
   // Registration page
