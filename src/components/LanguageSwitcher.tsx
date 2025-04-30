@@ -27,7 +27,7 @@ const LanguageSwitcher = ({ className = "" }: LanguageSwitcherProps) => {
     <Button 
       variant="ghost" 
       onClick={toggleLanguage}
-      className={`text-society-neutral-gray flex items-center gap-1 ${className}`}
+      className={`text-society-neutral-gray flex items-center gap-1 hover:bg-society-soft-purple hover:text-society-purple ${className}`}
     >
       <Globe className="h-4 w-4" />
       <span>{t("language.switch.tr")}</span>
