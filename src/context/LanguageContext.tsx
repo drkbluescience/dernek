@@ -364,7 +364,73 @@ export const translations: Record<string, Record<Language, string>> = {
   "validation.field.empty": {
     tr: "Bu alanı doldurun",
     de: "Fülle dieses Feld aus"
-  }
+  },
+  
+  // New translations for SelectionFields
+  "registration.maritalStatus": {
+    tr: "Medeni Durum",
+    de: "Familienstand"
+  },
+  "registration.gender": {
+    tr: "Cinsiyet",
+    de: "Geschlecht"
+  },
+  "registration.nationality": {
+    tr: "Uyruk",
+    de: "Nationalität"
+  },
+  "registration.select": {
+    tr: "Seçiniz",
+    de: "Auswählen"
+  },
+  "registration.maritalStatus.single": {
+    tr: "Bekar",
+    de: "Ledig"
+  },
+  "registration.maritalStatus.married": {
+    tr: "Evli",
+    de: "Verheiratet"
+  },
+  "registration.maritalStatus.divorced": {
+    tr: "Boşanmış",
+    de: "Geschieden"
+  },
+  "registration.maritalStatus.widowed": {
+    tr: "Dul",
+    de: "Verwitwet"
+  },
+  "registration.gender.male": {
+    tr: "Erkek",
+    de: "Männlich"
+  },
+  "registration.gender.female": {
+    tr: "Kadın",
+    de: "Weiblich"
+  },
+  "registration.nationality.tr": {
+    tr: "Türkiye",
+    de: "Türkei"
+  },
+  "registration.nationality.de": {
+    tr: "Almanya",
+    de: "Deutschland"
+  },
+  "registration.nationality.al": {
+    tr: "Arnavutluk",
+    de: "Albanien"
+  },
+  "registration.nationality.ba": {
+    tr: "Bosna",
+    de: "Bosnien"
+  },
+  "registration.nationality.ko": {
+    tr: "Kosova",
+    de: "Kosovo"
+  },
+  "registration.nationality.other": {
+    tr: "Diğer",
+    de: "Andere"
+  },
 };
 
 export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {

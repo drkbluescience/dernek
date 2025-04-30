@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue 
 } from "@/components/ui/select";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SelectionFieldsProps {
   maritalStatus: string;
@@ -21,58 +22,60 @@ const SelectionFields = ({
   nationality,
   onSelectChange,
 }: SelectionFieldsProps) => {
+  const { t } = useLanguage();
+  
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="maritalStatus">Medeni Durum:</Label>
+        <Label htmlFor="maritalStatus">{t("registration.maritalStatus")}:</Label>
         <Select 
           value={maritalStatus}
           onValueChange={(value) => onSelectChange("maritalStatus", value)}
         >
           <SelectTrigger className="auth-input">
-            <SelectValue placeholder="Seçiniz" />
+            <SelectValue placeholder={t("registration.select")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="single">Bekar</SelectItem>
-            <SelectItem value="married">Evli</SelectItem>
-            <SelectItem value="divorced">Boşanmış</SelectItem>
-            <SelectItem value="widowed">Dul</SelectItem>
+            <SelectItem value="single">{t("registration.maritalStatus.single")}</SelectItem>
+            <SelectItem value="married">{t("registration.maritalStatus.married")}</SelectItem>
+            <SelectItem value="divorced">{t("registration.maritalStatus.divorced")}</SelectItem>
+            <SelectItem value="widowed">{t("registration.maritalStatus.widowed")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="gender">Cinsiyet:</Label>
+        <Label htmlFor="gender">{t("registration.gender")}:</Label>
         <Select 
           value={gender}
           onValueChange={(value) => onSelectChange("gender", value)}
         >
           <SelectTrigger className="auth-input">
-            <SelectValue placeholder="Seçiniz" />
+            <SelectValue placeholder={t("registration.select")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="male">Erkek</SelectItem>
-            <SelectItem value="female">Kadın</SelectItem>
+            <SelectItem value="male">{t("registration.gender.male")}</SelectItem>
+            <SelectItem value="female">{t("registration.gender.female")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="nationality">Uyruk:</Label>
+        <Label htmlFor="nationality">{t("registration.nationality")}:</Label>
         <Select 
           value={nationality}
           onValueChange={(value) => onSelectChange("nationality", value)}
         >
           <SelectTrigger className="auth-input">
-            <SelectValue placeholder="Seçiniz" />
+            <SelectValue placeholder={t("registration.select")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="tr">Türkiye</SelectItem>
-            <SelectItem value="de">Almanya</SelectItem>
-            <SelectItem value="al">Arnavutluk</SelectItem>
-            <SelectItem value="ba">Bosna</SelectItem>
-            <SelectItem value="ko">Kosova</SelectItem>
-            <SelectItem value="other">Diğer</SelectItem>
+            <SelectItem value="tr">{t("registration.nationality.tr")}</SelectItem>
+            <SelectItem value="de">{t("registration.nationality.de")}</SelectItem>
+            <SelectItem value="al">{t("registration.nationality.al")}</SelectItem>
+            <SelectItem value="ba">{t("registration.nationality.ba")}</SelectItem>
+            <SelectItem value="ko">{t("registration.nationality.ko")}</SelectItem>
+            <SelectItem value="other">{t("registration.nationality.other")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
