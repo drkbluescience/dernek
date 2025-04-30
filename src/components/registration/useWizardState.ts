@@ -16,7 +16,8 @@ export function useWizardState(
   const [formData, setFormData] = useState<Record<string, any>>(initialData);
   const [skippedSteps, setSkippedSteps] = useState<string[]>([]);
 
-  const currentStep = steps[currentStepIndex];
+  // Make sure we always have a valid currentStep
+  const currentStep = steps[currentStepIndex] || steps[0];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.length - 1;
 
@@ -77,10 +78,16 @@ export function useWizardState(
 
   // Filter out skipped steps for the progress indicator
   const visibleSteps = steps.filter(step => !skippedSteps.includes(step.id) && !shouldSkipStep(step.id));
-  const currentStepProgressIndex = visibleSteps.findIndex(step => step.id === currentStep.id);
-  const progressPercentage = visibleSteps.length > 1 ? 
-    (currentStepProgressIndex / (visibleSteps.length - 1)) * 100 : 
-    (currentStepIndex === 0 ? 0 : 100);
+
+  // Ensure currentStep is defined before accessing its properties
+  const currentStepProgressIndex = currentStep 
+    ? visibleSteps.findIndex(step => step.id === currentStep.id) 
+    : 0;
+    
+  // Ensure we don't divide by zero when there's only one step
+  const progressPercentage = visibleSteps.length > 1 
+    ? ((currentStepProgressIndex >= 0 ? currentStepProgressIndex : 0) / (visibleSteps.length - 1)) * 100 
+    : (currentStepIndex === 0 ? 0 : 100);
 
   return {
     currentStep,
