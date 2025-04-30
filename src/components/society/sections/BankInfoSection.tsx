@@ -1,16 +1,9 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-
-interface BankInfo {
-  accountHolder: string;
-  bankName: string;
-  iban: string;
-  bic: string;
-}
+import { BankInfo } from "@/types/society";
 
 interface BankInfoSectionProps {
   bankInfo: BankInfo;
@@ -19,7 +12,7 @@ interface BankInfoSectionProps {
 
 const BankInfoSection = ({ bankInfo, onEditBankInfo }: BankInfoSectionProps) => {
   const { t } = useLanguage();
-
+  
   return (
     <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
       <CardContent className="pt-6 space-y-4">

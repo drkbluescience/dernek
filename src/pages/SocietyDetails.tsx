@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -7,119 +8,48 @@ import { useLanguage } from "@/context/LanguageContext";
 import BottomNavigation from "@/components/BottomNavigation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-// Import the refactored components
+// Import the refactored components and hooks
 import MemberWelcome from "@/components/society/MemberWelcome";
 import SocietyHeader from "@/components/society/SocietyHeader";
 import MemberInfoAccordion from "@/components/society/MemberInfoAccordion";
 import EditDialog from "@/components/society/EditDialog";
 import LogoutButton from "@/components/society/LogoutButton";
-
-// Address interface for structured address data
-interface Address {
-  street: string;
-  houseNumber: string;
-  postalCode: string;
-  city: string;
-}
+import { useSocietyMember } from "@/hooks/useSocietyMember";
+import { useEditMember } from "@/hooks/useEditMember";
 
 const SocietyDetails = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const { t } = useLanguage();
   
-  // Mock society data
-  const societyInfo = {
-    name: "Community Helpers Society",
-    founded: "2020",
-    members: 124,
-    description: "A volunteer organization dedicated to helping the community through various social service activities.",
-  };
+  // Get member data from our custom hook
+  const {
+    personalInfo,
+    setPersonalInfo,
+    addressData,
+    setAddressData,
+    familyInfo,
+    bankInfo,
+    setBankInfo,
+    paymentHistory,
+    societyInfo
+  } = useSocietyMember();
 
-  // Mock member personal data - now state for editing
-  const [personalInfo, setPersonalInfo] = useState({
-    fullName: "John Smith",
-    email: "john.smith@example.com",
-    phone: "+49 123 456 7890",
-    birthDate: "15.05.1985",
-    gender: "Male",
-    address: "Musterstraße 123, 10115 Berlin",
-    status: "Aktif", // Added status field
-  });
-
-  // Address fields as structured data
-  const [addressData, setAddressData] = useState<Address>({
-    street: "Musterstraße",
-    houseNumber: "123",
-    postalCode: "10115",
-    city: "Berlin",
-  });
-
-  // Mock family information
-  const familyInfo = {
-    maritalStatus: "Married",
-    spouse: {
-      name: "Maria Smith",
-      birthDate: "22.08.1988",
-    },
-    children: [
-      {
-        name: "Thomas Smith",
-        birthDate: "03.12.2012",
-      },
-      {
-        name: "Anna Smith",
-        birthDate: "17.06.2016",
-      }
-    ]
-  };
-
-  // Mock bank information - now state for editing
-  const [bankInfo, setBankInfo] = useState({
-    accountHolder: "John Smith",
-    bankName: "Sparkasse Berlin",
-    iban: "DE12 3456 7890 1234 5678 90",
-    bic: "SPKRDE21XXX"
-  });
-
-  // Mock payment history
-  const paymentHistory: Payment[] = [
-    {
-      id: "p1",
-      date: "01.01.2025",
-      amount: "50,00 €",
-      type: "Membership Fee",
-      status: "Paid"
-    },
-    {
-      id: "p2",
-      date: "01.02.2025",
-      amount: "50,00 €",
-      type: "Membership Fee",
-      status: "Paid"
-    },
-    {
-      id: "p3",
-      date: "01.03.2025",
-      amount: "50,00 €",
-      type: "Membership Fee",
-      status: "Paid"
-    },
-    {
-      id: "p4",
-      date: "01.04.2025",
-      amount: "50,00 €",
-      type: "Membership Fee",
-      status: "Pending"
-    }
-  ];
-
-  // Fields that can be edited
-  const [editField, setEditField] = useState("");
-  const [editValue, setEditValue] = useState("");
-  
-  // State for specific edit dialogs
-  const [isBankInfoEdit, setIsBankInfoEdit] = useState(false);
-  const [isAddressEdit, setIsAddressEdit] = useState(false);
+  // Get editing functionality from our custom hook
+  const {
+    editField,
+    editValue,
+    setEditValue,
+    setEditField,
+    isBankInfoEdit,
+    isAddressEdit,
+    handleEdit,
+    handleEditAddress,
+    handleEditBankInfo,
+    handleSaveBankInfo,
+    handleSaveAddress,
+    handleSave
+  } = useEditMember(setPersonalInfo, setBankInfo, setAddressData);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -142,77 +72,6 @@ const SocietyDetails = () => {
       description: "You have been successfully logged out.",
     });
     navigate("/");
-  };
-
-  const handleEdit = (field: string, currentValue: string) => {
-    setEditField(field);
-    setEditValue(currentValue);
-    setIsAddressEdit(false); // Reset address edit state
-    setIsBankInfoEdit(false); // Reset bank info edit state
-  };
-
-  // Handler for editing address specifically
-  const handleEditAddress = () => {
-    setEditField("address");
-    setIsAddressEdit(true);
-    setIsBankInfoEdit(false);
-  };
-
-  // Handler for editing bank info
-  const handleEditBankInfo = () => {
-    setIsBankInfoEdit(true);
-    setIsAddressEdit(false);
-    setEditField("bankInfo");
-  };
-
-  // Handler for saving bank info
-  const handleSaveBankInfo = (updatedBankInfo: {
-    accountHolder: string;
-    bankName: string;
-    iban: string;
-    bic: string;
-  }) => {
-    setBankInfo(updatedBankInfo);
-    setIsBankInfoEdit(false);
-    setEditField("");
-  };
-
-  // Handler for saving address info
-  const handleSaveAddress = (updatedAddress: Address) => {
-    // Update address data state
-    setAddressData(updatedAddress);
-    
-    // Format the address for display
-    const formattedAddress = `${updatedAddress.street} ${updatedAddress.houseNumber}, ${updatedAddress.postalCode} ${updatedAddress.city}`;
-    
-    // Update the formatted address in personalInfo
-    setPersonalInfo(prev => ({ 
-      ...prev, 
-      address: formattedAddress 
-    }));
-    
-    setIsAddressEdit(false);
-    setEditField("");
-  };
-
-  const handleSave = () => {
-    if (!editField) return;
-
-    // Update the appropriate field based on category
-    if (["fullName", "email", "phone"].includes(editField)) {
-      setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
-    }
-
-    // Show success toast
-    toast({
-      title: t("society.edit.success"),
-      description: t("society.edit.success.description"),
-    });
-
-    // Reset edit state
-    setEditField("");
-    setEditValue("");
-    setIsAddressEdit(false);
   };
 
   if (!user) {

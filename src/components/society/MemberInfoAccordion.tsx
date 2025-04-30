@@ -11,15 +11,16 @@ import FamilyInfoSection from "./sections/FamilyInfoSection";
 import BankInfoSection from "./sections/BankInfoSection";
 import PaymentHistorySection from "./sections/PaymentHistorySection";
 import { useLanguage } from "@/context/LanguageContext";
+import { PersonalInfo, FamilyInfo, BankInfo, Payment } from "@/types/society";
 
 interface MemberInfoAccordionProps {
-  personalInfo: any;
-  familyInfo: any;
-  bankInfo: any;
-  paymentHistory: any[];
+  personalInfo: PersonalInfo;
+  familyInfo: FamilyInfo;
+  bankInfo: BankInfo;
+  paymentHistory: Payment[];
   handleEdit: (field: string, currentValue: string) => void;
   onEditBankInfo: () => void;
-  onEditAddress: () => void; // Modified to not require a parameter
+  onEditAddress: () => void;
 }
 
 const MemberInfoAccordion = ({

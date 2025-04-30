@@ -1,7 +1,7 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/context/LanguageContext";
+import { FamilyInfo } from "@/types/society";
 
 interface FamilyMember {
   name: string;

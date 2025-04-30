@@ -1,4 +1,3 @@
-
 import React from "react";
 import { 
   Card, 
@@ -8,16 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Edit, Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Badge } from "@/components/ui/badge";
-
-interface PersonalInfo {
-  fullName: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  gender: string;
-  address: string;
-  status?: string; // Added status field
-}
+import { PersonalInfo } from "@/types/society";
 
 interface PersonalInfoSectionProps {
   personalInfo: PersonalInfo;

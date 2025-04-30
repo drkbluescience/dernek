@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -10,14 +9,7 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { useLanguage } from "@/context/LanguageContext";
-
-interface Payment {
-  id: string;
-  date: string;
-  amount: string;
-  type: string;
-  status: string;
-}
+import { Payment } from "@/types/society";
 
 interface PaymentHistorySectionProps {
   paymentHistory: Payment[];

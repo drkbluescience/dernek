@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   Dialog, 
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/context/LanguageContext";
 import { toast } from "@/hooks/use-toast";
+import { BankInfo, Address } from "@/types/society";
 
 interface EditDialogProps {
   editField: string;
@@ -19,32 +19,12 @@ interface EditDialogProps {
   handleSave: () => void;
   // Bank info editing props
   isBankInfoEdit?: boolean;
-  bankInfo?: {
-    accountHolder: string;
-    bankName: string;
-    iban: string;
-    bic: string;
-  };
-  onBankInfoSave?: (updatedBankInfo: {
-    accountHolder: string;
-    bankName: string;
-    iban: string;
-    bic: string;
-  }) => void;
+  bankInfo?: BankInfo;
+  onBankInfoSave?: (updatedBankInfo: BankInfo) => void;
   // Address editing props
   isAddressEdit?: boolean;
-  addressData?: {
-    street: string;
-    houseNumber: string;
-    postalCode: string;
-    city: string;
-  };
-  onAddressSave?: (updatedAddress: {
-    street: string;
-    houseNumber: string;
-    postalCode: string;
-    city: string;
-  }) => void;
+  addressData?: Address;
+  onAddressSave?: (updatedAddress: Address) => void;
 }
 
 const EditDialog = ({ 
@@ -63,7 +43,7 @@ const EditDialog = ({
   const { t } = useLanguage();
   
   // State for bank info editing
-  const [bankInfoState, setBankInfoState] = useState({
+  const [bankInfoState, setBankInfoState] = useState<BankInfo>({
     accountHolder: bankInfo?.accountHolder || "",
     bankName: bankInfo?.bankName || "",
     iban: bankInfo?.iban || "",
@@ -71,7 +51,7 @@ const EditDialog = ({
   });
   
   // State for address editing
-  const [addressState, setAddressState] = useState({
+  const [addressState, setAddressState] = useState<Address>({
     street: addressData?.street || "",
     houseNumber: addressData?.houseNumber || "",
     postalCode: addressData?.postalCode || "",
