@@ -69,9 +69,9 @@ const SelectionFields = ({
           <SelectContent>
             <SelectItem value="tr">Türkiye</SelectItem>
             <SelectItem value="de">Almanya</SelectItem>
-            <SelectItem value="at">Avusturya</SelectItem>
-            <SelectItem value="fr">Fransa</SelectItem>
-            <SelectItem value="nl">Hollanda</SelectItem>
+            <SelectItem value="al">Arnavutluk</SelectItem>
+            <SelectItem value="ba">Bosna</SelectItem>
+            <SelectItem value="ko">Kosova</SelectItem>
             <SelectItem value="other">Diğer</SelectItem>
           </SelectContent>
         </Select>
