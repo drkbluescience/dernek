@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit, Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Badge } from "@/components/ui/badge";
 
 interface PersonalInfo {
   fullName: string;
@@ -15,6 +16,7 @@ interface PersonalInfo {
   birthDate: string;
   gender: string;
   address: string;
+  status?: string; // Added status field
 }
 
 interface PersonalInfoSectionProps {
@@ -30,9 +32,41 @@ const PersonalInfoSection = ({
 }: PersonalInfoSectionProps) => {
   const { t } = useLanguage();
 
+  // Function to determine badge variant based on status
+  const getBadgeVariant = (status: string) => {
+    switch(status?.toLowerCase()) {
+      case "aktif":
+      case "active":
+        return "default"; // green
+      case "inaktiv":
+      case "inactive":
+        return "secondary"; // gray
+      case "onay bekliyor":
+      case "pending":
+        return "outline"; // outlined
+      default:
+        return "default";
+    }
+  };
+
   return (
     <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
       <CardContent className="pt-6 space-y-4">
+        {/* Membership Status - Full Width Row */}
+        <div className="space-y-1 pb-1 border-b border-gray-100 dark:border-gray-700">
+          <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+            {t("society.personal.status") || "Üyelik Statüsü"}
+          </p>
+          <div className="flex items-center">
+            <Badge 
+              variant={getBadgeVariant(personalInfo.status || "aktif")} 
+              className="font-medium"
+            >
+              {personalInfo.status || "Aktif"}
+            </Badge>
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
           {/* Name and edit button */}
           <div className="space-y-1">

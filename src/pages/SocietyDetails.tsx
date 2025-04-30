@@ -14,14 +14,6 @@ import MemberInfoAccordion from "@/components/society/MemberInfoAccordion";
 import EditDialog from "@/components/society/EditDialog";
 import LogoutButton from "@/components/society/LogoutButton";
 
-interface Payment {
-  id: string;
-  date: string;
-  amount: string;
-  type: string;
-  status: string;
-}
-
 // Address interface for structured address data
 interface Address {
   street: string;
@@ -51,6 +43,7 @@ const SocietyDetails = () => {
     birthDate: "15.05.1985",
     gender: "Male",
     address: "Musterstraße 123, 10115 Berlin",
+    status: "Aktif", // Added status field
   });
 
   // Address fields as structured data

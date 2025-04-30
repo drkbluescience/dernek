@@ -195,7 +195,7 @@ export const translations: Record<string, Record<Language, string>> = {
     de: "Vorstand"
   },
   "society.logout": {
-    tr: "Ç��kış Yap",
+    tr: "Çıkış Yap",
     de: "Abmelden"
   },
   "society.navigation.home": {
@@ -270,6 +270,10 @@ export const translations: Record<string, Record<Language, string>> = {
   "society.personal.address": {
     tr: "Adres",
     de: "Adresse"
+  },
+  "society.personal.status": {
+    tr: "Üyelik Statüsü",
+    de: "Mitgliedsstatus"
   },
   "society.family.maritalStatus": {
     tr: "Medeni Durum",
