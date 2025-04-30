@@ -63,12 +63,12 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="birthName">Doğum Adı:</Label>
+        <Label htmlFor="birthName">Kızlık Soyadı:</Label>
         <Input
           id="birthName"
           value={birthName}
           onChange={handleChange}
-          placeholder="Doğum adınız"
+          placeholder="Kızlık soyadınız"
           className="auth-input"
           {...(validationProps ? validationProps("birthName") : {})}
         />
