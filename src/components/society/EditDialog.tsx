@@ -31,8 +31,20 @@ interface EditDialogProps {
     iban: string;
     bic: string;
   }) => void;
-  // New address editing prop
+  // Address editing props
   isAddressEdit?: boolean;
+  addressData?: {
+    street: string;
+    houseNumber: string;
+    postalCode: string;
+    city: string;
+  };
+  onAddressSave?: (updatedAddress: {
+    street: string;
+    houseNumber: string;
+    postalCode: string;
+    city: string;
+  }) => void;
 }
 
 const EditDialog = ({ 
@@ -44,7 +56,9 @@ const EditDialog = ({
   isBankInfoEdit = false,
   bankInfo,
   onBankInfoSave,
-  isAddressEdit = false
+  isAddressEdit = false,
+  addressData,
+  onAddressSave
 }: EditDialogProps) => {
   const { t } = useLanguage();
   
@@ -54,6 +68,14 @@ const EditDialog = ({
     bankName: bankInfo?.bankName || "",
     iban: bankInfo?.iban || "",
     bic: bankInfo?.bic || ""
+  });
+  
+  // State for address editing
+  const [addressState, setAddressState] = useState({
+    street: addressData?.street || "",
+    houseNumber: addressData?.houseNumber || "",
+    postalCode: addressData?.postalCode || "",
+    city: addressData?.city || ""
   });
   
   // Initialize bank info state when dialog opens
@@ -68,13 +90,40 @@ const EditDialog = ({
     }
   }, [isBankInfoEdit, bankInfo]);
 
+  // Initialize address state when dialog opens
+  React.useEffect(() => {
+    if (isAddressEdit && addressData) {
+      setAddressState({
+        street: addressData.street || "",
+        houseNumber: addressData.houseNumber || "",
+        postalCode: addressData.postalCode || "",
+        city: addressData.city || ""
+      });
+    }
+  }, [isAddressEdit, addressData]);
+
   const handleBankInfoChange = (field: keyof typeof bankInfoState, value: string) => {
     setBankInfoState(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleAddressChange = (field: keyof typeof addressState, value: string) => {
+    setAddressState(prev => ({ ...prev, [field]: value }));
   };
 
   const handleBankInfoSave = () => {
     if (onBankInfoSave) {
       onBankInfoSave(bankInfoState);
+      toast({
+        title: t("society.edit.success"),
+        description: t("society.edit.success.description"),
+      });
+    }
+    setEditField("");
+  };
+
+  const handleAddressSave = () => {
+    if (onAddressSave) {
+      onAddressSave(addressState);
       toast({
         title: t("society.edit.success"),
         description: t("society.edit.success.description"),
@@ -139,7 +188,7 @@ const EditDialog = ({
     );
   }
   
-  // New specific address edit dialog
+  // New specific address edit dialog with German field labels
   if (isAddressEdit) {
     return (
       <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
@@ -150,18 +199,44 @@ const EditDialog = ({
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
-            <label className="text-sm font-medium">{t("society.personal.address")}</label>
-            <Input 
-              value={editValue} 
-              onChange={(e) => setEditValue(e.target.value)}
-              className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
-            />
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Strasse</label>
+              <Input 
+                value={addressState.street}
+                onChange={(e) => handleAddressChange("street", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Hausnummer</label>
+              <Input 
+                value={addressState.houseNumber}
+                onChange={(e) => handleAddressChange("houseNumber", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">PLZ</label>
+              <Input 
+                value={addressState.postalCode}
+                onChange={(e) => handleAddressChange("postalCode", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Ort</label>
+              <Input 
+                value={addressState.city}
+                onChange={(e) => handleAddressChange("city", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
           </div>
           <div className="flex justify-end gap-3">
             <Button variant="outline" onClick={() => setEditField("")}>
               {t("society.edit.cancel")}
             </Button>
-            <Button onClick={handleSave}>
+            <Button onClick={handleAddressSave}>
               {t("society.edit.save")}
             </Button>
           </div>

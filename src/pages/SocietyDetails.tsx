@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -23,6 +22,14 @@ interface Payment {
   status: string;
 }
 
+// Address interface for structured address data
+interface Address {
+  street: string;
+  houseNumber: string;
+  postalCode: string;
+  city: string;
+}
+
 const SocietyDetails = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
@@ -44,6 +51,14 @@ const SocietyDetails = () => {
     birthDate: "15.05.1985",
     gender: "Male",
     address: "Musterstraße 123, 10115 Berlin",
+  });
+
+  // Address fields as structured data
+  const [addressData, setAddressData] = useState<Address>({
+    street: "Musterstraße",
+    houseNumber: "123",
+    postalCode: "10115",
+    city: "Berlin",
   });
 
   // Mock family information
@@ -144,9 +159,8 @@ const SocietyDetails = () => {
   };
 
   // Handler for editing address specifically
-  const handleEditAddress = (currentValue: string) => {
+  const handleEditAddress = () => {
     setEditField("address");
-    setEditValue(currentValue);
     setIsAddressEdit(true);
     setIsBankInfoEdit(false);
   };
@@ -170,11 +184,29 @@ const SocietyDetails = () => {
     setEditField("");
   };
 
+  // Handler for saving address info
+  const handleSaveAddress = (updatedAddress: Address) => {
+    // Update address data state
+    setAddressData(updatedAddress);
+    
+    // Format the address for display
+    const formattedAddress = `${updatedAddress.street} ${updatedAddress.houseNumber}, ${updatedAddress.postalCode} ${updatedAddress.city}`;
+    
+    // Update the formatted address in personalInfo
+    setPersonalInfo(prev => ({ 
+      ...prev, 
+      address: formattedAddress 
+    }));
+    
+    setIsAddressEdit(false);
+    setEditField("");
+  };
+
   const handleSave = () => {
     if (!editField) return;
 
     // Update the appropriate field based on category
-    if (["fullName", "email", "phone", "address"].includes(editField)) {
+    if (["fullName", "email", "phone"].includes(editField)) {
       setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
     }
 
@@ -235,6 +267,8 @@ const SocietyDetails = () => {
           bankInfo={bankInfo}
           onBankInfoSave={handleSaveBankInfo}
           isAddressEdit={isAddressEdit}
+          addressData={addressData}
+          onAddressSave={handleSaveAddress}
         />
 
         {/* Logout Button */}

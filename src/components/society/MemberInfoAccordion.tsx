@@ -19,7 +19,7 @@ interface MemberInfoAccordionProps {
   paymentHistory: any[];
   handleEdit: (field: string, currentValue: string) => void;
   onEditBankInfo: () => void;
-  onEditAddress: (currentValue: string) => void; // New prop for address editing
+  onEditAddress: () => void; // Modified to not require a parameter
 }
 
 const MemberInfoAccordion = ({

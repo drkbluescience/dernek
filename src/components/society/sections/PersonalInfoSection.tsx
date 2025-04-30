@@ -20,7 +20,7 @@ interface PersonalInfo {
 interface PersonalInfoSectionProps {
   personalInfo: PersonalInfo;
   handleEdit: (field: string, currentValue: string) => void;
-  handleAddressEdit: (currentValue: string) => void; // New prop for address editing
+  handleAddressEdit: () => void; // Modified to not require a parameter
 }
 
 const PersonalInfoSection = ({ 
@@ -112,7 +112,7 @@ const PersonalInfoSection = ({
                 variant="ghost" 
                 size="sm" 
                 className="h-8 w-8 p-0" 
-                onClick={() => handleAddressEdit(personalInfo.address)}
+                onClick={handleAddressEdit}
               >
                 <MapPin className="h-4 w-4" />
                 <span className="sr-only">Edit Address</span>
