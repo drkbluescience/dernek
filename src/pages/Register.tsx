@@ -5,10 +5,13 @@ import Header from "@/components/Header";
 import RegistrationWizard from "@/components/RegistrationWizard";
 import { registerUser } from "@/utils/authUtils";
 import { toast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { t } = useLanguage();
 
   const handleRegisterComplete = async (formData: Record<string, any>) => {
     setLoading(true);
@@ -26,15 +29,15 @@ const Register = () => {
       
       if (response.success) {
         toast({
-          title: "Kayıt Başarılı",
-          description: "Hesabınız başarıyla oluşturuldu!",
+          title: t("registration.success"),
+          description: t("registration.success.description"),
         });
         navigate("/society-details");
       }
     } catch (error) {
       toast({
-        title: "Kayıt Hatası",
-        description: "Kayıt işlemi sırasında bir hata oluştu.",
+        title: t("registration.error"),
+        description: t("registration.error.description"),
         variant: "destructive",
       });
     } finally {
@@ -44,7 +47,10 @@ const Register = () => {
 
   return (
     <div className="page-container">
-      <Header title="Kayıt" showBackButton />
+      <div className="flex justify-between items-center">
+        <Header title={t("register.title")} showBackButton />
+        <LanguageSwitcher className="mr-4" />
+      </div>
       
       <div className="flex-1">
         <RegistrationWizard onComplete={handleRegisterComplete} isLoading={loading} />

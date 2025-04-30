@@ -9,25 +9,27 @@ import BankInfoStep from "./registration/BankInfoStep";
 import DocumentUploadStep from "./registration/DocumentUploadStep";
 import FamilyInfoStep from "./registration/FamilyInfoStep";
 import ChildInfoStep from "./registration/ChildInfoStep";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface RegistrationWizardProps {
   onComplete: (data: Record<string, any>) => void;
   isLoading: boolean;
 }
 
-const steps = [
-  { id: "personal", title: "Kişisel Bilgiler", isRequired: true },
-  { id: "address", title: "Adres Bilgileri", isRequired: true },
-  { id: "bank", title: "Banka Bilgileri", isRequired: false },
-  { id: "documents", title: "Belge Yükleme", isRequired: false },
-  { id: "family", title: "Eş Bilgileri", isRequired: false },
-  { id: "children", title: "Çocuk Bilgileri", isRequired: false },
-];
-
 const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [skippedSteps, setSkippedSteps] = useState<string[]>([]);
+  const { t } = useLanguage();
+
+  const steps = [
+    { id: "personal", title: t("registration.personal.title"), isRequired: true },
+    { id: "address", title: t("registration.address.title"), isRequired: true },
+    { id: "bank", title: t("registration.bank.title"), isRequired: false },
+    { id: "documents", title: t("registration.documents.title"), isRequired: false },
+    { id: "family", title: t("registration.family.title"), isRequired: false },
+    { id: "children", title: t("registration.children.title"), isRequired: false },
+  ];
 
   const currentStep = steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
@@ -180,7 +182,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
           <div className="bg-gray-800 text-white p-4 font-semibold rounded-t-lg flex justify-between items-center">
             <span>{currentStep.title}</span>
             {!currentStep.isRequired && (
-              <span className="text-xs bg-gray-600 px-2 py-1 rounded">Opsiyonel</span>
+              <span className="text-xs bg-gray-600 px-2 py-1 rounded">{t("registration.optional")}</span>
             )}
           </div>
           <div className="p-6">{renderStep()}</div>
@@ -192,7 +194,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
             disabled={isFirstStep || isLoading}
             className="flex items-center gap-2"
           >
-            <ArrowLeft className="w-4 h-4" /> Geri
+            <ArrowLeft className="w-4 h-4" /> {t("registration.button.previous")}
           </Button>
           <div className="flex gap-2">
             {!currentStep.isRequired && (
@@ -202,7 +204,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
                 disabled={isLoading}
                 className="text-gray-500 hover:text-gray-700"
               >
-                Atla
+                {t("registration.button.skip")}
               </Button>
             )}
             {isLastStep ? (
@@ -213,7 +215,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
                 className="flex items-center gap-2"
               >
                 {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-                Kaydı Tamamla
+                {t("registration.button.complete")}
               </Button>
             ) : (
               <Button
@@ -222,7 +224,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
                 disabled={isLoading}
                 className="flex items-center gap-2"
               >
-                İleri <ArrowRight className="w-4 h-4" />
+                {t("registration.button.next")} <ArrowRight className="w-4 h-4" />
               </Button>
             )}
           </div>
@@ -230,6 +232,55 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
       </Card>
     </div>
   );
+
+  function renderStep() {
+    switch (currentStep.id) {
+      case "personal":
+        return (
+          <PersonalInfoStep 
+            initialData={formData} 
+            onSubmit={handleNext} 
+          />
+        );
+      case "address":
+        return (
+          <AddressStep 
+            initialData={formData} 
+            onSubmit={handleNext} 
+          />
+        );
+      case "bank":
+        return (
+          <BankInfoStep 
+            initialData={formData} 
+            onSubmit={handleNext} 
+          />
+        );
+      case "documents":
+        return (
+          <DocumentUploadStep 
+            initialData={formData} 
+            onSubmit={handleNext} 
+          />
+        );
+      case "family":
+        return (
+          <FamilyInfoStep 
+            initialData={formData} 
+            onSubmit={handleNext} 
+          />
+        );
+      case "children":
+        return (
+          <ChildInfoStep 
+            initialData={formData} 
+            onSubmit={handleNext} 
+          />
+        );
+      default:
+        return null;
+    }
+  }
 };
 
 export default RegistrationWizard;
