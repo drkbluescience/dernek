@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/context/LanguageContext";
+import { toast } from "@/hooks/use-toast";
 
 interface EditDialogProps {
   editField: string;
@@ -16,6 +17,20 @@ interface EditDialogProps {
   setEditValue: (value: string) => void;
   setEditField: (field: string) => void;
   handleSave: () => void;
+  // New props for bank info editing
+  isBankInfoEdit?: boolean;
+  bankInfo?: {
+    accountHolder: string;
+    bankName: string;
+    iban: string;
+    bic: string;
+  };
+  onBankInfoSave?: (updatedBankInfo: {
+    accountHolder: string;
+    bankName: string;
+    iban: string;
+    bic: string;
+  }) => void;
 }
 
 const EditDialog = ({ 
@@ -23,10 +38,105 @@ const EditDialog = ({
   editValue, 
   setEditValue, 
   setEditField, 
-  handleSave 
+  handleSave,
+  isBankInfoEdit = false,
+  bankInfo,
+  onBankInfoSave
 }: EditDialogProps) => {
   const { t } = useLanguage();
+  
+  // State for bank info editing
+  const [bankInfoState, setBankInfoState] = useState({
+    accountHolder: bankInfo?.accountHolder || "",
+    bankName: bankInfo?.bankName || "",
+    iban: bankInfo?.iban || "",
+    bic: bankInfo?.bic || ""
+  });
+  
+  // Initialize bank info state when dialog opens
+  React.useEffect(() => {
+    if (isBankInfoEdit && bankInfo) {
+      setBankInfoState({
+        accountHolder: bankInfo.accountHolder,
+        bankName: bankInfo.bankName,
+        iban: bankInfo.iban,
+        bic: bankInfo.bic
+      });
+    }
+  }, [isBankInfoEdit, bankInfo]);
 
+  const handleBankInfoChange = (field: keyof typeof bankInfoState, value: string) => {
+    setBankInfoState(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleBankInfoSave = () => {
+    if (onBankInfoSave) {
+      onBankInfoSave(bankInfoState);
+      toast({
+        title: t("society.edit.success"),
+        description: t("society.edit.success.description"),
+      });
+    }
+    setEditField("");
+  };
+
+  if (isBankInfoEdit) {
+    return (
+      <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {t("society.bank.edit.title")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">{t("society.bank.holder")}</label>
+              <Input 
+                value={bankInfoState.accountHolder} 
+                onChange={(e) => handleBankInfoChange("accountHolder", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">{t("society.bank.account")}</label>
+              <Input 
+                value={bankInfoState.bankName} 
+                onChange={(e) => handleBankInfoChange("bankName", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">{t("society.bank.iban")}</label>
+              <Input 
+                value={bankInfoState.iban} 
+                onChange={(e) => handleBankInfoChange("iban", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">{t("society.bank.bic")}</label>
+              <Input 
+                value={bankInfoState.bic} 
+                onChange={(e) => handleBankInfoChange("bic", e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={() => setEditField("")}>
+              {t("society.edit.cancel")}
+            </Button>
+            <Button onClick={handleBankInfoSave}>
+              {t("society.edit.save")}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Original single field edit dialog
   return (
     <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
       <DialogContent className="sm:max-w-md">

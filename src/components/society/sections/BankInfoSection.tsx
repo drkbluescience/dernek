@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit, Banknote } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface BankInfo {
@@ -14,10 +14,10 @@ interface BankInfo {
 
 interface BankInfoSectionProps {
   bankInfo: BankInfo;
-  handleEdit: (field: string, currentValue: string) => void;
+  onEditBankInfo: () => void;
 }
 
-const BankInfoSection = ({ bankInfo, handleEdit }: BankInfoSectionProps) => {
+const BankInfoSection = ({ bankInfo, onEditBankInfo }: BankInfoSectionProps) => {
   const { t } = useLanguage();
 
   return (
@@ -26,63 +26,32 @@ const BankInfoSection = ({ bankInfo, handleEdit }: BankInfoSectionProps) => {
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.holder")}</p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("accountHolder", bankInfo.accountHolder)}
-              >
-                <Edit className="h-4 w-4" />
-                <span className="sr-only">Edit Account Holder</span>
-              </Button>
-            </div>
+            <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
           </div>
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.account")}</p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("bankName", bankInfo.bankName)}
-              >
-                <Banknote className="h-4 w-4" />
-                <span className="sr-only">Edit Bank Name</span>
-              </Button>
-            </div>
+            <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
           </div>
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("iban", bankInfo.iban)}
-              >
-                <Edit className="h-4 w-4" />
-                <span className="sr-only">Edit IBAN</span>
-              </Button>
-            </div>
+            <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
           </div>
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.bic")}</p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("bic", bankInfo.bic)}
-              >
-                <Edit className="h-4 w-4" />
-                <span className="sr-only">Edit BIC</span>
-              </Button>
-            </div>
+            <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
+          </div>
+          
+          {/* Edit all bank info button */}
+          <div className="pt-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full flex items-center justify-center gap-2 mt-2" 
+              onClick={onEditBankInfo}
+            >
+              <Edit className="h-4 w-4" />
+              {t("society.bank.edit")}
+            </Button>
           </div>
         </div>
       </CardContent>

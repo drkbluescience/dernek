@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { getCurrentUser, logoutUser, isAuthenticated } from "@/utils/authUtils";
 import { useLanguage } from "@/context/LanguageContext";
 import BottomNavigation from "@/components/BottomNavigation";
@@ -108,6 +108,8 @@ const SocietyDetails = () => {
   // Fields that can be edited
   const [editField, setEditField] = useState("");
   const [editValue, setEditValue] = useState("");
+  // New state for bank info editing
+  const [isBankInfoEdit, setIsBankInfoEdit] = useState(false);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -137,14 +139,30 @@ const SocietyDetails = () => {
     setEditValue(currentValue);
   };
 
+  // Handler for editing bank info
+  const handleEditBankInfo = () => {
+    setIsBankInfoEdit(true);
+    setEditField("bankInfo");
+  };
+
+  // Handler for saving bank info
+  const handleSaveBankInfo = (updatedBankInfo: {
+    accountHolder: string;
+    bankName: string;
+    iban: string;
+    bic: string;
+  }) => {
+    setBankInfo(updatedBankInfo);
+    setIsBankInfoEdit(false);
+    setEditField("");
+  };
+
   const handleSave = () => {
     if (!editField) return;
 
     // Update the appropriate field based on category
     if (["fullName", "email", "phone", "address"].includes(editField)) {
       setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
-    } else if (["accountHolder", "bankName", "iban", "bic"].includes(editField)) {
-      setBankInfo(prev => ({ ...prev, [editField]: editValue }));
     }
 
     // Show success toast
@@ -188,6 +206,7 @@ const SocietyDetails = () => {
           bankInfo={bankInfo}
           paymentHistory={paymentHistory}
           handleEdit={handleEdit}
+          onEditBankInfo={handleEditBankInfo}
         />
 
         {/* Edit Dialog */}
@@ -197,6 +216,9 @@ const SocietyDetails = () => {
           setEditValue={setEditValue}
           setEditField={setEditField}
           handleSave={handleSave}
+          isBankInfoEdit={isBankInfoEdit}
+          bankInfo={bankInfo}
+          onBankInfoSave={handleSaveBankInfo}
         />
 
         {/* Logout Button */}
