@@ -106,6 +106,104 @@ export const translations: Record<string, Record<Language, string>> = {
   "language.switch.tr": {
     tr: "Deutsch",
     de: "Türkçe"
+  },
+  
+  // Society Details page
+  "society.details.title": {
+    tr: "Üye Detayları",
+    de: "Mitgliedsdetails"
+  },
+  "society.welcome": {
+    tr: "Hoş geldiniz",
+    de: "Willkommen"
+  },
+  "society.member.since": {
+    tr: "Üyelik başlangıcı",
+    de: "Mitglied seit"
+  },
+  "society.tab.personal": {
+    tr: "Kişisel Bilgiler",
+    de: "Persönliche Informationen"
+  },
+  "society.tab.family": {
+    tr: "Aile Bilgileri",
+    de: "Familieninformationen"
+  },
+  "society.tab.bank": {
+    tr: "Banka Bilgileri",
+    de: "Bankinformationen"
+  },
+  "society.tab.payments": {
+    tr: "Ödeme Geçmişi",
+    de: "Zahlungsverlauf"
+  },
+  "society.founded": {
+    tr: "Kuruluş",
+    de: "Gegründet"
+  },
+  "society.members": {
+    tr: "Üyeler",
+    de: "Mitglieder"
+  },
+  "society.events": {
+    tr: "Etkinlikler",
+    de: "Veranstaltungen"
+  },
+  "society.committee": {
+    tr: "Yönetim Kurulu",
+    de: "Vorstand"
+  },
+  "society.logout": {
+    tr: "Çıkış Yap",
+    de: "Abmelden"
+  },
+  "society.navigation.home": {
+    tr: "Ana Sayfa",
+    de: "Startseite"
+  },
+  "society.navigation.profile": {
+    tr: "Profil",
+    de: "Profil"
+  },
+  "society.navigation.settings": {
+    tr: "Ayarlar",
+    de: "Einstellungen"
+  },
+  "society.settings.darkmode": {
+    tr: "Karanlık Mod",
+    de: "Dunkler Modus"
+  },
+  "society.bank.account": {
+    tr: "Hesap",
+    de: "Konto"
+  },
+  "society.bank.holder": {
+    tr: "Hesap Sahibi",
+    de: "Kontoinhaber"
+  },
+  "society.bank.iban": {
+    tr: "IBAN",
+    de: "IBAN"
+  },
+  "society.bank.bic": {
+    tr: "BIC",
+    de: "BIC"
+  },
+  "society.payment.date": {
+    tr: "Tarih",
+    de: "Datum"
+  },
+  "society.payment.amount": {
+    tr: "Tutar",
+    de: "Betrag"
+  },
+  "society.payment.type": {
+    tr: "İşlem Türü",
+    de: "Transaktionstyp"
+  },
+  "society.payment.status": {
+    tr: "Durum",
+    de: "Status"
   }
 };
 
