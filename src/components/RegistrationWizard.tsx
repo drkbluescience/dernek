@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -33,9 +34,9 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
   const isLastStep = currentStepIndex === steps.length - 1;
 
   // Check if a step should be skipped based on previous selections
-  const shouldSkipCurrentStep = () => {
+  const shouldSkipStep = (stepId: string) => {
     // Skip family step if marital status is not "married"
-    if (currentStep.id === "family" && formData.maritalStatus !== "married") {
+    if (stepId === "family" && formData.maritalStatus !== "married") {
       return true;
     }
     return false;
@@ -48,25 +49,31 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
     if (isLastStep) {
       onComplete(updatedData);
     } else {
-      const nextIndex = currentStepIndex + 1;
-      setCurrentStepIndex(nextIndex);
+      let nextIndex = currentStepIndex + 1;
       
-      // Check if the next step should be skipped
-      if (nextIndex < steps.length) {
-        const nextStep = steps[nextIndex];
-        if (nextStep.id === "family" && updatedData.maritalStatus !== "married") {
-          // Skip family step and go to the next one if not married
-          setSkippedSteps([...skippedSteps, nextStep.id]);
-          setCurrentStepIndex(nextIndex + 1);
-        }
+      // Skip steps that should be skipped based on previous selections
+      while (nextIndex < steps.length && shouldSkipStep(steps[nextIndex].id)) {
+        setSkippedSteps((prev) => [...prev, steps[nextIndex].id]);
+        nextIndex++;
       }
+      
+      setCurrentStepIndex(nextIndex);
     }
   };
 
   const handleSkip = () => {
     if (!currentStep.isRequired) {
       setSkippedSteps([...skippedSteps, currentStep.id]);
-      setCurrentStepIndex((prev) => Math.min(steps.length - 1, prev + 1));
+      
+      let nextIndex = currentStepIndex + 1;
+      
+      // Skip steps that should be skipped based on previous selections
+      while (nextIndex < steps.length && shouldSkipStep(steps[nextIndex].id)) {
+        setSkippedSteps((prev) => [...prev, steps[nextIndex].id]);
+        nextIndex++;
+      }
+      
+      setCurrentStepIndex(nextIndex);
     }
   };
 
@@ -74,7 +81,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
     let prevIndex = currentStepIndex - 1;
     
     // Skip backward over skipped steps
-    while (prevIndex >= 0 && skippedSteps.includes(steps[prevIndex].id)) {
+    while (prevIndex >= 0 && (skippedSteps.includes(steps[prevIndex].id) || shouldSkipStep(steps[prevIndex].id))) {
       prevIndex--;
     }
     
@@ -130,14 +137,8 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
     }
   };
 
-  // Check if we should auto-skip the current step
-  if (shouldSkipCurrentStep() && !isLastStep) {
-    setSkippedSteps([...skippedSteps, currentStep.id]);
-    setCurrentStepIndex((prev) => Math.min(steps.length - 1, prev + 1));
-  }
-
   // Filter out skipped steps for the progress indicator
-  const visibleSteps = steps.filter(step => !skippedSteps.includes(step.id));
+  const visibleSteps = steps.filter(step => !skippedSteps.includes(step.id) && !shouldSkipStep(step.id));
   const currentStepProgressIndex = visibleSteps.findIndex(step => step.id === currentStep.id);
   const progressPercentage = visibleSteps.length > 1 ? 
     (currentStepProgressIndex / (visibleSteps.length - 1)) * 100 : 

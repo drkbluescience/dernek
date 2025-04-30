@@ -30,11 +30,7 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {birthDate ? (
-              format(birthDate, "dd.MM.yyyy")
-            ) : (
-              "Tarih seçin (Gün.Ay.Yıl)"
-            )}
+            {birthDate ? format(birthDate, "dd.MM.yyyy") : "(Gün.Ay.Yıl)"}
           </Button>
         </PopoverTrigger>
         <PopoverContent 

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -66,19 +67,12 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
     onSubmit(formData);
   };
 
+  // If not married, auto-submit and skip
   if (!isMarried) {
-    // If not married, automatically submit with no spouse data and move to the next step
     setTimeout(() => {
       onSubmit({ hasSpouse: false });
     }, 0);
-    
-    return (
-      <div className="text-center p-6 bg-gray-50 rounded-lg">
-        <p className="text-gray-500">
-          Medeni durumunuz evli olmadığı için eş bilgileri adımı atlanıyor.
-        </p>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -113,7 +107,7 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="spouseLastName">Eş Soyad��:</Label>
+              <Label htmlFor="spouseLastName">Eş Soyadı:</Label>
               <Input
                 id="spouseLastName"
                 value={formData.spouseLastName}
@@ -162,7 +156,7 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
                     {formData.spouseBirthDate ? (
                       format(formData.spouseBirthDate, "dd.MM.yyyy")
                     ) : (
-                      "Tarih seçin (Gün.Ay.Yıl)"
+                      "(Gün.Ay.Yıl)"
                     )}
                   </Button>
                 </PopoverTrigger>

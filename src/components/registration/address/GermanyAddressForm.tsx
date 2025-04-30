@@ -1,13 +1,6 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue 
-} from "@/components/ui/select";
 
 interface GermanyAddressFormProps {
   formData: {
@@ -25,11 +18,10 @@ interface GermanyAddressFormProps {
   isRequired: boolean;
 }
 
-const GermanyAddressForm = ({ 
-  formData, 
-  handleChange, 
-  handleSelectChange, 
-  isRequired 
+const GermanyAddressForm = ({
+  formData,
+  handleChange,
+  isRequired,
 }: GermanyAddressFormProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -82,25 +74,15 @@ const GermanyAddressForm = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="district">Bölge/Eyalet:</Label>
-        <Select 
+        <Label htmlFor="district">İlçe:</Label>
+        <Input
+          id="district"
           value={formData.district}
-          onValueChange={(value) => handleSelectChange("district", value)}
-        >
-          <SelectTrigger className="auth-input">
-            <SelectValue placeholder="Seçiniz" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="bayern">Bayern</SelectItem>
-            <SelectItem value="berlin">Berlin</SelectItem>
-            <SelectItem value="bremen">Bremen</SelectItem>
-            <SelectItem value="hamburg">Hamburg</SelectItem>
-            <SelectItem value="hessen">Hessen</SelectItem>
-            <SelectItem value="niedersachsen">Niedersachsen</SelectItem>
-            <SelectItem value="nrw">Nordrhein-Westfalen</SelectItem>
-            <SelectItem value="other">Diğer</SelectItem>
-          </SelectContent>
-        </Select>
+          onChange={handleChange}
+          placeholder="İlçe"
+          required={isRequired}
+          className="auth-input"
+        />
       </div>
 
       <div className="space-y-2">
@@ -109,7 +91,7 @@ const GermanyAddressForm = ({
           id="phone"
           value={formData.phone}
           onChange={handleChange}
-          placeholder="Sabit telefon"
+          placeholder="Telefon numarası"
           className="auth-input"
         />
       </div>
@@ -121,7 +103,6 @@ const GermanyAddressForm = ({
           value={formData.mobile}
           onChange={handleChange}
           placeholder="Cep telefonu"
-          required={isRequired}
           className="auth-input"
         />
       </div>
@@ -130,11 +111,9 @@ const GermanyAddressForm = ({
         <Label htmlFor="email">E-posta:</Label>
         <Input
           id="email"
-          type="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="E-posta adresiniz"
-          required={isRequired}
+          placeholder="E-posta adresi"
           className="auth-input"
         />
       </div>
