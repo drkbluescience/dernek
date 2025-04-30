@@ -20,7 +20,7 @@ interface PersonalInfo {
 interface PersonalInfoSectionProps {
   personalInfo: PersonalInfo;
   handleEdit: (field: string, currentValue: string) => void;
-  handleAddressEdit: () => void; // Modified to not require a parameter
+  handleAddressEdit: () => void;
 }
 
 const PersonalInfoSection = ({ 
@@ -34,6 +34,7 @@ const PersonalInfoSection = ({
     <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
       <CardContent className="pt-6 space-y-4">
         <div className="grid grid-cols-2 gap-4">
+          {/* Name and edit button */}
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">
               {t("society.personal.name")}
@@ -52,6 +53,7 @@ const PersonalInfoSection = ({
             </div>
           </div>
           
+          {/* Birth Date */}
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">
               {t("society.personal.birthDate")}
@@ -59,65 +61,69 @@ const PersonalInfoSection = ({
             <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.birthDate}</p>
           </div>
           
+          {/* Gender */}
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">
               {t("society.personal.gender")}
             </p>
             <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.gender}</p>
           </div>
-          
-          <div className="space-y-1">
-            <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-              {t("society.personal.email")}
-            </p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.email}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("email", personalInfo.email)}
-              >
-                <Mail className="h-4 w-4" />
-                <span className="sr-only">Edit Email</span>
-              </Button>
-            </div>
+        </div>
+        
+        {/* Email - Full Width Row */}
+        <div className="space-y-1">
+          <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+            {t("society.personal.email")}
+          </p>
+          <div className="flex justify-between items-center">
+            <p className="text-society-dark-text dark:text-gray-200 font-medium overflow-ellipsis">{personalInfo.email}</p>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-8 w-8 p-0 ml-2 flex-shrink-0" 
+              onClick={() => handleEdit("email", personalInfo.email)}
+            >
+              <Mail className="h-4 w-4" />
+              <span className="sr-only">Edit Email</span>
+            </Button>
           </div>
-          
-          <div className="space-y-1">
-            <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-              {t("society.personal.phone")}
-            </p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.phone}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("phone", personalInfo.phone)}
-              >
-                <Phone className="h-4 w-4" />
-                <span className="sr-only">Edit Phone</span>
-              </Button>
-            </div>
+        </div>
+        
+        {/* Phone - Full Width Row */}
+        <div className="space-y-1">
+          <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+            {t("society.personal.phone")}
+          </p>
+          <div className="flex justify-between items-center">
+            <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.phone}</p>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-8 w-8 p-0 ml-2 flex-shrink-0" 
+              onClick={() => handleEdit("phone", personalInfo.phone)}
+            >
+              <Phone className="h-4 w-4" />
+              <span className="sr-only">Edit Phone</span>
+            </Button>
           </div>
-          
-          <div className="space-y-1 col-span-2">
-            <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-              {t("society.personal.address")}
-            </p>
-            <div className="flex justify-between items-center">
-              <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.address}</p>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0" 
-                onClick={handleAddressEdit}
-              >
-                <MapPin className="h-4 w-4" />
-                <span className="sr-only">Edit Address</span>
-              </Button>
-            </div>
+        </div>
+        
+        {/* Address - Full Width Row */}
+        <div className="space-y-1">
+          <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+            {t("society.personal.address")}
+          </p>
+          <div className="flex justify-between items-center">
+            <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.address}</p>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-8 w-8 p-0 ml-2 flex-shrink-0" 
+              onClick={handleAddressEdit}
+            >
+              <MapPin className="h-4 w-4" />
+              <span className="sr-only">Edit Address</span>
+            </Button>
           </div>
         </div>
       </CardContent>
