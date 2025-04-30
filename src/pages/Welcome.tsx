@@ -10,10 +10,10 @@ const Welcome = () => {
       <div className="flex-1 flex flex-col items-center justify-center text-center space-y-8 animate-fade-in">
         <div className="space-y-4">
           <h1 className="text-4xl font-bold text-society-dark-text">
-            Society Connect
+            Zsu 
           </h1>
           <p className="text-lg text-society-neutral-gray max-w-xs mx-auto">
-            Join your local society organization and stay connected with your community
+            Hosgeldiniz 
           </p>
         </div>
         
