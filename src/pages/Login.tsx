@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthForm from "@/components/AuthForm";
 import Header from "@/components/Header";
 import { loginUser } from "@/utils/authUtils";
+import BottomNavigation from "@/components/BottomNavigation";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Login = () => {
   ];
 
   return (
-    <div className="page-container">
+    <div className="page-container pb-20">
       <Header title="Login" showBackButton />
       
       <div className="flex-1 flex items-center">
@@ -55,6 +56,8 @@ const Login = () => {
           footerLinkUrl="/register"
         />
       </div>
+      
+      <BottomNavigation />
     </div>
   );
 };
