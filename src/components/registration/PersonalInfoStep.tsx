@@ -37,9 +37,6 @@ const PersonalInfoStep = ({ initialData, onSubmit }: PersonalInfoStepProps) => {
     fatherName: initialData.fatherName || "",
     gender: initialData.gender || "",
     nationality: initialData.nationality || "",
-    // Optional fields
-    email: initialData.email || "",
-    phone: initialData.phone || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,30 +216,6 @@ const PersonalInfoStep = ({ initialData, onSubmit }: PersonalInfoStepProps) => {
               <SelectItem value="other">Diğer</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-
-        {/* Optional Fields */}
-        <div className="space-y-2">
-          <Label htmlFor="email">E-posta (Opsiyonel):</Label>
-          <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="E-posta adresiniz"
-            className="auth-input"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="phone">Telefon (Opsiyonel):</Label>
-          <Input
-            id="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Telefon numaranız"
-            className="auth-input"
-          />
         </div>
       </div>
     </form>
