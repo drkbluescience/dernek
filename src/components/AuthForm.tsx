@@ -81,7 +81,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
             </div>
           </div>
         ))}
-        <Button type="submit" className="auth-button mt-6">
+        <Button type="submit" className="auth-button mt-6 w-full">
           {submitText}
         </Button>
       </form>

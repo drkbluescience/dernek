@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type Language = "tr" | "de";
@@ -36,6 +35,48 @@ export const translations: Record<string, Record<Language, string>> = {
   "welcome.copyright": {
     tr: "© 2025 Zsu e.V. Tüm hakları saklıdır.",
     de: "© 2025 Zsu e.V. Alle Rechte vorbehalten."
+  },
+  
+  // Login page
+  "login.title": {
+    tr: "Giriş",
+    de: "Anmelden"
+  },
+  "login.welcome": {
+    tr: "Tekrar Hoşgeldiniz",
+    de: "Willkommen zurück"
+  },
+  "login.email": {
+    tr: "E-posta",
+    de: "E-Mail"
+  },
+  "login.email.placeholder": {
+    tr: "E-posta adresinizi girin",
+    de: "Geben Sie Ihre E-Mail-Adresse ein"
+  },
+  "login.password": {
+    tr: "Şifre",
+    de: "Passwort"
+  },
+  "login.password.placeholder": {
+    tr: "Şifrenizi girin",
+    de: "Geben Sie Ihr Passwort ein"
+  },
+  "login.button": {
+    tr: "Giriş Yap",
+    de: "Anmelden"
+  },
+  "login.processing": {
+    tr: "Giriş yapılıyor...",
+    de: "Anmeldung läuft..."
+  },
+  "login.no.account": {
+    tr: "Hesabınız yok mu?",
+    de: "Haben Sie kein Konto?"
+  },
+  "login.register": {
+    tr: "Kayıt Ol",
+    de: "Registrieren"
   },
   
   // Registration page

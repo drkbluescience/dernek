@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import AuthForm from "@/components/AuthForm";
 import Header from "@/components/Header";
 import { loginUser } from "@/utils/authUtils";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import BottomNavigation from "@/components/BottomNavigation";
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { t } = useLanguage();
 
   const handleLogin = async (data: Record<string, string>) => {
     setLoading(true);
@@ -28,33 +32,38 @@ const Login = () => {
   const loginFields = [
     {
       id: "email",
-      label: "Email",
+      label: t("login.email"),
       type: "email",
-      placeholder: "Enter your email",
+      placeholder: t("login.email.placeholder"),
     },
     {
       id: "password",
-      label: "Password",
+      label: t("login.password"),
       type: "password",
-      placeholder: "Enter your password",
+      placeholder: t("login.password.placeholder"),
     },
   ];
 
   return (
     <div className="page-container">
-      <Header title="Login" showBackButton />
+      <div className="flex justify-between items-center mb-4">
+        <Header title={t("login.title")} showBackButton />
+        <LanguageSwitcher className="mr-4" />
+      </div>
       
       <div className="flex-1 flex items-center">
         <AuthForm
-          title="Welcome Back"
+          title={t("login.welcome")}
           fields={loginFields}
-          submitText={loading ? "Logging in..." : "Login"}
+          submitText={loading ? t("login.processing") : t("login.button")}
           onSubmit={handleLogin}
-          footerText="Don't have an account?"
-          footerLinkText="Register"
+          footerText={t("login.no.account")}
+          footerLinkText={t("login.register")}
           footerLinkUrl="/register"
         />
       </div>
+      
+      <BottomNavigation />
     </div>
   );
 };
