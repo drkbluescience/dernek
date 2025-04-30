@@ -150,6 +150,10 @@ export const translations: Record<string, Record<Language, string>> = {
   },
   
   // Society Details page
+  "society.bank.edit.title": {
+    tr: "Banka Bilgisi Degistir",
+    de: "Ändern"
+  },
   "society.details.title": {
     tr: "Üye Detayları",
     de: "Mitgliedsdetails"
