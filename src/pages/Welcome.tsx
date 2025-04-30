@@ -27,7 +27,7 @@ const Welcome = () => {
         <div className="h-48 w-48 rounded-full bg-society-purple bg-opacity-20 flex items-center justify-center">
           <div className="h-36 w-36 rounded-full bg-society-purple bg-opacity-30 flex items-center justify-center">
             <div className="h-24 w-24 rounded-full bg-society-purple flex items-center justify-center text-white text-4xl font-bold">
-              ZSU
+              SC
             </div>
           </div>
         </div>

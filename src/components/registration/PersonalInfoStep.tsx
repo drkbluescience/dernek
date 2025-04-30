@@ -67,7 +67,7 @@ const PersonalInfoStep = ({ initialData, onSubmit, validationMessages }: Persona
   };
 
   return (
-    <form id="form-personal" onSubmit={handleSubmit} noValidate className="bg-white rounded-lg">
+    <form id="form-personal" onSubmit={handleSubmit} noValidate>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BasicInfoFields
           firstName={formData.firstName}

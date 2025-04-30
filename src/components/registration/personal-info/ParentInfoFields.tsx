@@ -1,7 +1,6 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useLanguage } from "@/context/LanguageContext";
 
 interface ParentInfoFieldsProps {
   motherName: string;
@@ -14,28 +13,26 @@ const ParentInfoFields = ({
   fatherName,
   handleChange,
 }: ParentInfoFieldsProps) => {
-  const { t } = useLanguage();
-  
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="motherName" className="text-black font-medium">{t("society.personal.motherName")}:</Label>
+        <Label htmlFor="motherName">Anne Adı:</Label>
         <Input
           id="motherName"
           value={motherName}
           onChange={handleChange}
-          placeholder={t("society.personal.motherName.placeholder")}
+          placeholder="Anne adı"
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="fatherName" className="text-black font-medium">{t("society.personal.fatherName")}:</Label>
+        <Label htmlFor="fatherName">Baba Adı:</Label>
         <Input
           id="fatherName"
           value={fatherName}
           onChange={handleChange}
-          placeholder={t("society.personal.fatherName.placeholder")}
+          placeholder="Baba adı"
           className="auth-input"
         />
       </div>

@@ -18,8 +18,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const translations: Record<string, Record<Language, string>> = {
   // Welcome page
   "welcome.title": {
-    tr: "Sosyal dayanisma Dernegi",
-    de: "Zentrum für Soziale Unterstützung e.V"
+    tr: "Zsu",
+    de: "Zsu"
   },
   "welcome.description": {
     tr: "Hoşgeldiniz",
@@ -34,8 +34,8 @@ export const translations: Record<string, Record<Language, string>> = {
     de: "Registrieren"
   },
   "welcome.copyright": {
-    tr: "© 2025 Zsu e.V. Tüm hakları saklıdır.",
-    de: "© 2025 Zsu e.V. Alle Rechte vorbehalten."
+    tr: "© 2025 Society Connect. Tüm hakları saklıdır.",
+    de: "© 2025 Society Connect. Alle Rechte vorbehalten."
   },
   
   // Registration page
@@ -310,7 +310,7 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
   // Try to get language from localStorage or use default
   const [language, setLanguageState] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem("language");
-    return (savedLanguage === "tr" || savedLanguage === "de") ? savedLanguage as Language : defaultLanguage;
+    return (savedLanguage === "tr" || savedLanguage === "de") ? savedLanguage : defaultLanguage;
   });
 
   // Update localStorage when language changes
@@ -318,10 +318,6 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
     localStorage.setItem("language", language);
     // Force a re-render of components using the language context
     document.documentElement.setAttribute('lang', language);
-    
-    // Force the page to refresh all components that rely on translation
-    const event = new Event('languageChanged');
-    document.dispatchEvent(event);
   }, [language]);
 
   // Translate function

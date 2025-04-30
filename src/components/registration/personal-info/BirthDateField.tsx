@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useLanguage } from "@/context/LanguageContext";
 
 interface BirthDateFieldProps {
   birthDate: Date | null;
@@ -18,26 +17,24 @@ interface BirthDateFieldProps {
 }
 
 const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
-  const { t } = useLanguage();
-  
   return (
     <div className="space-y-2">
-      <Label htmlFor="birthDate" className="text-society-dark-text">{t("society.personal.birthDate")}:</Label>
+      <Label htmlFor="birthDate">Doğum Tarihi:</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal rounded-md border border-gray-300 px-3 py-2",
+              "w-full justify-start text-left font-normal auth-input",
               !birthDate && "text-muted-foreground"
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4 text-society-purple" />
+            <CalendarIcon className="mr-2 h-4 w-4" />
             {birthDate ? format(birthDate, "dd.MM.yyyy") : "(Gün.Ay.Yıl)"}
           </Button>
         </PopoverTrigger>
         <PopoverContent 
-          className="w-auto p-0 bg-white border-society-purple/20 shadow-md" 
+          className="w-auto p-0" 
           align="start"
           side="bottom"
           sideOffset={4}
@@ -50,15 +47,7 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
               date > new Date() || date < new Date("1900-01-01")
             }
             initialFocus
-            className="p-3 pointer-events-auto bg-white"
-            classNames={{
-              day_selected: "bg-society-purple text-white hover:bg-society-purple hover:text-white focus:bg-society-purple focus:text-white",
-              day_today: "bg-society-soft-purple text-society-purple",
-              nav_button_previous: "text-society-purple hover:text-society-secondary-purple",
-              nav_button_next: "text-society-purple hover:text-society-secondary-purple",
-              caption: "text-society-dark-text",
-              cell: "text-society-dark-text",
-            }}
+            className="p-3 pointer-events-auto"
           />
         </PopoverContent>
       </Popover>
