@@ -29,7 +29,7 @@ const WizardNavigation: React.FC<WizardNavigationProps> = ({
         variant="outline"
         onClick={onPrevious}
         disabled={isFirstStep || isLoading}
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
       >
         <ArrowLeft className="w-4 h-4" /> {t("registration.button.previous")}
       </Button>
@@ -49,7 +49,7 @@ const WizardNavigation: React.FC<WizardNavigationProps> = ({
             form={`form-${currentStep.id}`}
             type="submit"
             disabled={isLoading}
-            className="flex items-center gap-2"
+            className="bg-society-purple hover:bg-society-secondary-purple text-white flex items-center gap-2 px-6"
           >
             {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
             {t("registration.button.complete")}
@@ -59,7 +59,7 @@ const WizardNavigation: React.FC<WizardNavigationProps> = ({
             form={`form-${currentStep.id}`}
             type="submit"
             disabled={isLoading}
-            className="flex items-center gap-2"
+            className="bg-society-purple hover:bg-society-secondary-purple text-white flex items-center gap-2 px-6"
           >
             {t("registration.button.next")} <ArrowRight className="w-4 h-4" />
           </Button>

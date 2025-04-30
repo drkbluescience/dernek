@@ -50,7 +50,6 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
       <Card className="society-card shadow-md overflow-hidden">
         <CardContent className="p-0">
           <div className="bg-society-dark-purple text-white p-4 font-semibold rounded-t-lg flex justify-between items-center">
-            <span>{currentStep.title}</span>
             {!currentStep.isRequired && (
               <span className="text-xs bg-gray-600 px-2 py-1 rounded">{t("registration.optional")}</span>
             )}

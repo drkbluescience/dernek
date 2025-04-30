@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { useEffect, useState } from "react";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -17,6 +16,9 @@ const LanguageSwitcher = ({ className = "" }: LanguageSwitcherProps) => {
     setLanguage(newLanguage);
   };
 
+  // Display the opposite language of the current one
+  const displayLanguage = language === "tr" ? "Deutsch" : "Türkçe";
+
   return (
     <Button 
       variant="ghost" 
@@ -24,7 +26,7 @@ const LanguageSwitcher = ({ className = "" }: LanguageSwitcherProps) => {
       className={`text-society-neutral-gray flex items-center gap-1 hover:bg-society-soft-purple hover:text-society-purple ${className}`}
     >
       <Globe className="h-4 w-4" />
-      <span>{t("language.switch.tr")}</span>
+      <span>{displayLanguage}</span>
     </Button>
   );
 };

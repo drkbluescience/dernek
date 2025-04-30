@@ -29,53 +29,52 @@ const StepRenderer: React.FC<StepRendererProps> = ({
   onSubmit,
   validationMessages,
 }) => {
-  switch (currentStep.id) {
-    case "personal":
-      return (
+  // Add a title section with better styling matching the example image
+  return (
+    <div className="space-y-6">
+      <div className="bg-gray-100 p-4 rounded-md border border-gray-200 shadow-sm">
+        <h3 className="text-society-dark-text font-medium">{currentStep.title}</h3>
+      </div>
+      
+      {currentStep.id === "personal" && (
         <PersonalInfoStep 
           initialData={formData} 
           onSubmit={onSubmit} 
           validationMessages={validationMessages}
         />
-      );
-    case "address":
-      return (
+      )}
+      {currentStep.id === "address" && (
         <AddressStep 
           initialData={formData} 
           onSubmit={onSubmit}
         />
-      );
-    case "bank":
-      return (
+      )}
+      {currentStep.id === "bank" && (
         <BankInfoStep 
           initialData={formData} 
           onSubmit={onSubmit}
         />
-      );
-    case "documents":
-      return (
+      )}
+      {currentStep.id === "documents" && (
         <DocumentUploadStep 
           initialData={formData} 
           onSubmit={onSubmit} 
         />
-      );
-    case "family":
-      return (
+      )}
+      {currentStep.id === "family" && (
         <FamilyInfoStep 
           initialData={formData} 
           onSubmit={onSubmit}
         />
-      );
-    case "children":
-      return (
+      )}
+      {currentStep.id === "children" && (
         <ChildInfoStep 
           initialData={formData} 
           onSubmit={onSubmit}
         />
-      );
-    default:
-      return null;
-  }
+      )}
+    </div>
+  );
 };
 
 export default StepRenderer;
