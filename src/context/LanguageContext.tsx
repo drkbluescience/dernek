@@ -18,8 +18,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const translations: Record<string, Record<Language, string>> = {
   // Welcome page
   "welcome.title": {
-    tr: "Zsu",
-    de: "Zsu"
+    tr: "Sosyal Dayanışma Dernegi",
+    de: "Zentrum für Sosziale Unterstützung e.V."
   },
   "welcome.description": {
     tr: "Hoşgeldiniz",
