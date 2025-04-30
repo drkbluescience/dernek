@@ -223,8 +223,8 @@ export const translations: Record<string, Record<Language, string>> = {
     de: "Dunkler Modus"
   },
   "society.bank.account": {
-    tr: "Hesap",
-    de: "Konto"
+    tr: "Banka",
+    de: "Bankname"
   },
   "society.bank.holder": {
     tr: "Hesap Sahibi",
