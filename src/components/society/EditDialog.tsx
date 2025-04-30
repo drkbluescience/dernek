@@ -17,7 +17,7 @@ interface EditDialogProps {
   setEditValue: (value: string) => void;
   setEditField: (field: string) => void;
   handleSave: () => void;
-  // New props for bank info editing
+  // Bank info editing props
   isBankInfoEdit?: boolean;
   bankInfo?: {
     accountHolder: string;
@@ -31,6 +31,8 @@ interface EditDialogProps {
     iban: string;
     bic: string;
   }) => void;
+  // New address editing prop
+  isAddressEdit?: boolean;
 }
 
 const EditDialog = ({ 
@@ -41,7 +43,8 @@ const EditDialog = ({
   handleSave,
   isBankInfoEdit = false,
   bankInfo,
-  onBankInfoSave
+  onBankInfoSave,
+  isAddressEdit = false
 }: EditDialogProps) => {
   const { t } = useLanguage();
   
@@ -135,8 +138,39 @@ const EditDialog = ({
       </Dialog>
     );
   }
+  
+  // New specific address edit dialog
+  if (isAddressEdit) {
+    return (
+      <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {t("society.address.edit.title")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <label className="text-sm font-medium">{t("society.personal.address")}</label>
+            <Input 
+              value={editValue} 
+              onChange={(e) => setEditValue(e.target.value)}
+              className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+            />
+          </div>
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={() => setEditField("")}>
+              {t("society.edit.cancel")}
+            </Button>
+            <Button onClick={handleSave}>
+              {t("society.edit.save")}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
-  // Original single field edit dialog
+  // Original single field edit dialog for other fields
   return (
     <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
       <DialogContent className="sm:max-w-md">

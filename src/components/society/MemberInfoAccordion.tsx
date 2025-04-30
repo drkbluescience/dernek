@@ -19,6 +19,7 @@ interface MemberInfoAccordionProps {
   paymentHistory: any[];
   handleEdit: (field: string, currentValue: string) => void;
   onEditBankInfo: () => void;
+  onEditAddress: (currentValue: string) => void; // New prop for address editing
 }
 
 const MemberInfoAccordion = ({
@@ -27,7 +28,8 @@ const MemberInfoAccordion = ({
   bankInfo,
   paymentHistory,
   handleEdit,
-  onEditBankInfo
+  onEditBankInfo,
+  onEditAddress
 }: MemberInfoAccordionProps) => {
   const { t } = useLanguage();
 
@@ -42,6 +44,7 @@ const MemberInfoAccordion = ({
           <PersonalInfoSection 
             personalInfo={personalInfo}
             handleEdit={handleEdit}
+            handleAddressEdit={onEditAddress}
           />
         </AccordionContent>
       </AccordionItem>

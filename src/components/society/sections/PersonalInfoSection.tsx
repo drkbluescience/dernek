@@ -5,7 +5,7 @@ import {
   CardContent 
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit, Mail, Phone } from "lucide-react";
+import { Edit, Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface PersonalInfo {
@@ -20,11 +20,13 @@ interface PersonalInfo {
 interface PersonalInfoSectionProps {
   personalInfo: PersonalInfo;
   handleEdit: (field: string, currentValue: string) => void;
+  handleAddressEdit: (currentValue: string) => void; // New prop for address editing
 }
 
 const PersonalInfoSection = ({ 
   personalInfo, 
-  handleEdit 
+  handleEdit,
+  handleAddressEdit
 }: PersonalInfoSectionProps) => {
   const { t } = useLanguage();
 
@@ -110,9 +112,9 @@ const PersonalInfoSection = ({
                 variant="ghost" 
                 size="sm" 
                 className="h-8 w-8 p-0" 
-                onClick={() => handleEdit("address", personalInfo.address)}
+                onClick={() => handleAddressEdit(personalInfo.address)}
               >
-                <Edit className="h-4 w-4" />
+                <MapPin className="h-4 w-4" />
                 <span className="sr-only">Edit Address</span>
               </Button>
             </div>

@@ -108,8 +108,10 @@ const SocietyDetails = () => {
   // Fields that can be edited
   const [editField, setEditField] = useState("");
   const [editValue, setEditValue] = useState("");
-  // New state for bank info editing
+  
+  // State for specific edit dialogs
   const [isBankInfoEdit, setIsBankInfoEdit] = useState(false);
+  const [isAddressEdit, setIsAddressEdit] = useState(false);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -137,11 +139,22 @@ const SocietyDetails = () => {
   const handleEdit = (field: string, currentValue: string) => {
     setEditField(field);
     setEditValue(currentValue);
+    setIsAddressEdit(false); // Reset address edit state
+    setIsBankInfoEdit(false); // Reset bank info edit state
+  };
+
+  // Handler for editing address specifically
+  const handleEditAddress = (currentValue: string) => {
+    setEditField("address");
+    setEditValue(currentValue);
+    setIsAddressEdit(true);
+    setIsBankInfoEdit(false);
   };
 
   // Handler for editing bank info
   const handleEditBankInfo = () => {
     setIsBankInfoEdit(true);
+    setIsAddressEdit(false);
     setEditField("bankInfo");
   };
 
@@ -174,6 +187,7 @@ const SocietyDetails = () => {
     // Reset edit state
     setEditField("");
     setEditValue("");
+    setIsAddressEdit(false);
   };
 
   if (!user) {
@@ -207,6 +221,7 @@ const SocietyDetails = () => {
           paymentHistory={paymentHistory}
           handleEdit={handleEdit}
           onEditBankInfo={handleEditBankInfo}
+          onEditAddress={handleEditAddress}
         />
 
         {/* Edit Dialog */}
@@ -219,6 +234,7 @@ const SocietyDetails = () => {
           isBankInfoEdit={isBankInfoEdit}
           bankInfo={bankInfo}
           onBankInfoSave={handleSaveBankInfo}
+          isAddressEdit={isAddressEdit}
         />
 
         {/* Logout Button */}
