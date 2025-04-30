@@ -7,10 +7,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getCurrentUser, logoutUser, isAuthenticated } from "@/utils/authUtils";
 import { toast } from "@/components/ui/use-toast";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useLanguage } from "@/context/LanguageContext";
 import BottomNavigation from "@/components/BottomNavigation";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface SocietyEvent {
   id: number;
@@ -215,141 +220,154 @@ const SocietyDetails = () => {
           </CardContent>
         </Card>
 
-        {/* Member Information Tabs */}
-        <Tabs defaultValue="personal" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="personal">{t("society.tab.personal")}</TabsTrigger>
-            <TabsTrigger value="family">{t("society.tab.family")}</TabsTrigger>
-            <TabsTrigger value="bank">{t("society.tab.bank")}</TabsTrigger>
-            <TabsTrigger value="payments">{t("society.tab.payments")}</TabsTrigger>
-          </TabsList>
-          
-          {/* Personal Info Tab */}
-          <TabsContent value="personal">
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
-              <CardContent className="pt-6 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  {Object.entries(personalInfo).map(([key, value]) => (
-                    <div key={key} className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400 capitalize">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
-                      </p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{value}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Family Info Tab */}
-          <TabsContent value="family">
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
-              <CardContent className="pt-6 space-y-6">
-                <div>
-                  <p className="text-xs text-society-neutral-gray dark:text-gray-400 mb-1">Marital Status</p>
-                  <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.maritalStatus}</p>
-                </div>
-                
-                {familyInfo.spouse && (
-                  <div>
-                    <h3 className="text-md font-semibold mb-3 dark:text-white">Spouse</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <p className="text-xs text-society-neutral-gray dark:text-gray-400">Name</p>
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.name}</p>
+        {/* Member Information Accordion */}
+        <Accordion type="single" collapsible className="w-full">
+          {/* Personal Info Section */}
+          <AccordionItem value="personal">
+            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted rounded-t-lg">
+              {t("society.tab.personal")}
+            </AccordionTrigger>
+            <AccordionContent className="pt-0">
+              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    {Object.entries(personalInfo).map(([key, value]) => (
+                      <div key={key} className="space-y-1">
+                        <p className="text-xs text-society-neutral-gray dark:text-gray-400 capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                        </p>
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{value}</p>
                       </div>
-                      <div className="space-y-1">
-                        <p className="text-xs text-society-neutral-gray dark:text-gray-400">Birth Date</p>
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.birthDate}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                
-                {familyInfo.children && familyInfo.children.length > 0 && (
-                  <div>
-                    <h3 className="text-md font-semibold mb-3 dark:text-white">Children</h3>
-                    <div className="space-y-3">
-                      {familyInfo.children.map((child, index) => (
-                        <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                          <div className="space-y-1">
-                            <p className="text-xs text-society-neutral-gray dark:text-gray-400">Name</p>
-                            <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.name}</p>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-xs text-society-neutral-gray dark:text-gray-400">Birth Date</p>
-                            <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.birthDate}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Bank Info Tab */}
-          <TabsContent value="bank">
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
-              <CardContent className="pt-6 space-y-4">
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="space-y-1">
-                    <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.holder")}</p>
-                    <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.account")}</p>
-                    <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
-                    <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.bic")}</p>
-                    <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          {/* Payment History Tab */}
-          <TabsContent value="payments">
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
-              <CardContent className="pt-6">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                      <TableHead className="w-[120px]">{t("society.payment.date")}</TableHead>
-                      <TableHead>{t("society.payment.amount")}</TableHead>
-                      <TableHead>{t("society.payment.type")}</TableHead>
-                      <TableHead className="text-right">{t("society.payment.status")}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {paymentHistory.map((payment) => (
-                      <TableRow key={payment.id} className="dark:border-gray-700">
-                        <TableCell className="font-medium dark:text-gray-300">{payment.date}</TableCell>
-                        <TableCell className="dark:text-gray-300">{payment.amount}</TableCell>
-                        <TableCell className="dark:text-gray-300">{payment.type}</TableCell>
-                        <TableCell className={`text-right ${
-                          payment.status === "Paid" 
-                            ? "text-green-600 dark:text-green-400" 
-                            : "text-amber-600 dark:text-amber-400"
-                        }`}>
-                          {payment.status}
-                        </TableCell>
-                      </TableRow>
                     ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Family Info Section */}
+          <AccordionItem value="family">
+            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted">
+              {t("society.tab.family")}
+            </AccordionTrigger>
+            <AccordionContent className="pt-0">
+              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
+                <CardContent className="pt-6 space-y-6">
+                  <div>
+                    <p className="text-xs text-society-neutral-gray dark:text-gray-400 mb-1">Marital Status</p>
+                    <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.maritalStatus}</p>
+                  </div>
+                  
+                  {familyInfo.spouse && (
+                    <div>
+                      <h3 className="text-md font-semibold mb-3 dark:text-white">Spouse</h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">Name</p>
+                          <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.name}</p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">Birth Date</p>
+                          <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.birthDate}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {familyInfo.children && familyInfo.children.length > 0 && (
+                    <div>
+                      <h3 className="text-md font-semibold mb-3 dark:text-white">Children</h3>
+                      <div className="space-y-3">
+                        {familyInfo.children.map((child, index) => (
+                          <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div className="space-y-1">
+                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">Name</p>
+                              <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.name}</p>
+                            </div>
+                            <div className="space-y-1">
+                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">Birth Date</p>
+                              <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.birthDate}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Bank Info Section */}
+          <AccordionItem value="bank">
+            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted">
+              {t("society.tab.bank")}
+            </AccordionTrigger>
+            <AccordionContent className="pt-0">
+              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.holder")}</p>
+                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.account")}</p>
+                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
+                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.bic")}</p>
+                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Payment History Section */}
+          <AccordionItem value="payments">
+            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted">
+              {t("society.tab.payments")}
+            </AccordionTrigger>
+            <AccordionContent className="pt-0">
+              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
+                <CardContent className="pt-6">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        <TableHead className="w-[120px]">{t("society.payment.date")}</TableHead>
+                        <TableHead>{t("society.payment.amount")}</TableHead>
+                        <TableHead>{t("society.payment.type")}</TableHead>
+                        <TableHead className="text-right">{t("society.payment.status")}</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {paymentHistory.map((payment) => (
+                        <TableRow key={payment.id} className="dark:border-gray-700">
+                          <TableCell className="font-medium dark:text-gray-300">{payment.date}</TableCell>
+                          <TableCell className="dark:text-gray-300">{payment.amount}</TableCell>
+                          <TableCell className="dark:text-gray-300">{payment.type}</TableCell>
+                          <TableCell className={`text-right ${
+                            payment.status === "Paid" 
+                              ? "text-green-600 dark:text-green-400" 
+                              : "text-amber-600 dark:text-amber-400"
+                          }`}>
+                            {payment.status}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
         {/* Upcoming Events */}
         <div>
