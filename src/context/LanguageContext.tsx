@@ -204,6 +204,71 @@ export const translations: Record<string, Record<Language, string>> = {
   "society.payment.status": {
     tr: "Durum",
     de: "Status"
+  },
+  // New keys for editing functionality
+  "society.personal.name": {
+    tr: "Ad Soyad",
+    de: "Name"
+  },
+  "society.personal.birthDate": {
+    tr: "Doğum Tarihi",
+    de: "Geburtsdatum"
+  },
+  "society.personal.gender": {
+    tr: "Cinsiyet",
+    de: "Geschlecht"
+  },
+  "society.personal.email": {
+    tr: "E-posta",
+    de: "E-Mail"
+  },
+  "society.personal.phone": {
+    tr: "Telefon",
+    de: "Telefon"
+  },
+  "society.personal.address": {
+    tr: "Adres",
+    de: "Adresse"
+  },
+  "society.family.maritalStatus": {
+    tr: "Medeni Durum",
+    de: "Familienstand"
+  },
+  "society.family.spouse": {
+    tr: "Eş",
+    de: "Ehepartner/in"
+  },
+  "society.family.children": {
+    tr: "Çocuklar",
+    de: "Kinder"
+  },
+  "society.family.name": {
+    tr: "Ad Soyad",
+    de: "Name"
+  },
+  "society.family.birthDate": {
+    tr: "Doğum Tarihi",
+    de: "Geburtsdatum"
+  },
+  "society.edit.title": {
+    tr: "Bilgi Düzenle",
+    de: "Information bearbeiten"
+  },
+  "society.edit.save": {
+    tr: "Kaydet",
+    de: "Speichern"
+  },
+  "society.edit.cancel": {
+    tr: "İptal",
+    de: "Abbrechen"
+  },
+  "society.edit.success": {
+    tr: "Güncelleme Başarılı",
+    de: "Aktualisierung erfolgreich"
+  },
+  "society.edit.success.description": {
+    tr: "Bilgileriniz başarıyla güncellendi.",
+    de: "Ihre Informationen wurden erfolgreich aktualisiert."
   }
 };
 

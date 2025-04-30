@@ -10,26 +10,22 @@ import { toast } from "@/components/ui/use-toast";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useLanguage } from "@/context/LanguageContext";
 import BottomNavigation from "@/components/BottomNavigation";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-interface SocietyEvent {
-  id: number;
-  title: string;
-  date: string;
-  location: string;
-}
-
-interface Member {
-  id: string;
-  name: string;
-  role: string;
-  joinDate: string;
-}
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Edit, Phone, Mail, Banknote } from "lucide-react";
 
 interface Payment {
   id: string;
@@ -52,51 +48,15 @@ const SocietyDetails = () => {
     description: "A volunteer organization dedicated to helping the community through various social service activities.",
   };
 
-  const upcomingEvents: SocietyEvent[] = [
-    {
-      id: 1,
-      title: "Community Cleanup",
-      date: "May 15, 2025",
-      location: "City Park",
-    },
-    {
-      id: 2,
-      title: "Fundraiser Dinner",
-      date: "June 2, 2025",
-      location: "Community Center",
-    },
-  ];
-
-  const committeeMembers: Member[] = [
-    {
-      id: "m-1",
-      name: "Jane Smith",
-      role: "President",
-      joinDate: "Jan 2020",
-    },
-    {
-      id: "m-2",
-      name: "John Doe",
-      role: "Secretary",
-      joinDate: "Mar 2020",
-    },
-    {
-      id: "m-3",
-      name: "Emma Wilson",
-      role: "Treasurer",
-      joinDate: "Feb 2021",
-    },
-  ];
-
-  // Mock member personal data
-  const personalInfo = {
+  // Mock member personal data - now state for editing
+  const [personalInfo, setPersonalInfo] = useState({
     fullName: "John Smith",
     email: "john.smith@example.com",
     phone: "+49 123 456 7890",
     birthDate: "15.05.1985",
     gender: "Male",
     address: "Musterstraße 123, 10115 Berlin",
-  };
+  });
 
   // Mock family information
   const familyInfo = {
@@ -117,13 +77,13 @@ const SocietyDetails = () => {
     ]
   };
 
-  // Mock bank information
-  const bankInfo = {
+  // Mock bank information - now state for editing
+  const [bankInfo, setBankInfo] = useState({
     accountHolder: "John Smith",
     bankName: "Sparkasse Berlin",
     iban: "DE12 3456 7890 1234 5678 90",
     bic: "SPKRDE21XXX"
-  };
+  });
 
   // Mock payment history
   const paymentHistory: Payment[] = [
@@ -157,6 +117,10 @@ const SocietyDetails = () => {
     }
   ];
 
+  // Fields that can be edited
+  const [editField, setEditField] = useState("");
+  const [editValue, setEditValue] = useState("");
+
   useEffect(() => {
     const checkAuth = () => {
       if (!isAuthenticated()) {
@@ -180,13 +144,42 @@ const SocietyDetails = () => {
     navigate("/");
   };
 
+  const handleEdit = (field: string, currentValue: string) => {
+    setEditField(field);
+    setEditValue(currentValue);
+  };
+
+  const handleSave = () => {
+    if (!editField) return;
+
+    // Update the appropriate field based on category
+    if (["fullName", "email", "phone", "address"].includes(editField)) {
+      setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
+    } else if (["accountHolder", "bankName", "iban", "bic"].includes(editField)) {
+      setBankInfo(prev => ({ ...prev, [editField]: editValue }));
+    }
+
+    // Show success toast
+    toast({
+      title: t("society.edit.success"),
+      description: t("society.edit.success.description"),
+    });
+
+    // Reset edit state
+    setEditField("");
+    setEditValue("");
+  };
+
   if (!user) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
 
   return (
     <div className="page-container pb-20">
-      <Header title={t("society.details.title")} />
+      <div className="flex justify-between items-center">
+        <Header title={t("society.details.title")} />
+        <LanguageSwitcher className="mr-4" />
+      </div>
 
       <div className="space-y-6 w-full animate-fade-in">
         {/* User Welcome */}
@@ -214,7 +207,7 @@ const SocietyDetails = () => {
               </div>
               <div className="bg-society-soft-purple p-3 rounded-lg dark:bg-purple-900">
                 <p className="text-sm text-society-neutral-gray dark:text-gray-300">{t("society.events")}</p>
-                <p className="font-bold text-society-dark-text dark:text-white">{upcomingEvents.length}</p>
+                <p className="font-bold text-society-dark-text dark:text-white">2</p>
               </div>
             </div>
           </CardContent>
@@ -231,14 +224,92 @@ const SocietyDetails = () => {
               <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
                 <CardContent className="pt-6 space-y-4">
                   <div className="grid grid-cols-2 gap-4">
-                    {Object.entries(personalInfo).map(([key, value]) => (
-                      <div key={key} className="space-y-1">
-                        <p className="text-xs text-society-neutral-gray dark:text-gray-400 capitalize">
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                        </p>
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{value}</p>
+                    {/* Personal details with edit buttons */}
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                        {t("society.personal.name")}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.fullName}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("fullName", personalInfo.fullName)}
+                        >
+                          <Edit className="h-4 w-4" />
+                          <span className="sr-only">Edit Name</span>
+                        </Button>
                       </div>
-                    ))}
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                        {t("society.personal.birthDate")}
+                      </p>
+                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.birthDate}</p>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                        {t("society.personal.gender")}
+                      </p>
+                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.gender}</p>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                        {t("society.personal.email")}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.email}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("email", personalInfo.email)}
+                        >
+                          <Mail className="h-4 w-4" />
+                          <span className="sr-only">Edit Email</span>
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                        {t("society.personal.phone")}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.phone}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("phone", personalInfo.phone)}
+                        >
+                          <Phone className="h-4 w-4" />
+                          <span className="sr-only">Edit Phone</span>
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1 col-span-2">
+                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                        {t("society.personal.address")}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.address}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("address", personalInfo.address)}
+                        >
+                          <Edit className="h-4 w-4" />
+                          <span className="sr-only">Edit Address</span>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -254,20 +325,20 @@ const SocietyDetails = () => {
               <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
                 <CardContent className="pt-6 space-y-6">
                   <div>
-                    <p className="text-xs text-society-neutral-gray dark:text-gray-400 mb-1">Marital Status</p>
+                    <p className="text-xs text-society-neutral-gray dark:text-gray-400 mb-1">{t("society.family.maritalStatus")}</p>
                     <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.maritalStatus}</p>
                   </div>
                   
                   {familyInfo.spouse && (
                     <div>
-                      <h3 className="text-md font-semibold mb-3 dark:text-white">Spouse</h3>
+                      <h3 className="text-md font-semibold mb-3 dark:text-white">{t("society.family.spouse")}</h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">Name</p>
+                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.name")}</p>
                           <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.name}</p>
                         </div>
                         <div className="space-y-1">
-                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">Birth Date</p>
+                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.birthDate")}</p>
                           <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.birthDate}</p>
                         </div>
                       </div>
@@ -276,16 +347,16 @@ const SocietyDetails = () => {
                   
                   {familyInfo.children && familyInfo.children.length > 0 && (
                     <div>
-                      <h3 className="text-md font-semibold mb-3 dark:text-white">Children</h3>
+                      <h3 className="text-md font-semibold mb-3 dark:text-white">{t("society.family.children")}</h3>
                       <div className="space-y-3">
                         {familyInfo.children.map((child, index) => (
                           <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <div className="space-y-1">
-                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">Name</p>
+                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.name")}</p>
                               <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.name}</p>
                             </div>
                             <div className="space-y-1">
-                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">Birth Date</p>
+                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.birthDate")}</p>
                               <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.birthDate}</p>
                             </div>
                           </div>
@@ -309,19 +380,63 @@ const SocietyDetails = () => {
                   <div className="grid grid-cols-1 gap-4">
                     <div className="space-y-1">
                       <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.holder")}</p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("accountHolder", bankInfo.accountHolder)}
+                        >
+                          <Edit className="h-4 w-4" />
+                          <span className="sr-only">Edit Account Holder</span>
+                        </Button>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.account")}</p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("bankName", bankInfo.bankName)}
+                        >
+                          <Banknote className="h-4 w-4" />
+                          <span className="sr-only">Edit Bank Name</span>
+                        </Button>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("iban", bankInfo.iban)}
+                        >
+                          <Edit className="h-4 w-4" />
+                          <span className="sr-only">Edit IBAN</span>
+                        </Button>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.bic")}</p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0" 
+                          onClick={() => handleEdit("bic", bankInfo.bic)}
+                        >
+                          <Edit className="h-4 w-4" />
+                          <span className="sr-only">Edit BIC</span>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -369,49 +484,31 @@ const SocietyDetails = () => {
           </AccordionItem>
         </Accordion>
 
-        {/* Upcoming Events */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3 px-1 dark:text-white">{t("society.events")}</h2>
-          <div className="space-y-3">
-            {upcomingEvents.map((event) => (
-              <Card key={event.id} className="overflow-hidden dark:bg-gray-800 dark:border-gray-700">
-                <div className="h-2 bg-society-purple w-full"></div>
-                <CardContent className="pt-4">
-                  <h3 className="font-semibold text-society-dark-text dark:text-white">{event.title}</h3>
-                  <div className="flex justify-between text-sm mt-1">
-                    <span className="text-society-neutral-gray dark:text-gray-400">{event.date}</span>
-                    <span className="text-society-neutral-gray dark:text-gray-400">{event.location}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Committee Members */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3 px-1 dark:text-white">{t("society.committee")}</h2>
-          <Card className="dark:bg-gray-800 dark:border-gray-700">
-            <CardContent className="p-0">
-              {committeeMembers.map((member, index) => (
-                <React.Fragment key={member.id}>
-                  <div className="p-4">
-                    <div className="flex justify-between">
-                      <div>
-                        <h3 className="font-medium dark:text-white">{member.name}</h3>
-                        <p className="text-sm text-society-neutral-gray dark:text-gray-400">{member.role}</p>
-                      </div>
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400 self-end">
-                        Since {member.joinDate}
-                      </p>
-                    </div>
-                  </div>
-                  {index < committeeMembers.length - 1 && <Separator className="dark:bg-gray-700" />}
-                </React.Fragment>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
+        {/* Edit Dialog */}
+        <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>
+                {t("society.edit.title")}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <Input 
+                value={editValue} 
+                onChange={(e) => setEditValue(e.target.value)}
+                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
+              />
+            </div>
+            <div className="flex justify-end gap-3">
+              <Button variant="outline" onClick={() => setEditField("")}>
+                {t("society.edit.cancel")}
+              </Button>
+              <Button onClick={handleSave}>
+                {t("society.edit.save")}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Logout Button */}
         <Button 
