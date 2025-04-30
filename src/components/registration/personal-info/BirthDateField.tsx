@@ -32,12 +32,12 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
               !birthDate && "text-muted-foreground"
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4 text-society-primary-purple" />
+            <CalendarIcon className="mr-2 h-4 w-4 text-society-purple" />
             {birthDate ? format(birthDate, "dd.MM.yyyy") : "(Gün.Ay.Yıl)"}
           </Button>
         </PopoverTrigger>
         <PopoverContent 
-          className="w-auto p-0 bg-white border-society-primary-purple/20 shadow-md" 
+          className="w-auto p-0 bg-white border-society-purple/20 shadow-md" 
           align="start"
           side="bottom"
           sideOffset={4}
@@ -52,10 +52,10 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
             initialFocus
             className="p-3 pointer-events-auto bg-white"
             classNames={{
-              day_selected: "bg-society-primary-purple text-white hover:bg-society-primary-purple hover:text-white focus:bg-society-primary-purple focus:text-white",
-              day_today: "bg-society-soft-purple text-society-primary-purple",
-              nav_button_previous: "text-society-primary-purple hover:text-society-secondary-purple",
-              nav_button_next: "text-society-primary-purple hover:text-society-secondary-purple",
+              day_selected: "bg-society-purple text-white hover:bg-society-purple hover:text-white focus:bg-society-purple focus:text-white",
+              day_today: "bg-society-soft-purple text-society-purple",
+              nav_button_previous: "text-society-purple hover:text-society-secondary-purple",
+              nav_button_next: "text-society-purple hover:text-society-secondary-purple",
               caption: "text-society-dark-text",
               cell: "text-society-dark-text",
             }}

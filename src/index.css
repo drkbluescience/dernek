@@ -110,15 +110,15 @@
   }
 
   .auth-input {
-    @apply w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-society-dark-text focus:outline-none focus:ring-2 focus:ring-society-primary-purple focus:border-transparent;
+    @apply w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-society-dark-text focus:outline-none focus:ring-2 focus:ring-society-purple focus:border-transparent;
   }
 
   .auth-button {
-    @apply w-full bg-society-primary-purple hover:bg-opacity-90 text-white font-medium py-3 rounded-lg transition-all;
+    @apply w-full bg-society-purple hover:bg-opacity-90 text-white font-medium py-3 rounded-lg transition-all;
   }
 
   .auth-link {
-    @apply text-society-primary-purple hover:text-opacity-80 font-medium transition-colors;
+    @apply text-society-purple hover:text-opacity-80 font-medium transition-colors;
   }
 
   /* Society Design System */
@@ -131,23 +131,23 @@
   }
 
   .society-input {
-    @apply w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-society-dark-text focus:outline-none focus:ring-2 focus:ring-society-primary-purple focus:border-transparent;
+    @apply w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-society-dark-text focus:outline-none focus:ring-2 focus:ring-society-purple focus:border-transparent;
   }
 
   .society-button-primary {
-    @apply bg-society-primary-purple hover:bg-opacity-90 text-white font-medium py-2 px-4 rounded-lg transition-all;
+    @apply bg-society-purple hover:bg-opacity-90 text-white font-medium py-2 px-4 rounded-lg transition-all;
   }
 
   .society-button-secondary {
-    @apply bg-society-soft-purple hover:bg-society-light-purple text-society-primary-purple font-medium py-2 px-4 rounded-lg transition-all;
+    @apply bg-society-soft-purple hover:bg-society-light-purple text-society-purple font-medium py-2 px-4 rounded-lg transition-all;
   }
   
   /* Calendar Component */
   .calendar-day-selected {
-    @apply bg-society-primary-purple text-white hover:bg-society-primary-purple hover:text-white focus:bg-society-primary-purple focus:text-white;
+    @apply bg-society-purple text-white hover:bg-society-purple hover:text-white focus:bg-society-purple focus:text-white;
   }
   
   .calendar-day-today {
-    @apply bg-society-soft-purple text-society-primary-purple;
+    @apply bg-society-soft-purple text-society-purple;
   }
 }

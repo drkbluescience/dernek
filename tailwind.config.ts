@@ -65,11 +65,13 @@ export default {
 				},
 				society: {
 					purple: '#8B5CF6',
+					'primary-purple': '#8B5CF6',
 					'light-purple': '#D6BCFA',
 					'soft-purple': '#E5DEFF',
 					'soft-gray': '#F1F0FB',
 					'dark-text': '#1A1F2C',
-					'neutral-gray': '#8E9196'
+					'neutral-gray': '#8E9196',
+					'secondary-purple': '#7C3AED'
 				}
 			},
 			borderRadius: {
