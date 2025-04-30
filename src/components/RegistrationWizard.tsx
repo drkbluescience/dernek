@@ -232,55 +232,6 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
       </Card>
     </div>
   );
-
-  function renderStep() {
-    switch (currentStep.id) {
-      case "personal":
-        return (
-          <PersonalInfoStep 
-            initialData={formData} 
-            onSubmit={handleNext} 
-          />
-        );
-      case "address":
-        return (
-          <AddressStep 
-            initialData={formData} 
-            onSubmit={handleNext} 
-          />
-        );
-      case "bank":
-        return (
-          <BankInfoStep 
-            initialData={formData} 
-            onSubmit={handleNext} 
-          />
-        );
-      case "documents":
-        return (
-          <DocumentUploadStep 
-            initialData={formData} 
-            onSubmit={handleNext} 
-          />
-        );
-      case "family":
-        return (
-          <FamilyInfoStep 
-            initialData={formData} 
-            onSubmit={handleNext} 
-          />
-        );
-      case "children":
-        return (
-          <ChildInfoStep 
-            initialData={formData} 
-            onSubmit={handleNext} 
-          />
-        );
-      default:
-        return null;
-    }
-  }
 };
 
 export default RegistrationWizard;
