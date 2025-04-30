@@ -2,30 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { getCurrentUser, logoutUser, isAuthenticated } from "@/utils/authUtils";
 import { toast } from "@/components/ui/use-toast";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { getCurrentUser, logoutUser, isAuthenticated } from "@/utils/authUtils";
 import { useLanguage } from "@/context/LanguageContext";
 import BottomNavigation from "@/components/BottomNavigation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Edit, Phone, Mail, Banknote } from "lucide-react";
+
+// Import the refactored components
+import MemberWelcome from "@/components/society/MemberWelcome";
+import SocietyHeader from "@/components/society/SocietyHeader";
+import MemberInfoAccordion from "@/components/society/MemberInfoAccordion";
+import EditDialog from "@/components/society/EditDialog";
+import LogoutButton from "@/components/society/LogoutButton";
 
 interface Payment {
   id: string;
@@ -183,341 +171,36 @@ const SocietyDetails = () => {
 
       <div className="space-y-6 w-full animate-fade-in">
         {/* User Welcome */}
-        <div className="bg-society-purple rounded-lg p-4 text-white dark:bg-purple-800">
-          <h2 className="text-lg">{t("society.welcome")}, {user.name}!</h2>
-          <p className="text-sm opacity-90">{t("society.member.since")} April 2025</p>
-        </div>
+        <MemberWelcome name={user.name} />
 
         {/* Society Info */}
-        <Card className="dark:bg-gray-800 dark:border-gray-700">
-          <CardHeader>
-            <CardTitle className="text-xl dark:text-white">{societyInfo.name}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-society-neutral-gray dark:text-gray-300">{societyInfo.description}</p>
-            
-            <div className="grid grid-cols-3 gap-2 text-center">
-              <div className="bg-society-soft-purple p-3 rounded-lg dark:bg-purple-900">
-                <p className="text-sm text-society-neutral-gray dark:text-gray-300">{t("society.founded")}</p>
-                <p className="font-bold text-society-dark-text dark:text-white">{societyInfo.founded}</p>
-              </div>
-              <div className="bg-society-soft-purple p-3 rounded-lg dark:bg-purple-900">
-                <p className="text-sm text-society-neutral-gray dark:text-gray-300">{t("society.members")}</p>
-                <p className="font-bold text-society-dark-text dark:text-white">{societyInfo.members}</p>
-              </div>
-              <div className="bg-society-soft-purple p-3 rounded-lg dark:bg-purple-900">
-                <p className="text-sm text-society-neutral-gray dark:text-gray-300">{t("society.events")}</p>
-                <p className="font-bold text-society-dark-text dark:text-white">2</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <SocietyHeader 
+          name={societyInfo.name}
+          description={societyInfo.description}
+          founded={societyInfo.founded}
+          members={societyInfo.members}
+        />
 
         {/* Member Information Accordion */}
-        <Accordion type="single" collapsible className="w-full">
-          {/* Personal Info Section */}
-          <AccordionItem value="personal">
-            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted rounded-t-lg">
-              {t("society.tab.personal")}
-            </AccordionTrigger>
-            <AccordionContent className="pt-0">
-              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* Personal details with edit buttons */}
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-                        {t("society.personal.name")}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.fullName}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("fullName", personalInfo.fullName)}
-                        >
-                          <Edit className="h-4 w-4" />
-                          <span className="sr-only">Edit Name</span>
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-                        {t("society.personal.birthDate")}
-                      </p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.birthDate}</p>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-                        {t("society.personal.gender")}
-                      </p>
-                      <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.gender}</p>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-                        {t("society.personal.email")}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.email}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("email", personalInfo.email)}
-                        >
-                          <Mail className="h-4 w-4" />
-                          <span className="sr-only">Edit Email</span>
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-                        {t("society.personal.phone")}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.phone}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("phone", personalInfo.phone)}
-                        >
-                          <Phone className="h-4 w-4" />
-                          <span className="sr-only">Edit Phone</span>
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-1 col-span-2">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-                        {t("society.personal.address")}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.address}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("address", personalInfo.address)}
-                        >
-                          <Edit className="h-4 w-4" />
-                          <span className="sr-only">Edit Address</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </AccordionContent>
-          </AccordionItem>
-          
-          {/* Family Info Section */}
-          <AccordionItem value="family">
-            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted">
-              {t("society.tab.family")}
-            </AccordionTrigger>
-            <AccordionContent className="pt-0">
-              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
-                <CardContent className="pt-6 space-y-6">
-                  <div>
-                    <p className="text-xs text-society-neutral-gray dark:text-gray-400 mb-1">{t("society.family.maritalStatus")}</p>
-                    <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.maritalStatus}</p>
-                  </div>
-                  
-                  {familyInfo.spouse && (
-                    <div>
-                      <h3 className="text-md font-semibold mb-3 dark:text-white">{t("society.family.spouse")}</h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.name")}</p>
-                          <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.name}</p>
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.birthDate")}</p>
-                          <p className="text-society-dark-text dark:text-gray-200 font-medium">{familyInfo.spouse.birthDate}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {familyInfo.children && familyInfo.children.length > 0 && (
-                    <div>
-                      <h3 className="text-md font-semibold mb-3 dark:text-white">{t("society.family.children")}</h3>
-                      <div className="space-y-3">
-                        {familyInfo.children.map((child, index) => (
-                          <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div className="space-y-1">
-                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.name")}</p>
-                              <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.name}</p>
-                            </div>
-                            <div className="space-y-1">
-                              <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.family.birthDate")}</p>
-                              <p className="text-society-dark-text dark:text-gray-200 font-medium">{child.birthDate}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </AccordionContent>
-          </AccordionItem>
-          
-          {/* Bank Info Section */}
-          <AccordionItem value="bank">
-            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted">
-              {t("society.tab.bank")}
-            </AccordionTrigger>
-            <AccordionContent className="pt-0">
-              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.holder")}</p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.accountHolder}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("accountHolder", bankInfo.accountHolder)}
-                        >
-                          <Edit className="h-4 w-4" />
-                          <span className="sr-only">Edit Account Holder</span>
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.account")}</p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("bankName", bankInfo.bankName)}
-                        >
-                          <Banknote className="h-4 w-4" />
-                          <span className="sr-only">Edit Bank Name</span>
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("iban", bankInfo.iban)}
-                        >
-                          <Edit className="h-4 w-4" />
-                          <span className="sr-only">Edit IBAN</span>
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.bic")}</p>
-                      <div className="flex justify-between items-center">
-                        <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="h-8 w-8 p-0" 
-                          onClick={() => handleEdit("bic", bankInfo.bic)}
-                        >
-                          <Edit className="h-4 w-4" />
-                          <span className="sr-only">Edit BIC</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </AccordionContent>
-          </AccordionItem>
-          
-          {/* Payment History Section */}
-          <AccordionItem value="payments">
-            <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted">
-              {t("society.tab.payments")}
-            </AccordionTrigger>
-            <AccordionContent className="pt-0">
-              <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
-                <CardContent className="pt-6">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                        <TableHead className="w-[120px]">{t("society.payment.date")}</TableHead>
-                        <TableHead>{t("society.payment.amount")}</TableHead>
-                        <TableHead>{t("society.payment.type")}</TableHead>
-                        <TableHead className="text-right">{t("society.payment.status")}</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {paymentHistory.map((payment) => (
-                        <TableRow key={payment.id} className="dark:border-gray-700">
-                          <TableCell className="font-medium dark:text-gray-300">{payment.date}</TableCell>
-                          <TableCell className="dark:text-gray-300">{payment.amount}</TableCell>
-                          <TableCell className="dark:text-gray-300">{payment.type}</TableCell>
-                          <TableCell className={`text-right ${
-                            payment.status === "Paid" 
-                              ? "text-green-600 dark:text-green-400" 
-                              : "text-amber-600 dark:text-amber-400"
-                          }`}>
-                            {payment.status}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <MemberInfoAccordion
+          personalInfo={personalInfo}
+          familyInfo={familyInfo}
+          bankInfo={bankInfo}
+          paymentHistory={paymentHistory}
+          handleEdit={handleEdit}
+        />
 
         {/* Edit Dialog */}
-        <Dialog open={!!editField} onOpenChange={(open) => !open && setEditField("")}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>
-                {t("society.edit.title")}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <Input 
-                value={editValue} 
-                onChange={(e) => setEditValue(e.target.value)}
-                className="dark:bg-gray-800 dark:text-white dark:border-gray-700"
-              />
-            </div>
-            <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setEditField("")}>
-                {t("society.edit.cancel")}
-              </Button>
-              <Button onClick={handleSave}>
-                {t("society.edit.save")}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <EditDialog 
+          editField={editField}
+          editValue={editValue}
+          setEditValue={setEditValue}
+          setEditField={setEditField}
+          handleSave={handleSave}
+        />
 
         {/* Logout Button */}
-        <Button 
-          variant="outline" 
-          className="w-full border-society-purple text-society-purple hover:bg-society-soft-purple hover:text-society-purple mt-6 dark:border-purple-500 dark:text-purple-400 dark:hover:bg-purple-900"
-          onClick={handleLogout}
-        >
-          {t("society.logout")}
-        </Button>
+        <LogoutButton onLogout={handleLogout} />
       </div>
       
       <BottomNavigation />
