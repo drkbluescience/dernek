@@ -48,6 +48,13 @@ const BankInfoStep = ({ initialData, onSubmit }: BankInfoStepProps) => {
   return (
     <form id="form-bank" onSubmit={handleSubmit}>
       <div className="space-y-6">
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded-md mb-6">
+          <p className="text-amber-800 text-sm">
+            Bu adım opsiyoneldir. Banka bilgilerinizi şimdi eklemek istemiyorsanız, atlamak için sayfanın altındaki 
+            "Atla" düğmesine tıklayabilirsiniz. Daha sonra istediğiniz zaman hesap ayarlarınızdan ekleyebilirsiniz.
+          </p>
+        </div>
+      
         <div className="flex items-center space-x-2 mb-6">
           <Checkbox 
             id="provideBankInfo" 

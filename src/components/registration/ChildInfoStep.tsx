@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -171,7 +170,12 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                             )}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 z-50" align="start">
+                        <PopoverContent 
+                          className="w-auto p-0" 
+                          align="start" 
+                          side="bottom"
+                          sideOffset={4}
+                        >
                           <Calendar
                             mode="single"
                             selected={child.birthDate || undefined}

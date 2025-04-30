@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -114,7 +113,7 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="spouseLastName">Eş Soyadı:</Label>
+              <Label htmlFor="spouseLastName">Eş Soyad��:</Label>
               <Input
                 id="spouseLastName"
                 value={formData.spouseLastName}
@@ -167,7 +166,12 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 z-50" align="start">
+                <PopoverContent 
+                  className="w-auto p-0" 
+                  align="start"
+                  side="bottom"
+                  sideOffset={4}
+                >
                   <Calendar
                     mode="single"
                     selected={formData.spouseBirthDate}

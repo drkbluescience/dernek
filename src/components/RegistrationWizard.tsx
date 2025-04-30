@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -195,11 +194,12 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
             <ArrowLeft className="w-4 h-4" /> Geri
           </Button>
           <div className="flex gap-2">
-            {!currentStep.isRequired && !isLastStep && (
+            {!currentStep.isRequired && (
               <Button
                 variant="ghost"
                 onClick={handleSkip}
                 disabled={isLoading}
+                className="text-gray-500 hover:text-gray-700"
               >
                 Atla
               </Button>
