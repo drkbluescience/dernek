@@ -150,6 +150,14 @@ export const translations: Record<string, Record<Language, string>> = {
   },
   
   // Society Details page
+  "society.name": {
+    tr: "Toplum Yardımlaşma Derneği",
+    de: "Gemeinschaft der Helfer e.V."
+  },
+  "society.description": {
+    tr: "Çeşitli sosyal hizmet faaliyetleri aracılığıyla topluma yardım etmeye adanmış bir gönüllü kuruluştur.",
+    de: "Eine Freiwilligenorganisation, die sich der Unterstützung der Gemeinschaft durch verschiedene soziale Dienstleistungen widmet."
+  },
   "society.bank.edit": {
     tr: "Banka Bilgisi Degistir",
     de: "Ändern"

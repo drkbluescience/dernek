@@ -16,10 +16,10 @@ const SocietyHeader = ({ name, description, founded, members }: SocietyHeaderPro
   return (
     <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader>
-        <CardTitle className="text-xl dark:text-white">{name}</CardTitle>
+        <CardTitle className="text-xl dark:text-white">{t("society.name")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-society-neutral-gray dark:text-gray-300">{description}</p>
+        <p className="text-society-neutral-gray dark:text-gray-300">{t("society.description")}</p>
         
         <div className="grid grid-cols-2 gap-2 text-center">
           <div className="bg-society-soft-purple p-3 rounded-lg dark:bg-purple-900">
