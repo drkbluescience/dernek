@@ -8,6 +8,8 @@ interface BasicInfoFieldsProps {
   birthPlace: string;
   birthName: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  validationProps?: (fieldName: string) => Record<string, any>;
+  errors?: Record<string, string>;
 }
 
 const BasicInfoFields = ({
@@ -16,6 +18,8 @@ const BasicInfoFields = ({
   birthPlace,
   birthName,
   handleChange,
+  validationProps,
+  errors,
 }: BasicInfoFieldsProps) => {
   return (
     <>
@@ -27,7 +31,8 @@ const BasicInfoFields = ({
           onChange={handleChange}
           placeholder="Adınız"
           required
-          className="auth-input"
+          className={`auth-input ${errors?.firstName ? "border-red-500" : ""}`}
+          {...(validationProps ? validationProps("firstName") : {})}
         />
       </div>
 
@@ -39,7 +44,8 @@ const BasicInfoFields = ({
           onChange={handleChange}
           placeholder="Soyadınız"
           required
-          className="auth-input"
+          className={`auth-input ${errors?.lastName ? "border-red-500" : ""}`}
+          {...(validationProps ? validationProps("lastName") : {})}
         />
       </div>
 
@@ -51,7 +57,8 @@ const BasicInfoFields = ({
           onChange={handleChange}
           placeholder="Doğum yeriniz"
           required
-          className="auth-input"
+          className={`auth-input ${errors?.birthPlace ? "border-red-500" : ""}`}
+          {...(validationProps ? validationProps("birthPlace") : {})}
         />
       </div>
 
@@ -63,6 +70,7 @@ const BasicInfoFields = ({
           onChange={handleChange}
           placeholder="Doğum adınız"
           className="auth-input"
+          {...(validationProps ? validationProps("birthName") : {})}
         />
       </div>
     </>

@@ -42,16 +42,14 @@ const StepRenderer: React.FC<StepRendererProps> = ({
       return (
         <AddressStep 
           initialData={formData} 
-          onSubmit={onSubmit} 
-          validationMessages={validationMessages}
+          onSubmit={onSubmit}
         />
       );
     case "bank":
       return (
         <BankInfoStep 
           initialData={formData} 
-          onSubmit={onSubmit} 
-          validationMessages={validationMessages}
+          onSubmit={onSubmit}
         />
       );
     case "documents":
@@ -65,16 +63,14 @@ const StepRenderer: React.FC<StepRendererProps> = ({
       return (
         <FamilyInfoStep 
           initialData={formData} 
-          onSubmit={onSubmit} 
-          validationMessages={validationMessages}
+          onSubmit={onSubmit}
         />
       );
     case "children":
       return (
         <ChildInfoStep 
           initialData={formData} 
-          onSubmit={onSubmit} 
-          validationMessages={validationMessages}
+          onSubmit={onSubmit}
         />
       );
     default:
