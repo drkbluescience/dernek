@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BirthDateFieldProps {
   birthDate: Date | null;
@@ -18,17 +18,17 @@ interface BirthDateFieldProps {
 }
 
 const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
-  const { theme } = useTheme();
+  const { t } = useLanguage();
   
   return (
     <div className="space-y-2">
-      <Label htmlFor="birthDate" className="text-society-dark-text">Doğum Tarihi:</Label>
+      <Label htmlFor="birthDate" className="text-society-dark-text">{t("society.personal.birthDate")}:</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant={"outline"}
             className={cn(
-              "w-full justify-start text-left font-normal society-input",
+              "w-full justify-start text-left font-normal rounded-md border border-gray-300 px-3 py-2",
               !birthDate && "text-muted-foreground"
             )}
           >

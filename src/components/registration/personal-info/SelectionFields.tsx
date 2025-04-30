@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue 
 } from "@/components/ui/select";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SelectionFieldsProps {
   maritalStatus: string;
@@ -21,15 +22,17 @@ const SelectionFields = ({
   nationality,
   onSelectChange,
 }: SelectionFieldsProps) => {
+  const { t } = useLanguage();
+  
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="maritalStatus" className="text-society-dark-text">Medeni Durum:</Label>
+        <Label htmlFor="maritalStatus" className="text-society-dark-text">{t("society.family.maritalStatus")}:</Label>
         <Select 
           value={maritalStatus}
           onValueChange={(value) => onSelectChange("maritalStatus", value)}
         >
-          <SelectTrigger className="auth-input">
+          <SelectTrigger className="w-full rounded-md border border-gray-300 px-3 py-2">
             <SelectValue placeholder="Seçiniz" />
           </SelectTrigger>
           <SelectContent className="bg-white">
@@ -42,12 +45,12 @@ const SelectionFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="gender" className="text-society-dark-text">Cinsiyet:</Label>
+        <Label htmlFor="gender" className="text-society-dark-text">{t("society.personal.gender")}:</Label>
         <Select 
           value={gender}
           onValueChange={(value) => onSelectChange("gender", value)}
         >
-          <SelectTrigger className="auth-input">
+          <SelectTrigger className="w-full rounded-md border border-gray-300 px-3 py-2">
             <SelectValue placeholder="Seçiniz" />
           </SelectTrigger>
           <SelectContent className="bg-white">
@@ -64,7 +67,7 @@ const SelectionFields = ({
           value={nationality}
           onValueChange={(value) => onSelectChange("nationality", value)}
         >
-          <SelectTrigger className="auth-input">
+          <SelectTrigger className="w-full rounded-md border border-gray-300 px-3 py-2">
             <SelectValue placeholder="Seçiniz" />
           </SelectTrigger>
           <SelectContent className="bg-white">

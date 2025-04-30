@@ -310,7 +310,7 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
   // Try to get language from localStorage or use default
   const [language, setLanguageState] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem("language");
-    return (savedLanguage === "tr" || savedLanguage === "de") ? savedLanguage : defaultLanguage;
+    return (savedLanguage === "tr" || savedLanguage === "de") ? savedLanguage as Language : defaultLanguage;
   });
 
   // Update localStorage when language changes
@@ -318,6 +318,10 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
     localStorage.setItem("language", language);
     // Force a re-render of components using the language context
     document.documentElement.setAttribute('lang', language);
+    
+    // Force the page to refresh all components that rely on translation
+    const event = new Event('languageChanged');
+    document.dispatchEvent(event);
   }, [language]);
 
   // Translate function

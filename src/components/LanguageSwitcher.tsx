@@ -10,17 +10,11 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher = ({ className = "" }: LanguageSwitcherProps) => {
   const { language, setLanguage, t } = useLanguage();
-  // Add state to force re-render when language changes
-  const [currentLanguage, setCurrentLanguage] = useState(language);
   
-  useEffect(() => {
-    setCurrentLanguage(language);
-  }, [language]);
-
   const toggleLanguage = () => {
+    // Toggle language between tr and de
     const newLanguage = language === "tr" ? "de" : "tr";
     setLanguage(newLanguage);
-    setCurrentLanguage(newLanguage);
   };
 
   return (
