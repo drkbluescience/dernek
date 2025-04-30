@@ -42,7 +42,7 @@ export const usePersonalInfoForm = ({ initialData }: UsePersonalInfoFormProps) =
   };
 
   const handleDateChange = (date: Date | undefined) => {
-    setFormData((prev) => ({ ...prev, birthDate: date }));
+    setFormData((prev) => ({ ...prev, birthDate: date || null }));
   };
 
   return {

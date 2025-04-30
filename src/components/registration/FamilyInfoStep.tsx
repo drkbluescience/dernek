@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { 
@@ -30,6 +30,16 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
   const isMarried = initialData.maritalStatus === "married";
   const [hasSpouse, setHasSpouse] = useState(isMarried && initialData.hasSpouse !== false);
   
+  // Get the user's gender from initialData
+  const userGender = initialData.gender || "";
+  
+  // Determine spouse gender based on user gender
+  const getAutomaticSpouseGender = () => {
+    if (userGender === "male") return "female";
+    if (userGender === "female") return "male";
+    return "";
+  };
+  
   const [formData, setFormData] = useState({
     hasSpouse: isMarried && initialData.hasSpouse !== false,
     spouseFirstName: initialData.spouseFirstName || "",
@@ -39,10 +49,20 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
     spouseBirthDate: initialData.spouseBirthDate || null,
     spouseMotherName: initialData.spouseMotherName || "",
     spouseFatherName: initialData.spouseFatherName || "",
-    spouseGender: initialData.spouseGender || "",
+    spouseGender: initialData.spouseGender || getAutomaticSpouseGender(),
     spouseNationality: initialData.spouseNationality || "",
     spouseReligion: initialData.spouseReligion || "",
   });
+
+  // Update spouse gender when user gender changes
+  useEffect(() => {
+    if (userGender && !initialData.spouseGender) {
+      setFormData(prev => ({
+        ...prev,
+        spouseGender: getAutomaticSpouseGender()
+      }));
+    }
+  }, [userGender, initialData.spouseGender]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
