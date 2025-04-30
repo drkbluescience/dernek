@@ -31,10 +31,11 @@ const MemberInfoAccordion = ({
   onEditBankInfo,
   onEditAddress
 }: MemberInfoAccordionProps) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
+  // Added key with language to force re-render when language changes
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full" key={`accordion-${language}`}>
       {/* Personal Info Section */}
       <AccordionItem value="personal">
         <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted rounded-t-lg">

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type Language = "tr" | "de";
@@ -315,6 +316,8 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
   // Update localStorage when language changes
   useEffect(() => {
     localStorage.setItem("language", language);
+    // Force a re-render of components using the language context
+    document.documentElement.setAttribute('lang', language);
   }, [language]);
 
   // Translate function

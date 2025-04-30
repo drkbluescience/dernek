@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useEffect, useState } from "react";
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -9,9 +10,17 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher = ({ className = "" }: LanguageSwitcherProps) => {
   const { language, setLanguage, t } = useLanguage();
+  // Add state to force re-render when language changes
+  const [currentLanguage, setCurrentLanguage] = useState(language);
+  
+  useEffect(() => {
+    setCurrentLanguage(language);
+  }, [language]);
 
   const toggleLanguage = () => {
-    setLanguage(language === "tr" ? "de" : "tr");
+    const newLanguage = language === "tr" ? "de" : "tr";
+    setLanguage(newLanguage);
+    setCurrentLanguage(newLanguage);
   };
 
   return (
