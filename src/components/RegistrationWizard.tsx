@@ -13,7 +13,7 @@ interface RegistrationWizardProps {
 }
 
 const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const steps = [
     { id: "personal", title: t("registration.personal.title"), isRequired: true },
@@ -38,7 +38,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
   } = useWizardState(steps, {}, onComplete);
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-4">
+    <div className="w-full max-w-4xl mx-auto py-4" lang={language}>
       {/* Progress indicator with improved responsiveness */}
       <ProgressIndicator 
         visibleSteps={visibleSteps}
@@ -60,6 +60,13 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
               currentStep={currentStep} 
               formData={formData}
               onSubmit={handleNext}
+              validationMessages={{
+                required: t("validation.field.empty"),
+                email: t("validation.email"),
+                minLength: t("validation.minLength"),
+                maxLength: t("validation.maxLength"),
+                pattern: t("validation.pattern")
+              }}
             />
           </div>
         </CardContent>

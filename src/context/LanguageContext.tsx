@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type Language = "tr" | "de";
@@ -6,7 +5,7 @@ type Language = "tr" | "de";
 interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, ...args: any[]) => string;
 }
 
 const defaultLanguage: Language = "tr";
@@ -154,7 +153,7 @@ export const translations: Record<string, Record<Language, string>> = {
     de: "Vorstand"
   },
   "society.logout": {
-    tr: "Çıkış Yap",
+    tr: "Ç��kış Yap",
     de: "Abmelden"
   },
   "society.navigation.home": {
@@ -269,6 +268,40 @@ export const translations: Record<string, Record<Language, string>> = {
   "society.edit.success.description": {
     tr: "Bilgileriniz başarıyla güncellendi.",
     de: "Ihre Informationen wurden erfolgreich aktualisiert."
+  },
+  
+  // Form validation messages
+  "validation.required": {
+    tr: "Bu alan zorunludur",
+    de: "Dieses Feld ist erforderlich"
+  },
+  "validation.email": {
+    tr: "Geçerli bir e-posta adresi giriniz",
+    de: "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+  },
+  "validation.minLength": {
+    tr: "En az {0} karakter giriniz",
+    de: "Geben Sie mindestens {0} Zeichen ein"
+  },
+  "validation.maxLength": {
+    tr: "En fazla {0} karakter girebilirsiniz",
+    de: "Sie können höchstens {0} Zeichen eingeben"
+  },
+  "validation.pattern": {
+    tr: "Geçersiz format",
+    de: "Ungültiges Format"
+  },
+  "validation.numeric": {
+    tr: "Sadece rakam giriniz",
+    de: "Bitte geben Sie nur Zahlen ein"
+  },
+  "validation.date": {
+    tr: "Geçerli bir tarih giriniz",
+    de: "Bitte geben Sie ein gültiges Datum ein"
+  },
+  "validation.field.empty": {
+    tr: "Bu alanı doldurun",
+    de: "Fülle dieses Feld aus"
   }
 };
 
@@ -285,12 +318,22 @@ export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) 
   }, [language]);
 
   // Translate function
-  const t = (key: string): string => {
+  const t = (key: string, ...args: any[]): string => {
     if (!translations[key]) {
       console.warn(`Translation key not found: ${key}`);
       return key;
     }
-    return translations[key][language] || key;
+    
+    let translatedText = translations[key][language] || key;
+    
+    // Replace placeholders like {0}, {1} with arguments
+    if (args && args.length > 0) {
+      args.forEach((arg, index) => {
+        translatedText = translatedText.replace(`{${index}}`, arg);
+      });
+    }
+    
+    return translatedText;
   };
 
   // Set language function

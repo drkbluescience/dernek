@@ -8,16 +8,26 @@ import FamilyInfoStep from "./FamilyInfoStep";
 import ChildInfoStep from "./ChildInfoStep";
 import { Step } from "./useWizardState";
 
+interface ValidationMessages {
+  required: string;
+  email: string;
+  minLength: string;
+  maxLength: string;
+  pattern: string;
+}
+
 interface StepRendererProps {
   currentStep: Step;
   formData: Record<string, any>;
   onSubmit: (data: Record<string, any>) => void;
+  validationMessages: ValidationMessages;
 }
 
 const StepRenderer: React.FC<StepRendererProps> = ({
   currentStep,
   formData,
   onSubmit,
+  validationMessages,
 }) => {
   switch (currentStep.id) {
     case "personal":
@@ -25,6 +35,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
         <PersonalInfoStep 
           initialData={formData} 
           onSubmit={onSubmit} 
+          validationMessages={validationMessages}
         />
       );
     case "address":
@@ -32,6 +43,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
         <AddressStep 
           initialData={formData} 
           onSubmit={onSubmit} 
+          validationMessages={validationMessages}
         />
       );
     case "bank":
@@ -39,6 +51,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
         <BankInfoStep 
           initialData={formData} 
           onSubmit={onSubmit} 
+          validationMessages={validationMessages}
         />
       );
     case "documents":
@@ -53,6 +66,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
         <FamilyInfoStep 
           initialData={formData} 
           onSubmit={onSubmit} 
+          validationMessages={validationMessages}
         />
       );
     case "children":
@@ -60,6 +74,7 @@ const StepRenderer: React.FC<StepRendererProps> = ({
         <ChildInfoStep 
           initialData={formData} 
           onSubmit={onSubmit} 
+          validationMessages={validationMessages}
         />
       );
     default:

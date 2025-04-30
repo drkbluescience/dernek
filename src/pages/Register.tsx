@@ -47,7 +47,7 @@ const Register = () => {
 
   return (
     <div className="page-container">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-4">
         <Header title={t("register.title")} showBackButton />
         <LanguageSwitcher className="mr-4" />
       </div>
