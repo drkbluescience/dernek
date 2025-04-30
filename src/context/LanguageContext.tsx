@@ -151,11 +151,11 @@ export const translations: Record<string, Record<Language, string>> = {
   
   // Society Details page
   "society.name": {
-    tr: "Toplum Yardımlaşma Derneği",
-    de: "Gemeinschaft der Helfer e.V."
+    tr: "Sosyal Dayanışma Dernegi",
+    de: "Zentrum für Sosziale Unterstützung e.V."
   },
   "society.description": {
-    tr: "Çeşitli sosyal hizmet faaliyetleri aracılığıyla topluma yardım etmeye adanmış bir gönüllü kuruluştur.",
+    tr: "Avrupa’ya Türk işgücü ile birlikte, başta Almanya olmak üzere Avrupa ülkelerinde özellikle dini ve sosyal ihtiyaçların karşılanabilmesi, karşılaşılan güçlüklerin üstesinden gelinebilmesi için dernekler kuruldu. ",
     de: "Eine Freiwilligenorganisation, die sich der Unterstützung der Gemeinschaft durch verschiedene soziale Dienstleistungen widmet."
   },
   "society.bank.edit": {
