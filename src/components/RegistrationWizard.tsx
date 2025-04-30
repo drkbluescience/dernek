@@ -148,11 +148,11 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
 
   return (
     <div className="w-full max-w-4xl mx-auto py-4">
-      {/* Progress indicator */}
+      {/* Progress indicator with improved responsiveness */}
       <div className="mb-6">
         <div className="flex justify-between items-center">
           {visibleSteps.map((step, index) => (
-            <div key={step.id} className="flex flex-col items-center">
+            <div key={step.id} className="flex flex-col items-center max-w-[80px] mx-1">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${
                   index <= currentStepProgressIndex
@@ -162,7 +162,7 @@ const RegistrationWizard = ({ onComplete, isLoading }: RegistrationWizardProps) 
               >
                 {index + 1}
               </div>
-              <span className="text-xs text-center hidden sm:block">
+              <span className="text-[10px] md:text-xs text-center line-clamp-2 h-10">
                 {step.title}
               </span>
             </div>
