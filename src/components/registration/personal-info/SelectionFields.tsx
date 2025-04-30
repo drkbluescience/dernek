@@ -53,7 +53,6 @@ const SelectionFields = ({
           <SelectContent>
             <SelectItem value="male">Erkek</SelectItem>
             <SelectItem value="female">Kadın</SelectItem>
-            <SelectItem value="other">Diğer</SelectItem>
           </SelectContent>
         </Select>
       </div>
