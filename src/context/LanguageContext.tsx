@@ -517,6 +517,88 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Diğer",
     de: "Andere"
   },
+  
+  // Online Activation page
+  "activate.title": {
+    tr: "Çevrimiçi Giriş Aktifleştirme",
+    de: "Online-Login aktivieren"
+  },
+  "activate.header": {
+    tr: "Çevrimiçi Giriş Aktifleştirme",
+    de: "Online-Login aktivieren"
+  },
+  "activate.description": {
+    tr: "Çevrimiçi hizmetlere erişmek için hesabınızı aktifleştirin.",
+    de: "Aktivieren Sie Ihr Konto, um auf Online-Dienste zuzugreifen."
+  },
+  "activate.memberId": {
+    tr: "Üye Numarası",
+    de: "Mitgliedsnummer"
+  },
+  "activate.memberId.placeholder": {
+    tr: "Üye numaranızı giriniz",
+    de: "Geben Sie Ihre Mitgliedsnummer ein"
+  },
+  "activate.firstName": {
+    tr: "Adı",
+    de: "Vorname"
+  },
+  "activate.firstName.placeholder": {
+    tr: "Adınızı giriniz",
+    de: "Geben Sie Ihren Vornamen ein"
+  },
+  "activate.lastName": {
+    tr: "Soyadı",
+    de: "Nachname"
+  },
+  "activate.lastName.placeholder": {
+    tr: "Soyadınızı giriniz",
+    de: "Geben Sie Ihren Nachnamen ein"
+  },
+  "activate.birthDate": {
+    tr: "Doğum Tarihi",
+    de: "Geburtsdatum"
+  },
+  "activate.birthDate.placeholder": {
+    tr: "Doğum tarihinizi seçin",
+    de: "Wählen Sie Ihr Geburtsdatum"
+  },
+  "activate.contactInfo": {
+    tr: "İletişim Bilgisi",
+    de: "Kontaktinformation"
+  },
+  "activate.contactInfo.placeholder": {
+    tr: "E-posta veya telefon numaranızı giriniz",
+    de: "Geben Sie Ihre E-Mail oder Telefonnummer ein"
+  },
+  "activate.contactInfo.hint": {
+    tr: "Şifre sıfırlama bağlantısı bu adrese gönderilecektir",
+    de: "Ein Link zum Zurücksetzen des Passworts wird an diese Adresse gesendet"
+  },
+  "activate.submit": {
+    tr: "Aktifleştir",
+    de: "Aktivieren"
+  },
+  "activate.submitting": {
+    tr: "Aktifleştiriliyor...",
+    de: "Aktivierung..."
+  },
+  "activate.success.title": {
+    tr: "Aktifleştirme Başarılı",
+    de: "Aktivierung Erfolgreich"
+  },
+  "activate.success.description": {
+    tr: "Hesabınız başarıyla aktifleştirildi. Giriş yapabilirsiniz.",
+    de: "Ihr Konto wurde erfolgreich aktiviert. Sie können sich jetzt anmelden."
+  },
+  "activate.error.title": {
+    tr: "Aktifleştirme Hatası",
+    de: "Aktivierungsfehler"
+  },
+  "activate.error.description": {
+    tr: "Hesap aktifleştirme sırasında bir hata oluştu. Lütfen bilgilerinizi kontrol edip tekrar deneyin.",
+    de: "Bei der Aktivierung Ihres Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Informationen und versuchen Sie es erneut."
+  },
 };
 
 export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {
