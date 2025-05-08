@@ -40,7 +40,7 @@ export const translations: Record<string, Record<Language, string>> = {
   // Login page
   "login.title": {
     tr: "Giriş",
-    de: "Anmelden"
+    de: "Anmeldung"
   },
   "login.welcome": {
     tr: "Tekrar Hoşgeldiniz",
@@ -81,6 +81,10 @@ export const translations: Record<string, Record<Language, string>> = {
   "login.forgot.password": {
     tr: "Şifremi Unuttum",
     de: "Passwort vergessen"
+  },
+  "login.activate.online": {
+    tr: "Online Giriş Aktifleştirme",
+    de: "Online-Login aktivieren"
   },
   
   // Forgot password page

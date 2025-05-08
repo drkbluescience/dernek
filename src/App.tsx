@@ -31,6 +31,7 @@ const App = () => (
               <Route path="/society-details" element={<SocietyDetails />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/activate-online" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -23,6 +23,8 @@ interface AuthFormProps {
   footerLinkUrl?: string;
   forgotPasswordText?: string;
   forgotPasswordUrl?: string;
+  activateOnlineText?: string;
+  activateOnlineUrl?: string;
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({
@@ -35,6 +37,8 @@ const AuthForm: React.FC<AuthFormProps> = ({
   footerLinkUrl,
   forgotPasswordText,
   forgotPasswordUrl,
+  activateOnlineText,
+  activateOnlineUrl,
 }) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -86,13 +90,19 @@ const AuthForm: React.FC<AuthFormProps> = ({
           </div>
         ))}
         
-        {forgotPasswordText && forgotPasswordUrl && (
-          <div className="text-right">
+        <div className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-y-0">
+          {forgotPasswordText && forgotPasswordUrl && (
             <Link to={forgotPasswordUrl} className="text-sm text-society-primary hover:underline">
               {forgotPasswordText}
             </Link>
-          </div>
-        )}
+          )}
+          
+          {activateOnlineText && activateOnlineUrl && (
+            <Link to={activateOnlineUrl} className="text-sm text-society-primary hover:underline">
+              {activateOnlineText}
+            </Link>
+          )}
+        </div>
         
         <Button type="submit" className="auth-button mt-6 w-full">
           {submitText}

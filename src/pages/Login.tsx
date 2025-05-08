@@ -62,6 +62,8 @@ const Login = () => {
           footerLinkUrl="/register"
           forgotPasswordText={t("login.forgot.password")}
           forgotPasswordUrl="/forgot-password"
+          activateOnlineText={t("login.activate.online")}
+          activateOnlineUrl="/activate-online"
         />
       </div>
       
