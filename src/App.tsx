@@ -29,6 +29,7 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/society-details" element={<SocietyDetails />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/forgot-password" element={<NotFound />} /> {/* Temporarily pointing to NotFound */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

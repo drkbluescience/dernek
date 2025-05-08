@@ -60,6 +60,8 @@ const Login = () => {
           footerText={t("login.no.account")}
           footerLinkText={t("login.register")}
           footerLinkUrl="/register"
+          forgotPasswordText={t("login.forgot.password")}
+          forgotPasswordUrl="/forgot-password"
         />
       </div>
       

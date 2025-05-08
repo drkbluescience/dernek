@@ -78,6 +78,10 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Kayıt Ol",
     de: "Registrieren"
   },
+  "login.forgot.password": {
+    tr: "Şifremi Unuttum",
+    de: "Passwort vergessen"
+  },
   
   // Registration page
   "register.title": {

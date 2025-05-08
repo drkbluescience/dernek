@@ -21,6 +21,8 @@ interface AuthFormProps {
   footerText?: string;
   footerLinkText?: string;
   footerLinkUrl?: string;
+  forgotPasswordText?: string;
+  forgotPasswordUrl?: string;
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({
@@ -31,6 +33,8 @@ const AuthForm: React.FC<AuthFormProps> = ({
   footerText,
   footerLinkText,
   footerLinkUrl,
+  forgotPasswordText,
+  forgotPasswordUrl,
 }) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -81,6 +85,15 @@ const AuthForm: React.FC<AuthFormProps> = ({
             </div>
           </div>
         ))}
+        
+        {forgotPasswordText && forgotPasswordUrl && (
+          <div className="text-right">
+            <Link to={forgotPasswordUrl} className="text-sm text-society-primary hover:underline">
+              {forgotPasswordText}
+            </Link>
+          </div>
+        )}
+        
         <Button type="submit" className="auth-button mt-6 w-full">
           {submitText}
         </Button>
