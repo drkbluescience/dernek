@@ -13,6 +13,7 @@ import SocietyDetails from "./pages/SocietyDetails";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
+import ActivateOnline from "./pages/ActivateOnline";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,7 @@ const App = () => (
               <Route path="/society-details" element={<SocietyDetails />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/activate-online" element={<NotFound />} />
+              <Route path="/activate-online" element={<ActivateOnline />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
