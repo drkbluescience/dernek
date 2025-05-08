@@ -69,7 +69,12 @@ export default {
 					'soft-purple': '#E5DEFF',
 					'soft-gray': '#F1F0FB',
 					'dark-text': '#1A1F2C',
-					'neutral-gray': '#8E9196'
+					'neutral-gray': '#8E9196',
+					// Dark mode equivalents
+					'dark-purple': '#9F7AFA',
+					'dark-light-purple': '#B794F4',
+					'dark-soft-purple': '#483D8B',
+					'dark-soft-gray': '#2D3748',
 				}
 			},
 			borderRadius: {
