@@ -1,4 +1,3 @@
-
 import React from "react";
 import Header from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,7 +10,6 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "@/utils/authUtils";
-import { useEffect } from "react";
 import { 
   Select,
   SelectContent,
@@ -25,11 +23,8 @@ const Settings = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // Removed the authentication check to allow access to settings page when not logged in
+  // We still keep the navigate import for potential future use
 
   // Get icon based on theme
   const getThemeIcon = () => {
