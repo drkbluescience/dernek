@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import SocietyDetails from "./pages/SocietyDetails";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +30,7 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/society-details" element={<SocietyDetails />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/forgot-password" element={<NotFound />} /> {/* Temporarily pointing to NotFound */}
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

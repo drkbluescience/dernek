@@ -83,6 +83,84 @@ export const translations: Record<string, Record<Language, string>> = {
     de: "Passwort vergessen"
   },
   
+  // Forgot password page
+  "forgot.password.title": {
+    tr: "Şifremi Unuttum",
+    de: "Passwort vergessen"
+  },
+  "forgot.password.header": {
+    tr: "Şifre Sıfırlama",
+    de: "Passwort zurücksetzen"
+  },
+  "forgot.password.description": {
+    tr: "Şifrenizi sıfırlamak için lütfen aşağıdaki bilgileri doldurun.",
+    de: "Bitte füllen Sie die folgenden Informationen aus, um Ihr Passwort zurückzusetzen."
+  },
+  "forgot.password.method.select": {
+    tr: "Doğrulama yöntemi seçin",
+    de: "Bestätigungsmethode auswählen"
+  },
+  "forgot.password.method.memberId": {
+    tr: "Üye numarası",
+    de: "Mitgliedsnummer"
+  },
+  "forgot.password.method.email": {
+    tr: "E-posta",
+    de: "E-Mail"
+  },
+  "forgot.password.method.phone": {
+    tr: "Telefon numarası",
+    de: "Telefonnummer"
+  },
+  "forgot.password.memberId.label": {
+    tr: "Üye numarası",
+    de: "Mitgliedsnummer"
+  },
+  "forgot.password.email.label": {
+    tr: "E-posta",
+    de: "E-Mail"
+  },
+  "forgot.password.phone.label": {
+    tr: "Telefon numarası",
+    de: "Telefonnummer"
+  },
+  "forgot.password.memberId.placeholder": {
+    tr: "Üye numaranızı girin",
+    de: "Geben Sie Ihre Mitgliedsnummer ein"
+  },
+  "forgot.password.email.placeholder": {
+    tr: "E-posta adresinizi girin",
+    de: "Geben Sie Ihre E-Mail-Adresse ein"
+  },
+  "forgot.password.phone.placeholder": {
+    tr: "Telefon numaranızı girin",
+    de: "Geben Sie Ihre Telefonnummer ein"
+  },
+  "forgot.password.submit": {
+    tr: "Şifremi Sıfırla",
+    de: "Passwort zurücksetzen"
+  },
+  "forgot.password.submitting": {
+    tr: "İşleniyor...",
+    de: "Wird bearbeitet..."
+  },
+  "forgot.password.success.title": {
+    tr: "Başarılı",
+    de: "Erfolgreich"
+  },
+  "forgot.password.success.description": {
+    tr: "Şifre sıfırlama talebi alındı. Lütfen e-postanızı kontrol edin.",
+    de: "Passwort-Zurücksetzungsanfrage wurde empfangen. Bitte überprüfen Sie Ihre E-Mail."
+  },
+  "forgot.password.error.title": {
+    tr: "Hata",
+    de: "Fehler"
+  },
+  "forgot.password.error.description": {
+    tr: "Şifre sıfırlama işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    de: "Bei der Passwort-Zurücksetzung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  
   // Registration page
   "register.title": {
     tr: "Kayıt",
