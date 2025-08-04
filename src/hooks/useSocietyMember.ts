@@ -53,6 +53,9 @@ export const useSocietyMember = () => {
     description: "",
   });
 
+  // Raw family data from API
+  const [rawFamilyData, setRawFamilyData] = useState<any[]>([]);
+
   // Load user data from API
   useEffect(() => {
     const loadUserData = async () => {
@@ -100,27 +103,47 @@ export const useSocietyMember = () => {
           if (userDataObj.mitglied && Array.isArray(userDataObj.mitglied)) {
             const familyMembers = userDataObj.mitglied;
 
-            // Try to identify spouse and children from mitglied array
+            // Store raw family data for detailed display
+            setRawFamilyData(familyMembers);
+
+            // Find spouse based on verwandschaft field
             const spouse = familyMembers.find((member: any) =>
-              member.verwandtschaftsgrad === 'Ehepartner' ||
-              member.verwandtschaftsgrad === 'Ehefrau' ||
-              member.verwandtschaftsgrad === 'Ehemann'
+              member.verwandschaft === 'Ehefrau' ||
+              member.verwandschaft === 'Eheman' ||
+              member.verwandschaft === 'Ehepartner'
             );
 
+            // Find children based on verwandschaft field
             const children = familyMembers.filter((member: any) =>
-              member.verwandtschaftsgrad === 'Kind' ||
-              member.verwandtschaftsgrad === 'Sohn' ||
-              member.verwandtschaftsgrad === 'Tochter'
+              member.verwandschaft === 'Kind' ||
+              member.verwandschaft === 'Sohn' ||
+              member.verwandschaft === 'Tochter'
             );
+
+            // Determine marital status from familienstand_Id or presence of spouse
+            let maritalStatus = "";
+            if (spouse) {
+              maritalStatus = "Verheiratet";
+            } else if (familyMembers.length > 0 && familyMembers[0].familienstand_Id) {
+              // Map familienstand_Id to status (this might need adjustment based on your system)
+              const familienstandId = familyMembers[0].familienstand_Id;
+              switch (familienstandId) {
+                case 1: maritalStatus = "Ledig"; break;
+                case 2: maritalStatus = "Verheiratet"; break;
+                case 3: maritalStatus = "Geschieden"; break;
+                case 4: maritalStatus = "Verwitwet"; break;
+                default: maritalStatus = "";
+              }
+            }
 
             setFamilyInfo({
-              maritalStatus: spouse ? "Verheiratet" : "",
-              spouse: {
-                name: spouse?.name || spouse?.vorname + " " + spouse?.nachname || "",
-                birthDate: spouse?.geburtsdatum || "",
-              },
+              maritalStatus,
+              spouse: spouse ? {
+                name: `${spouse.vorname || ""} ${spouse.nachname || ""}`.trim(),
+                birthDate: spouse.geburtsdatum || "",
+              } : { name: "", birthDate: "" },
               children: children.map((child: any) => ({
-                name: child.name || child.vorname + " " + child.nachname || "",
+                name: `${child.vorname || ""} ${child.nachname || ""}`.trim(),
                 birthDate: child.geburtsdatum || "",
               }))
             });
@@ -169,6 +192,7 @@ export const useSocietyMember = () => {
     paymentHistory,
     setPaymentHistory,
     societyInfo,
-    setSocietyInfo
+    setSocietyInfo,
+    rawFamilyData
   };
 };

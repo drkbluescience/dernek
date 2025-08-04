@@ -397,6 +397,26 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Çocuklar",
     de: "Kinder"
   },
+  "society.family.members": {
+    tr: "Aile Üyeleri",
+    de: "Familienmitglieder"
+  },
+  "society.family.relationship": {
+    tr: "Yakınlık",
+    de: "Verwandtschaft"
+  },
+  "society.family.gender": {
+    tr: "Cinsiyet",
+    de: "Geschlecht"
+  },
+  "society.family.memberNumber": {
+    tr: "Üye Numarası",
+    de: "Mitgliedsnummer"
+  },
+  "society.family.status": {
+    tr: "Durum",
+    de: "Status"
+  },
   "society.family.name": {
     tr: "Ad Soyad",
     de: "Name"
