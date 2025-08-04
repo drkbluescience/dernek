@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import PWAInstallBanner from "./components/PWAInstallBanner";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -24,6 +25,7 @@ const App = () => (
         <ThemeProvider>
           <Toaster />
           <Sonner />
+          <PWAInstallBanner />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Welcome />} />

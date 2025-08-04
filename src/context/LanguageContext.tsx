@@ -675,6 +675,24 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Hesap aktifleştirme sırasında bir hata oluştu. Lütfen bilgilerinizi kontrol edip tekrar deneyin.",
     de: "Bei der Aktivierung Ihres Kontos ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Informationen und versuchen Sie es erneut."
   },
+
+  // PWA Install Prompt
+  "pwa.install.title": {
+    tr: "Uygulamayı Yükle",
+    de: "App installieren"
+  },
+  "pwa.install.description": {
+    tr: "Ana ekranınıza ekleyin",
+    de: "Zum Startbildschirm hinzufügen"
+  },
+  "pwa.install.button": {
+    tr: "Yükle",
+    de: "Installieren"
+  },
+  "pwa.offline.message": {
+    tr: "Çevrimdışı mod aktif",
+    de: "Offline-Modus aktiv"
+  }
 };
 
 export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {
