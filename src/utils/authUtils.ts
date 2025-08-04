@@ -86,22 +86,32 @@ const fetchUserDataAfterLogin = async (token: string) => {
     console.log("🔍 Token ile kullanıcı bilgileri çekiliyor...");
     console.log("📝 Kullanılan Token:", token);
 
+    // Set token for API calls
+    apiService.setToken(token);
+
     const response = await memberApi.getProfile();
+    console.log("✅ Userdata Response:", response);
 
-    if (response.success && response.data) {
-      // Type assertion for user data response
-      const userData = response.data as UserDataResponse;
+    // Handle both success/data format and direct data format
+    const userData = response.success ? response.data : response;
 
-      console.log("✅ Kullanıcı bilgileri başarıyla çekildi:");
-      console.log("👤 Kişisel Bilgiler:", userData.personalInfo);
-      console.log("🏠 Adres Bilgileri:", userData.address);
-      console.log("👨‍👩‍👧‍👦 Aile Bilgileri:", userData.familyInfo);
-      console.log("🏦 Banka Bilgileri:", userData.bankInfo);
-      console.log("💰 Ödeme Geçmişi:", userData.paymentHistory);
+    if (userData && typeof userData === 'object') {
+      console.log("🎉 Userdata başarıyla çekildi!");
+      console.log("📊 Kullanıcı Detayları:", userData);
+
+      // Update localStorage with complete user data
+      const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+      const userDataObj = userData as any;
+      const updatedUser = {
+        ...currentUser,
+        ...userDataObj,
+        name: userDataObj.name || userDataObj.fullName || currentUser.name || "Kullanıcı"
+      };
+      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
       return userData;
     } else {
-      console.warn("⚠️ Kullanıcı bilgileri çekilemedi:", response.message);
+      console.log("📊 Userdata Response (veri yok):", response);
       return null;
     }
   } catch (error: any) {
@@ -158,37 +168,48 @@ export const registerUser = async (userData: Record<string, any>) => {
   }
 };
 
-// Login user function - now uses real API
-export const loginUser = async (credentials: { email: string; password: string }) => {
+// Login user function - now uses real API with username/password
+export const loginUser = async (credentials: { username?: string; email?: string; password: string }) => {
   try {
-    const response = await authApi.login(credentials);
+    // Use username for real API, fallback to email for mock
+    const loginData = credentials.username
+      ? { username: credentials.username, password: credentials.password }
+      : { email: credentials.email, password: credentials.password };
 
-    if (response.success && response.data) {
-      // Type assertion for auth response
-      const authData = response.data as AuthResponse;
+    const response = await authApi.login(loginData);
+
+    // Handle API response format: {fk_Vertrag_Id: number, token: string}
+    if (response && (response as any).token) {
+      const responseData = response as any;
+
+      // Create user object from response
+      const user = {
+        id: responseData.fk_Vertrag_Id?.toString() || "unknown",
+        name: "Kullanıcı", // Will be updated from profile data
+        memberNumber: credentials.username || "unknown",
+        token: responseData.token
+      };
 
       // Save user data and token
-      localStorage.setItem("currentUser", JSON.stringify(authData.user));
-      if (authData.token) {
-        apiService.setToken(authData.token);
-      }
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      apiService.setToken(responseData.token);
 
       toast({
         title: "Giriş Başarılı",
-        description: `Hoş geldiniz, ${authData.user.name}!`,
+        description: `Hoş geldiniz!`,
       });
 
-      // Fetch user data after successful login
-      await fetchUserDataAfterLogin(authData.token);
+      // Fetch detailed user data after successful login
+      await fetchUserDataAfterLogin(responseData.token);
 
-      return { success: true, message: "Login successful", user: authData.user };
+      return { success: true, message: "Login successful", user };
     }
 
-    return { success: false, message: response.message || "Login failed" };
+    return { success: false, message: "Login failed - Invalid credentials" };
   } catch (error: any) {
-    // Fallback to mock data in development
-    if (isDevelopment) {
-      return loginUserMock(credentials);
+    // Fallback to mock data in development only if using email
+    if (isDevelopment && credentials.email) {
+      return loginUserMock({ email: credentials.email, password: credentials.password });
     }
 
     toast({

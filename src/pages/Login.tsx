@@ -16,11 +16,12 @@ const Login = () => {
   const handleLogin = async (data: Record<string, string>) => {
     setLoading(true);
     try {
+      // Use username (member number) instead of email for real API
       const response = await loginUser({
-        email: data.email,
+        username: data.username,
         password: data.password,
-      });
-      
+      } as any);
+
       if (response.success) {
         navigate("/society-details");
       }
@@ -31,10 +32,10 @@ const Login = () => {
 
   const loginFields = [
     {
-      id: "email",
-      label: t("login.email"),
-      type: "email",
-      placeholder: t("login.email.placeholder"),
+      id: "username",
+      label: t("login.member.number"),
+      type: "text",
+      placeholder: t("login.member.number.placeholder"),
     },
     {
       id: "password",

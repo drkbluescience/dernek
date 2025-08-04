@@ -54,6 +54,14 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "E-posta adresinizi girin",
     de: "Geben Sie Ihre E-Mail-Adresse ein"
   },
+  "login.member.number": {
+    tr: "Üye Numarası",
+    de: "Mitgliedsnummer"
+  },
+  "login.member.number.placeholder": {
+    tr: "Üye numaranızı girin",
+    de: "Geben Sie Ihre Mitgliedsnummer ein"
+  },
   "login.password": {
     tr: "Şifre",
     de: "Passwort"

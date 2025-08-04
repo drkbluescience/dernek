@@ -131,7 +131,7 @@ export const apiService = new ApiService();
 
 // Specific API methods
 export const authApi = {
-  login: (credentials: { email: string; password: string }) =>
+  login: (credentials: { email?: string; username?: string; password: string }) =>
     apiService.post(API_ENDPOINTS.auth.login, credentials),
     
   register: (userData: any) =>
