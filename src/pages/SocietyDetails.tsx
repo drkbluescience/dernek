@@ -37,9 +37,8 @@ const SocietyDetails = () => {
     rawPaymentData
   } = useSocietyMember();
 
-  console.log("🔍 SocietyDetails received:");
-  console.log("- paymentHistory:", paymentHistory);
-  console.log("- rawPaymentData:", rawPaymentData);
+  // Debug: Check data flow
+  console.log("🔍 SocietyDetails - rawPaymentData length:", rawPaymentData?.length || 0);
 
   // Get editing functionality from our custom hook
   const {

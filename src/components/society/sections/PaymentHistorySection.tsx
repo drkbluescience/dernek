@@ -23,27 +23,16 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  console.log("🔍 PaymentHistorySection received:");
-  console.log("- paymentHistory:", paymentHistory);
-  console.log("- rawPaymentData:", rawPaymentData);
+  // Debug: Check received data
+  console.log("🔍 PaymentHistorySection - rawPaymentData length:", rawPaymentData?.length || 0);
 
   // Simple approach: use rawPaymentData directly if available
   const displayData = useMemo(() => {
     // If we have raw payment data, process it simply
     if (rawPaymentData && Array.isArray(rawPaymentData) && rawPaymentData.length > 0) {
-      console.log("✅ Using rawPaymentData with", rawPaymentData.length, "items");
-      console.log("📊 Processing feeMatches - sample item:", rawPaymentData[0]);
-      console.log("📊 Available fields:", Object.keys(rawPaymentData[0] || {}));
+      console.log("✅ Processing", rawPaymentData.length, "feeMatches items");
 
       const processed = rawPaymentData.map((fee: any, index: number) => {
-        console.log(`Processing fee ${index}:`, {
-          id: fee.id,
-          datum: fee.datum,
-          soll: fee.soll,
-          haben: fee.haben,
-          fk_Gebuehren_Id: fee.fk_Gebuehren_Id,
-          eingetragen_am: fee.eingetragen_am
-        });
 
         return {
           id: fee.id || `payment-${index}`,
@@ -55,7 +44,6 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
         };
       });
 
-      console.log("✅ Processed data:", processed.slice(0, 3)); // Show first 3 items
       return processed;
     }
 

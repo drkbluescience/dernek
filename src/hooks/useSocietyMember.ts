@@ -72,9 +72,7 @@ export const useSocietyMember = () => {
         // Handle both success/data format and direct data format
         const userData = profileResponse.success ? profileResponse.data : profileResponse;
 
-        console.log("🔍 FULL API RESPONSE:", JSON.stringify(profileResponse, null, 2));
-        console.log("🔍 EXTRACTED userData:", JSON.stringify(userData, null, 2));
-        console.log("🔍 userData keys:", Object.keys(userData || {}));
+        // Debug: Check if feeMatches exists in response
         console.log("🔍 feeMatches exists?", !!(userData && userData.feeMatches));
         console.log("🔍 feeMatches length:", userData?.feeMatches?.length || 0);
 
@@ -160,11 +158,13 @@ export const useSocietyMember = () => {
         }
 
         // Process payment history from feeMatches if available
+        console.log("🔍 Checking for feeMatches...");
+        console.log("🔍 userDataObj.feeMatches exists?", !!(userDataObj.feeMatches));
+        console.log("🔍 userDataObj.feeMatches is array?", Array.isArray(userDataObj.feeMatches));
+        console.log("🔍 userDataObj.feeMatches length:", userDataObj.feeMatches?.length);
+
         if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
-          console.log("🔍 useSocietyMember: Found feeMatches with", userDataObj.feeMatches.length, "items");
-          console.log("📊 First feeMatch detailed:", JSON.stringify(userDataObj.feeMatches[0], null, 2));
-          console.log("📊 Second feeMatch detailed:", JSON.stringify(userDataObj.feeMatches[1], null, 2));
-          console.log("📊 All feeMatches keys:", Object.keys(userDataObj.feeMatches[0] || {}));
+          console.log("✅ FOUND feeMatches with", userDataObj.feeMatches.length, "items");
 
           // Store raw payment data for detailed display with pagination
           setRawPaymentData(userDataObj.feeMatches);
