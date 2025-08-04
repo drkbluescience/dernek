@@ -25,25 +25,48 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
 
   // Use raw payment data if available, otherwise use processed payment history
   const displayData = useMemo(() => {
-    console.log("PaymentHistorySection - rawPaymentData:", rawPaymentData);
-    console.log("PaymentHistorySection - paymentHistory:", paymentHistory);
-
     if (rawPaymentData && rawPaymentData.length > 0) {
       // Process raw feeMatches data
       const processed = rawPaymentData.map((fee: any) => {
-        console.log("Processing fee:", fee);
+
+        // Determine amount - soll (debit) or haben (credit)
+        let amount = "0.00 €";
+        let status = "Offen";
+
+        if (fee.soll && fee.soll > 0) {
+          amount = `${fee.soll.toFixed(2)} €`;
+          status = "Offen"; // Debit means payment is due
+        } else if (fee.haben && fee.haben > 0) {
+          amount = `${fee.haben.toFixed(2)} €`;
+          status = "Bezahlt"; // Credit means payment received
+        }
+
+        // Determine payment type based on fk_Gebuehren_Id
+        let type = "Mitgliedsbeitrag";
+        if (fee.fk_Gebuehren_Id) {
+          switch (fee.fk_Gebuehren_Id) {
+            case 1: type = "Anmeldegebühr"; break;
+            case 32: type = "Jahresbeitrag"; break;
+            case 38: type = "Monatsbeitrag"; break;
+            case 54: type = "Sondergebühr"; break;
+            case 60: type = "Verwaltungsgebühr"; break;
+            case 66: type = "Bearbeitungsgebühr"; break;
+            default: type = `Gebühr (ID: ${fee.fk_Gebuehren_Id})`;
+          }
+        }
+
         return {
           id: fee.id || `fee-${Math.random()}`,
           date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-          amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : "0.00 €"),
-          type: fee.fk_Gebuehren_Id ? `Gebühr ID: ${fee.fk_Gebuehren_Id}` : "Mitgliedsbeitrag",
-          status: fee.haben && fee.haben > 0 ? "Bezahlt" : "Offen",
+          amount: amount,
+          type: type,
+          status: status,
           indicator: fee.indicator,
           task: fee.task,
           eingetragen_am: fee.eingetragen_am ? new Date(fee.eingetragen_am).toLocaleDateString('de-DE') : ""
         };
       });
-      console.log("Processed payment data:", processed);
+
       return processed;
     }
     return paymentHistory;

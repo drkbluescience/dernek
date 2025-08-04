@@ -155,25 +155,47 @@ export const useSocietyMember = () => {
 
         // Process payment history from feeMatches if available
         if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
-          console.log("🔍 Processing feeMatches:", userDataObj.feeMatches.length, "items");
-          console.log("📊 First feeMatch sample:", userDataObj.feeMatches[0]);
-
           // Store raw payment data for detailed display with pagination
           setRawPaymentData(userDataObj.feeMatches);
 
           // Also create processed payment history for fallback
-          const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
-            id: fee.id || `payment-${index}`,
-            date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-            amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : "0.00 €"),
-            type: fee.fk_Gebuehren_Id ? `Gebühr ID: ${fee.fk_Gebuehren_Id}` : "Mitgliedsbeitrag",
-            status: fee.haben && fee.haben > 0 ? "Bezahlt" : "Offen"
-          }));
+          const payments = userDataObj.feeMatches.map((fee: any, index: number) => {
+            // Determine amount and status
+            let amount = "0.00 €";
+            let status = "Offen";
 
-          console.log("✅ Processed payments:", payments.length, "items");
+            if (fee.soll && fee.soll > 0) {
+              amount = `${fee.soll.toFixed(2)} €`;
+              status = "Offen"; // Debit means payment is due
+            } else if (fee.haben && fee.haben > 0) {
+              amount = `${fee.haben.toFixed(2)} €`;
+              status = "Bezahlt"; // Credit means payment received
+            }
+
+            // Determine payment type
+            let type = "Mitgliedsbeitrag";
+            if (fee.fk_Gebuehren_Id) {
+              switch (fee.fk_Gebuehren_Id) {
+                case 1: type = "Anmeldegebühr"; break;
+                case 32: type = "Jahresbeitrag"; break;
+                case 38: type = "Monatsbeitrag"; break;
+                case 54: type = "Sondergebühr"; break;
+                case 60: type = "Verwaltungsgebühr"; break;
+                case 66: type = "Bearbeitungsgebühr"; break;
+                default: type = `Gebühr (ID: ${fee.fk_Gebuehren_Id})`;
+              }
+            }
+
+            return {
+              id: fee.id || `payment-${index}`,
+              date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
+              amount: amount,
+              type: type,
+              status: status
+            };
+          });
+
           setPaymentHistory(payments);
-        } else {
-          console.log("❌ No feeMatches found in userData");
         }
 
         // Update society info with contract details
