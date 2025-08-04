@@ -32,15 +32,31 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
     // If we have raw payment data, process it simply
     if (rawPaymentData && Array.isArray(rawPaymentData) && rawPaymentData.length > 0) {
       console.log("✅ Using rawPaymentData with", rawPaymentData.length, "items");
+      console.log("📊 Processing feeMatches - sample item:", rawPaymentData[0]);
+      console.log("📊 Available fields:", Object.keys(rawPaymentData[0] || {}));
 
-      return rawPaymentData.map((fee: any, index: number) => ({
-        id: fee.id || `payment-${index}`,
-        date: fee.datum ? fee.datum.split('T')[0].split('-').reverse().join('.') : "-",
-        amount: fee.soll ? `${fee.soll} €` : (fee.haben ? `${fee.haben} €` : "0 €"),
-        type: `Gebühr ${fee.fk_Gebuehren_Id || 'N/A'}`,
-        status: fee.haben > 0 ? "Bezahlt" : "Offen",
-        eingetragen_am: fee.eingetragen_am ? fee.eingetragen_am.split('T')[0].split('-').reverse().join('.') : "-"
-      }));
+      const processed = rawPaymentData.map((fee: any, index: number) => {
+        console.log(`Processing fee ${index}:`, {
+          id: fee.id,
+          datum: fee.datum,
+          soll: fee.soll,
+          haben: fee.haben,
+          fk_Gebuehren_Id: fee.fk_Gebuehren_Id,
+          eingetragen_am: fee.eingetragen_am
+        });
+
+        return {
+          id: fee.id || `payment-${index}`,
+          date: fee.datum ? fee.datum.split('T')[0].split('-').reverse().join('.') : "-",
+          amount: fee.soll ? `${fee.soll} €` : (fee.haben ? `${fee.haben} €` : "0 €"),
+          type: `Gebühr ${fee.fk_Gebuehren_Id || 'N/A'}`,
+          status: fee.haben > 0 ? "Bezahlt" : "Offen",
+          eingetragen_am: fee.eingetragen_am ? fee.eingetragen_am.split('T')[0].split('-').reverse().join('.') : "-"
+        };
+      });
+
+      console.log("✅ Processed data:", processed.slice(0, 3)); // Show first 3 items
+      return processed;
     }
 
     // Fallback to processed payment history

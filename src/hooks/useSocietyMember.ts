@@ -156,7 +156,9 @@ export const useSocietyMember = () => {
         // Process payment history from feeMatches if available
         if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
           console.log("🔍 useSocietyMember: Found feeMatches with", userDataObj.feeMatches.length, "items");
-          console.log("📊 Sample feeMatch:", userDataObj.feeMatches[0]);
+          console.log("📊 First feeMatch detailed:", JSON.stringify(userDataObj.feeMatches[0], null, 2));
+          console.log("📊 Second feeMatch detailed:", JSON.stringify(userDataObj.feeMatches[1], null, 2));
+          console.log("📊 All feeMatches keys:", Object.keys(userDataObj.feeMatches[0] || {}));
 
           // Store raw payment data for detailed display with pagination
           setRawPaymentData(userDataObj.feeMatches);
