@@ -77,21 +77,25 @@ const PersonalInfoSection = ({
             </div>
           </div>
           
-          {/* Birth Date */}
-          <div className="space-y-1">
-            <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-              {t("society.personal.birthDate")}
-            </p>
-            <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.birthDate}</p>
-          </div>
-          
-          {/* Gender */}
-          <div className="space-y-1">
-            <p className="text-xs text-society-neutral-gray dark:text-gray-400">
-              {t("society.personal.gender")}
-            </p>
-            <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.gender}</p>
-          </div>
+          {/* Birth Date - Only show if available */}
+          {personalInfo.birthDate && (
+            <div className="space-y-1">
+              <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                {t("society.personal.birthDate")}
+              </p>
+              <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.birthDate}</p>
+            </div>
+          )}
+
+          {/* Gender - Only show if available */}
+          {personalInfo.gender && (
+            <div className="space-y-1">
+              <p className="text-xs text-society-neutral-gray dark:text-gray-400">
+                {t("society.personal.gender")}
+              </p>
+              <p className="text-society-dark-text dark:text-gray-200 font-medium">{personalInfo.gender}</p>
+            </div>
+          )}
         </div>
         
         {/* Email - Full Width Row */}

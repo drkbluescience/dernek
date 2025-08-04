@@ -13,21 +13,26 @@ const FamilyInfoSection = ({ familyInfo }: FamilyInfoSectionProps) => {
   return (
     <div className="p-4 space-y-4">
       <div className="grid grid-cols-1 gap-4">
-        <div className="flex justify-between items-center pb-2 border-b dark:border-gray-700">
-          <span className="font-medium text-gray-700 dark:text-gray-300">{t("society.family.maritalStatus")}</span>
-          <span className="text-gray-900 dark:text-gray-100">{familyInfo.maritalStatus}</span>
-        </div>
+        {/* Marital Status - Only show if available */}
+        {familyInfo.maritalStatus && (
+          <div className="flex justify-between items-center pb-2 border-b dark:border-gray-700">
+            <span className="font-medium text-gray-700 dark:text-gray-300">{t("society.family.maritalStatus")}</span>
+            <span className="text-gray-900 dark:text-gray-100">{familyInfo.maritalStatus}</span>
+          </div>
+        )}
 
-        {familyInfo.spouse && (
+        {familyInfo.spouse && familyInfo.spouse.name && (
           <>
             <div className="flex justify-between items-center pb-2 border-b dark:border-gray-700">
               <span className="font-medium text-gray-700 dark:text-gray-300">{t("society.family.spouse")}</span>
               <span className="text-gray-900 dark:text-gray-100">{familyInfo.spouse.name}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b dark:border-gray-700">
-              <span className="font-medium text-gray-700 dark:text-gray-300">{t("society.family.birthDate")}</span>
-              <span className="text-gray-900 dark:text-gray-100">{familyInfo.spouse.birthDate}</span>
-            </div>
+            {familyInfo.spouse.birthDate && (
+              <div className="flex justify-between items-center pb-2 border-b dark:border-gray-700">
+                <span className="font-medium text-gray-700 dark:text-gray-300">{t("society.family.birthDate")}</span>
+                <span className="text-gray-900 dark:text-gray-100">{familyInfo.spouse.birthDate}</span>
+              </div>
+            )}
           </>
         )}
 

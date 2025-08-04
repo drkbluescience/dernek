@@ -62,67 +62,95 @@ export const useSocietyMember = () => {
 
         // Fetch user profile data
         const profileResponse = await memberApi.getProfile();
-        if (profileResponse.success && profileResponse.data) {
-          const userData = profileResponse.data;
 
-          // Update personal info with API data
+        // Handle both success/data format and direct data format
+        const userData = profileResponse.success ? profileResponse.data : profileResponse;
+
+        if (userData && typeof userData === 'object') {
+          const userDataObj = userData as any;
+
+          // Update personal info with real API data
           setPersonalInfo({
-            fullName: userData.name || userData.fullName || "",
-            email: userData.email || "",
-            phone: userData.phone || userData.phoneNumber || "",
-            birthDate: userData.birthDate || userData.dateOfBirth || "",
-            gender: userData.gender || "",
-            address: userData.address || "",
-            status: userData.status || userData.membershipStatus || "",
+            fullName: userDataObj.briefname || "",
+            email: userDataObj.email || "",
+            phone: userDataObj.handynummer || userDataObj.telefonnummer || "",
+            birthDate: "", // Not available in current API response
+            gender: "", // Not available in current API response
+            address: `${userDataObj.strasse || ""} ${userDataObj.hausnummer || ""}, ${userDataObj.plz || ""} ${userDataObj.ort || ""}`.trim(),
+            status: userDataObj.status || "",
           });
 
-          // Update address data if available
-          if (userData.address) {
-            // Try to parse address string or use structured address data
-            const addressParts = userData.address.split(',');
-            setAddressData({
-              street: userData.street || (addressParts[0] ? addressParts[0].trim() : ""),
-              houseNumber: userData.houseNumber || "",
-              postalCode: userData.postalCode || (addressParts[1] ? addressParts[1].trim().split(' ')[0] : ""),
-              city: userData.city || (addressParts[1] ? addressParts[1].trim().split(' ').slice(1).join(' ') : ""),
-            });
-          }
+          // Update address data with structured API data
+          setAddressData({
+            street: userDataObj.strasse || "",
+            houseNumber: userDataObj.hausnummer || "",
+            postalCode: userDataObj.plz || "",
+            city: userDataObj.ort || "",
+          });
 
-          // Update bank info if available
-          if (userData.bankInfo || userData.iban) {
-            setBankInfo({
-              accountHolder: userData.bankInfo?.accountHolder || userData.accountHolder || userData.name || "",
-              bankName: userData.bankInfo?.bankName || userData.bankName || "",
-              iban: userData.bankInfo?.iban || userData.iban || "",
-              bic: userData.bankInfo?.bic || userData.bic || ""
-            });
-          }
+          // Update bank info with API data
+          setBankInfo({
+            accountHolder: userDataObj.kontoinhaber || "",
+            bankName: userDataObj.bankname || "",
+            iban: userDataObj.iban || "",
+            bic: userDataObj.bic || ""
+          });
 
-          // Update family info if available
-          if (userData.familyInfo || userData.spouse || userData.children) {
+          // Update family info if mitglied array exists
+          if (userDataObj.mitglied && Array.isArray(userDataObj.mitglied)) {
+            const familyMembers = userDataObj.mitglied;
+
+            // Try to identify spouse and children from mitglied array
+            const spouse = familyMembers.find((member: any) =>
+              member.verwandtschaftsgrad === 'Ehepartner' ||
+              member.verwandtschaftsgrad === 'Ehefrau' ||
+              member.verwandtschaftsgrad === 'Ehemann'
+            );
+
+            const children = familyMembers.filter((member: any) =>
+              member.verwandtschaftsgrad === 'Kind' ||
+              member.verwandtschaftsgrad === 'Sohn' ||
+              member.verwandtschaftsgrad === 'Tochter'
+            );
+
             setFamilyInfo({
-              maritalStatus: userData.familyInfo?.maritalStatus || userData.maritalStatus || "",
+              maritalStatus: spouse ? "Verheiratet" : "",
               spouse: {
-                name: userData.familyInfo?.spouse?.name || userData.spouse?.name || "",
-                birthDate: userData.familyInfo?.spouse?.birthDate || userData.spouse?.birthDate || "",
+                name: spouse?.name || spouse?.vorname + " " + spouse?.nachname || "",
+                birthDate: spouse?.geburtsdatum || "",
               },
-              children: userData.familyInfo?.children || userData.children || []
+              children: children.map((child: any) => ({
+                name: child.name || child.vorname + " " + child.nachname || "",
+                birthDate: child.geburtsdatum || "",
+              }))
             });
           }
         }
 
-        // Fetch payment history if available
-        try {
-          const paymentsResponse = await memberApi.getPaymentHistory();
-          if (paymentsResponse.success && paymentsResponse.data) {
-            setPaymentHistory(paymentsResponse.data);
-          }
-        } catch (error) {
-          console.log("Payment history not available:", error);
+        // Process payment history from feeMatches if available
+        if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
+          const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
+            id: `payment-${index}`,
+            date: fee.faelligkeitsdatum || fee.datum || "",
+            amount: fee.betrag ? `${fee.betrag.toFixed(2)} €` : "",
+            type: fee.beitragsart || "Mitgliedsbeitrag",
+            status: fee.bezahlt ? "Bezahlt" : "Offen"
+          }));
+
+          setPaymentHistory(payments);
         }
+
+        // Update society info with contract details
+        setSocietyInfo({
+          name: "Zentrum für Soziale Unterstützung e.V.",
+          founded: "1991",
+          members: 0, // Not available in API
+          description: `Mitglied seit: ${userDataObj.startderMitgliedschaft || ""}\nVertragsnummer: ${userDataObj.vertragsnummer || ""}\nAktueller Saldo: ${userDataObj.saldo ? userDataObj.saldo.toFixed(2) + " €" : ""}`,
+        });
 
       } catch (error) {
         console.error("Error loading user data:", error);
+        // Keep empty state if API fails
       }
     };
 

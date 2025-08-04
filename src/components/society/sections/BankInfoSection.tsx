@@ -25,10 +25,13 @@ const BankInfoSection = ({ bankInfo, onEditBankInfo }: BankInfoSectionProps) => 
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.account")}</p>
             <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bankName}</p>
           </div>
-          <div className="space-y-1">
-            <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
-            <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
-          </div>
+          {/* IBAN - Only show if available */}
+          {bankInfo.iban && (
+            <div className="space-y-1">
+              <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.iban")}</p>
+              <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.iban}</p>
+            </div>
+          )}
           <div className="space-y-1">
             <p className="text-xs text-society-neutral-gray dark:text-gray-400">{t("society.bank.bic")}</p>
             <p className="text-society-dark-text dark:text-gray-200 font-medium">{bankInfo.bic}</p>
