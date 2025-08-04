@@ -72,6 +72,12 @@ export const useSocietyMember = () => {
         // Handle both success/data format and direct data format
         const userData = profileResponse.success ? profileResponse.data : profileResponse;
 
+        console.log("🔍 FULL API RESPONSE:", JSON.stringify(profileResponse, null, 2));
+        console.log("🔍 EXTRACTED userData:", JSON.stringify(userData, null, 2));
+        console.log("🔍 userData keys:", Object.keys(userData || {}));
+        console.log("🔍 feeMatches exists?", !!(userData && userData.feeMatches));
+        console.log("🔍 feeMatches length:", userData?.feeMatches?.length || 0);
+
         if (userData && typeof userData === 'object') {
           const userDataObj = userData as any;
 
