@@ -195,6 +195,7 @@ export const useSocietyMember = () => {
         } else {
           console.log("❌ Step 2: feeMatches NOT found or not array");
         }
+        }
 
       } catch (error) {
         console.error("Error loading user data:", error);
