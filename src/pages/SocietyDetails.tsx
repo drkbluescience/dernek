@@ -37,6 +37,10 @@ const SocietyDetails = () => {
     rawPaymentData
   } = useSocietyMember();
 
+  console.log("🔍 SocietyDetails received:");
+  console.log("- paymentHistory:", paymentHistory);
+  console.log("- rawPaymentData:", rawPaymentData);
+
   // Get editing functionality from our custom hook
   const {
     editField,

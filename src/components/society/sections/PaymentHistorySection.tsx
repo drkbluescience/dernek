@@ -23,53 +23,29 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Use raw payment data if available, otherwise use processed payment history
+  console.log("🔍 PaymentHistorySection received:");
+  console.log("- paymentHistory:", paymentHistory);
+  console.log("- rawPaymentData:", rawPaymentData);
+
+  // Simple approach: use rawPaymentData directly if available
   const displayData = useMemo(() => {
-    if (rawPaymentData && rawPaymentData.length > 0) {
-      // Process raw feeMatches data
-      const processed = rawPaymentData.map((fee: any) => {
+    // If we have raw payment data, process it simply
+    if (rawPaymentData && Array.isArray(rawPaymentData) && rawPaymentData.length > 0) {
+      console.log("✅ Using rawPaymentData with", rawPaymentData.length, "items");
 
-        // Determine amount - soll (debit) or haben (credit)
-        let amount = "0.00 €";
-        let status = "Offen";
-
-        if (fee.soll && fee.soll > 0) {
-          amount = `${fee.soll.toFixed(2)} €`;
-          status = "Offen"; // Debit means payment is due
-        } else if (fee.haben && fee.haben > 0) {
-          amount = `${fee.haben.toFixed(2)} €`;
-          status = "Bezahlt"; // Credit means payment received
-        }
-
-        // Determine payment type based on fk_Gebuehren_Id
-        let type = "Mitgliedsbeitrag";
-        if (fee.fk_Gebuehren_Id) {
-          switch (fee.fk_Gebuehren_Id) {
-            case 1: type = "Anmeldegebühr"; break;
-            case 32: type = "Jahresbeitrag"; break;
-            case 38: type = "Monatsbeitrag"; break;
-            case 54: type = "Sondergebühr"; break;
-            case 60: type = "Verwaltungsgebühr"; break;
-            case 66: type = "Bearbeitungsgebühr"; break;
-            default: type = `Gebühr (ID: ${fee.fk_Gebuehren_Id})`;
-          }
-        }
-
-        return {
-          id: fee.id || `fee-${Math.random()}`,
-          date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-          amount: amount,
-          type: type,
-          status: status,
-          indicator: fee.indicator,
-          task: fee.task,
-          eingetragen_am: fee.eingetragen_am ? new Date(fee.eingetragen_am).toLocaleDateString('de-DE') : ""
-        };
-      });
-
-      return processed;
+      return rawPaymentData.map((fee: any, index: number) => ({
+        id: fee.id || `payment-${index}`,
+        date: fee.datum ? fee.datum.split('T')[0].split('-').reverse().join('.') : "-",
+        amount: fee.soll ? `${fee.soll} €` : (fee.haben ? `${fee.haben} €` : "0 €"),
+        type: `Gebühr ${fee.fk_Gebuehren_Id || 'N/A'}`,
+        status: fee.haben > 0 ? "Bezahlt" : "Offen",
+        eingetragen_am: fee.eingetragen_am ? fee.eingetragen_am.split('T')[0].split('-').reverse().join('.') : "-"
+      }));
     }
-    return paymentHistory;
+
+    // Fallback to processed payment history
+    console.log("⚠️ Using fallback paymentHistory with", paymentHistory?.length || 0, "items");
+    return paymentHistory || [];
   }, [rawPaymentData, paymentHistory]);
 
   // Calculate pagination
