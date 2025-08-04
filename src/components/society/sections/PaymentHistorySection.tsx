@@ -25,18 +25,26 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
 
   // Use raw payment data if available, otherwise use processed payment history
   const displayData = useMemo(() => {
+    console.log("PaymentHistorySection - rawPaymentData:", rawPaymentData);
+    console.log("PaymentHistorySection - paymentHistory:", paymentHistory);
+
     if (rawPaymentData && rawPaymentData.length > 0) {
       // Process raw feeMatches data
-      return rawPaymentData.map((fee: any) => ({
-        id: fee.id,
-        date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-        amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : ""),
-        type: fee.fk_Gebuehren_Id ? `Gebühr ID: ${fee.fk_Gebuehren_Id}` : "Mitgliedsbeitrag",
-        status: fee.haben > 0 ? "Bezahlt" : "Offen",
-        indicator: fee.indicator,
-        task: fee.task,
-        eingetragen_am: fee.eingetragen_am ? new Date(fee.eingetragen_am).toLocaleDateString('de-DE') : ""
-      }));
+      const processed = rawPaymentData.map((fee: any) => {
+        console.log("Processing fee:", fee);
+        return {
+          id: fee.id || `fee-${Math.random()}`,
+          date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
+          amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : "0.00 €"),
+          type: fee.fk_Gebuehren_Id ? `Gebühr ID: ${fee.fk_Gebuehren_Id}` : "Mitgliedsbeitrag",
+          status: fee.haben && fee.haben > 0 ? "Bezahlt" : "Offen",
+          indicator: fee.indicator,
+          task: fee.task,
+          eingetragen_am: fee.eingetragen_am ? new Date(fee.eingetragen_am).toLocaleDateString('de-DE') : ""
+        };
+      });
+      console.log("Processed payment data:", processed);
+      return processed;
     }
     return paymentHistory;
   }, [rawPaymentData, paymentHistory]);
@@ -51,6 +59,21 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
     setCurrentPage(Math.max(1, Math.min(page, totalPages)));
   };
 
+  // Show loading or empty state
+  if (!displayData || displayData.length === 0) {
+    return (
+      <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
+        <CardContent className="pt-6">
+          <div className="text-center py-8">
+            <p className="text-gray-500 dark:text-gray-400">
+              {t("society.payment.noData")}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="border-t-0 rounded-t-none dark:bg-gray-800 dark:border-gray-700">
       <CardContent className="pt-6">
@@ -61,7 +84,7 @@ const PaymentHistorySection = ({ paymentHistory, rawPaymentData }: PaymentHistor
               {t("society.payment.total")}: {displayData.length} {t("society.payment.entries")}
             </span>
             <span className="text-gray-600 dark:text-gray-400">
-              {t("society.payment.page")} {currentPage} / {totalPages}
+              {t("society.payment.page")} {currentPage} / {totalPages || 1}
             </span>
           </div>
         </div>

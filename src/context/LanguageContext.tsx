@@ -388,6 +388,10 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Sonraki",
     de: "Weiter"
   },
+  "society.payment.noData": {
+    tr: "Ödeme geçmişi bulunamadı",
+    de: "Keine Zahlungshistorie gefunden"
+  },
   // New keys for editing functionality
   "society.personal.name": {
     tr: "Ad Soyad",

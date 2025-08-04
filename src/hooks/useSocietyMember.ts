@@ -155,6 +155,9 @@ export const useSocietyMember = () => {
 
         // Process payment history from feeMatches if available
         if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
+          console.log("🔍 Processing feeMatches:", userDataObj.feeMatches.length, "items");
+          console.log("📊 First feeMatch sample:", userDataObj.feeMatches[0]);
+
           // Store raw payment data for detailed display with pagination
           setRawPaymentData(userDataObj.feeMatches);
 
@@ -162,12 +165,15 @@ export const useSocietyMember = () => {
           const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
             id: fee.id || `payment-${index}`,
             date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-            amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : ""),
+            amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : "0.00 €"),
             type: fee.fk_Gebuehren_Id ? `Gebühr ID: ${fee.fk_Gebuehren_Id}` : "Mitgliedsbeitrag",
-            status: fee.haben > 0 ? "Bezahlt" : "Offen"
+            status: fee.haben && fee.haben > 0 ? "Bezahlt" : "Offen"
           }));
 
+          console.log("✅ Processed payments:", payments.length, "items");
           setPaymentHistory(payments);
+        } else {
+          console.log("❌ No feeMatches found in userData");
         }
 
         // Update society info with contract details
