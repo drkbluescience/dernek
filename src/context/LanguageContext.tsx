@@ -356,6 +356,38 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Durum",
     de: "Status"
   },
+  "society.payment.total": {
+    tr: "Toplam",
+    de: "Gesamt"
+  },
+  "society.payment.entries": {
+    tr: "kayıt",
+    de: "Einträge"
+  },
+  "society.payment.page": {
+    tr: "Sayfa",
+    de: "Seite"
+  },
+  "society.payment.registered": {
+    tr: "Kayıt Tarihi",
+    de: "Eingetragen am"
+  },
+  "society.payment.showing": {
+    tr: "Gösterilen",
+    de: "Zeige"
+  },
+  "society.payment.of": {
+    tr: "toplam",
+    de: "von"
+  },
+  "society.payment.previous": {
+    tr: "Önceki",
+    de: "Zurück"
+  },
+  "society.payment.next": {
+    tr: "Sonraki",
+    de: "Weiter"
+  },
   // New keys for editing functionality
   "society.personal.name": {
     tr: "Ad Soyad",

@@ -22,6 +22,7 @@ interface MemberInfoAccordionProps {
   onEditBankInfo: () => void;
   onEditAddress: () => void;
   rawFamilyData?: any[];
+  rawPaymentData?: any[];
 }
 
 const MemberInfoAccordion = ({
@@ -32,7 +33,8 @@ const MemberInfoAccordion = ({
   handleEdit,
   onEditBankInfo,
   onEditAddress,
-  rawFamilyData
+  rawFamilyData,
+  rawPaymentData
 }: MemberInfoAccordionProps) => {
   const { t, language } = useLanguage();
 
@@ -82,7 +84,7 @@ const MemberInfoAccordion = ({
           {t("society.tab.payments")}
         </AccordionTrigger>
         <AccordionContent className="pt-0">
-          <PaymentHistorySection paymentHistory={paymentHistory} />
+          <PaymentHistorySection paymentHistory={paymentHistory} rawPaymentData={rawPaymentData} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

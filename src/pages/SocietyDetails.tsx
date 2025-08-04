@@ -33,7 +33,8 @@ const SocietyDetails = () => {
     setBankInfo,
     paymentHistory,
     societyInfo,
-    rawFamilyData
+    rawFamilyData,
+    rawPaymentData
   } = useSocietyMember();
 
   // Get editing functionality from our custom hook
@@ -110,6 +111,7 @@ const SocietyDetails = () => {
           onEditBankInfo={handleEditBankInfo}
           onEditAddress={handleEditAddress}
           rawFamilyData={rawFamilyData}
+          rawPaymentData={rawPaymentData}
         />
 
         {/* Edit Dialog */}

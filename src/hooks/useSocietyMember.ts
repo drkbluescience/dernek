@@ -56,6 +56,9 @@ export const useSocietyMember = () => {
   // Raw family data from API
   const [rawFamilyData, setRawFamilyData] = useState<any[]>([]);
 
+  // Raw payment data from API
+  const [rawPaymentData, setRawPaymentData] = useState<any[]>([]);
+
   // Load user data from API
   useEffect(() => {
     const loadUserData = async () => {
@@ -152,12 +155,16 @@ export const useSocietyMember = () => {
 
         // Process payment history from feeMatches if available
         if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
+          // Store raw payment data for detailed display with pagination
+          setRawPaymentData(userDataObj.feeMatches);
+
+          // Also create processed payment history for fallback
           const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
-            id: `payment-${index}`,
-            date: fee.faelligkeitsdatum || fee.datum || "",
-            amount: fee.betrag ? `${fee.betrag.toFixed(2)} €` : "",
-            type: fee.beitragsart || "Mitgliedsbeitrag",
-            status: fee.bezahlt ? "Bezahlt" : "Offen"
+            id: fee.id || `payment-${index}`,
+            date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
+            amount: fee.soll ? `${fee.soll.toFixed(2)} €` : (fee.haben ? `${fee.haben.toFixed(2)} €` : ""),
+            type: fee.fk_Gebuehren_Id ? `Gebühr ID: ${fee.fk_Gebuehren_Id}` : "Mitgliedsbeitrag",
+            status: fee.haben > 0 ? "Bezahlt" : "Offen"
           }));
 
           setPaymentHistory(payments);
@@ -193,6 +200,7 @@ export const useSocietyMember = () => {
     setPaymentHistory,
     societyInfo,
     setSocietyInfo,
-    rawFamilyData
+    rawFamilyData,
+    rawPaymentData
   };
 };
