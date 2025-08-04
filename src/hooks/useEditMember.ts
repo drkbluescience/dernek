@@ -41,11 +41,17 @@ export const useEditMember = (
 
   // Handler for saving bank info
   const handleSaveBankInfo = async (updatedBankInfo: BankInfo) => {
+    console.log("🏦 Banka bilgisi güncelleme başlatıldı:");
+    console.log("📤 Gönderilen veri:", updatedBankInfo);
+
     try {
       // Call API to update bank info
       const response = await memberApi.updateBankInfo(updatedBankInfo);
+      console.log("📥 API Response:", response);
 
       if (response.success || response) {
+        console.log("✅ Banka bilgisi başarıyla güncellendi");
+
         // Update local state only if API call succeeds
         setBankInfo(updatedBankInfo);
         setIsBankInfoEdit(false);
@@ -56,10 +62,11 @@ export const useEditMember = (
           description: t("society.edit.success.description"),
         });
       } else {
+        console.log("❌ API güncelleme başarısız:", response.message);
         throw new Error(response.message || "Update failed");
       }
     } catch (error: any) {
-      console.error("Error updating bank info:", error);
+      console.error("❌ Banka bilgisi güncelleme hatası:", error);
       toast({
         title: t("society.edit.error"),
         description: error.message || "Banka bilgileri güncellenirken hata oluştu.",
@@ -70,16 +77,23 @@ export const useEditMember = (
 
   // Handler for saving address info
   const handleSaveAddress = async (updatedAddress: Address) => {
+    console.log("🏠 Adres bilgisi güncelleme başlatıldı:");
+    console.log("📤 Gönderilen veri:", updatedAddress);
+
     try {
       // Call API to update address
       const response = await memberApi.updateAddress(updatedAddress);
+      console.log("📥 API Response:", response);
 
       if (response.success || response) {
+        console.log("✅ Adres bilgisi başarıyla güncellendi");
+
         // Update address data state only if API call succeeds
         setAddressData(updatedAddress);
 
         // Format the address for display
         const formattedAddress = `${updatedAddress.street} ${updatedAddress.houseNumber}, ${updatedAddress.postalCode} ${updatedAddress.city}`;
+        console.log("📍 Formatlanmış adres:", formattedAddress);
 
         // Update the formatted address in personalInfo
         setPersonalInfo(prev => ({
@@ -95,10 +109,11 @@ export const useEditMember = (
           description: t("society.edit.success.description"),
         });
       } else {
+        console.log("❌ API güncelleme başarısız:", response.message);
         throw new Error(response.message || "Update failed");
       }
     } catch (error: any) {
-      console.error("Error updating address:", error);
+      console.error("❌ Adres bilgisi güncelleme hatası:", error);
       toast({
         title: t("society.edit.error"),
         description: error.message || "Adres bilgileri güncellenirken hata oluştu.",
@@ -110,17 +125,26 @@ export const useEditMember = (
   const handleSave = async () => {
     if (!editField) return;
 
+    console.log("👤 Kişisel bilgi güncelleme başlatıldı:");
+    console.log("📝 Alan:", editField);
+    console.log("📤 Yeni değer:", editValue);
+
     try {
       // Prepare data for API call
       const updateData = { [editField]: editValue };
+      console.log("📤 Gönderilen veri:", updateData);
 
       // Call API to update personal info
       const response = await memberApi.updateProfile(updateData);
+      console.log("📥 API Response:", response);
 
       if (response.success || response) {
+        console.log("✅ Kişisel bilgi başarıyla güncellendi");
+
         // Update the appropriate field based on category only if API call succeeds
         if (["fullName", "email", "phone"].includes(editField)) {
           setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
+          console.log("🔄 Local state güncellendi:", editField, "=", editValue);
         }
 
         // Show success toast
@@ -134,10 +158,11 @@ export const useEditMember = (
         setEditValue("");
         setIsAddressEdit(false);
       } else {
+        console.log("❌ API güncelleme başarısız:", response.message);
         throw new Error(response.message || "Update failed");
       }
     } catch (error: any) {
-      console.error("Error updating personal info:", error);
+      console.error("❌ Kişisel bilgi güncelleme hatası:", error);
       toast({
         title: t("society.edit.error"),
         description: error.message || "Kişisel bilgiler güncellenirken hata oluştu.",
