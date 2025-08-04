@@ -155,45 +155,43 @@ export const useSocietyMember = () => {
               }))
             });
           }
-        }
 
+          // Process payment history from feeMatches if available
+          console.log("🔍 Step 1: Checking for feeMatches...");
+          console.log("🔍 userDataObj.feeMatches exists?", !!(userDataObj.feeMatches));
+          console.log("🔍 userDataObj.feeMatches is array?", Array.isArray(userDataObj.feeMatches));
+          console.log("🔍 userDataObj.feeMatches length:", userDataObj.feeMatches?.length);
 
+          if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
+            console.log("✅ Step 2: FOUND feeMatches with", userDataObj.feeMatches.length, "items");
+            console.log("🔍 Step 3: About to call setRawPaymentData...");
 
-        // Update society info with contract details
-        setSocietyInfo({
-          name: "Zentrum für Soziale Unterstützung e.V.",
-          founded: "1991",
-          members: 0, // Not available in API
-          description: `Mitglied seit: ${userDataObj.startderMitgliedschaft || ""}\nVertragsnummer: ${userDataObj.vertragsnummer || ""}\nAktueller Saldo: ${userDataObj.saldo ? userDataObj.saldo.toFixed(2) + " €" : ""}`,
-        });
+            // Store raw payment data for detailed display with pagination
+            setRawPaymentData(userDataObj.feeMatches);
+            console.log("✅ Step 4: setRawPaymentData called with", userDataObj.feeMatches.length, "items");
 
-        // Process payment history from feeMatches if available
-        console.log("🔍 Step 1: Checking for feeMatches...");
-        console.log("🔍 userDataObj.feeMatches exists?", !!(userDataObj.feeMatches));
-        console.log("🔍 userDataObj.feeMatches is array?", Array.isArray(userDataObj.feeMatches));
-        console.log("🔍 userDataObj.feeMatches length:", userDataObj.feeMatches?.length);
+            // Also create processed payment history for fallback
+            const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
+              id: fee.id || `payment-${index}`,
+              date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
+              amount: fee.soll ? `${fee.soll} €` : (fee.haben ? `${fee.haben} €` : "0 €"),
+              type: `Gebühr ${fee.fk_Gebuehren_Id || 'N/A'}`,
+              status: fee.haben > 0 ? "Bezahlt" : "Offen"
+            }));
 
-        if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
-          console.log("✅ Step 2: FOUND feeMatches with", userDataObj.feeMatches.length, "items");
-          console.log("🔍 Step 3: About to call setRawPaymentData...");
+            setPaymentHistory(payments);
+            console.log("✅ Step 5: setPaymentHistory called with", payments.length, "items");
+          } else {
+            console.log("❌ Step 2: feeMatches NOT found or not array");
+          }
 
-          // Store raw payment data for detailed display with pagination
-          setRawPaymentData(userDataObj.feeMatches);
-          console.log("✅ Step 4: setRawPaymentData called with", userDataObj.feeMatches.length, "items");
-
-          // Also create processed payment history for fallback
-          const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
-            id: fee.id || `payment-${index}`,
-            date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-            amount: fee.soll ? `${fee.soll} €` : (fee.haben ? `${fee.haben} €` : "0 €"),
-            type: `Gebühr ${fee.fk_Gebuehren_Id || 'N/A'}`,
-            status: fee.haben > 0 ? "Bezahlt" : "Offen"
-          }));
-
-          setPaymentHistory(payments);
-          console.log("✅ Step 5: setPaymentHistory called with", payments.length, "items");
-        } else {
-          console.log("❌ Step 2: feeMatches NOT found or not array");
+          // Update society info with contract details
+          setSocietyInfo({
+            name: "Zentrum für Soziale Unterstützung e.V.",
+            founded: "1991",
+            members: 0, // Not available in API
+            description: `Mitglied seit: ${userDataObj.startderMitgliedschaft || ""}\nVertragsnummer: ${userDataObj.vertragsnummer || ""}\nAktueller Saldo: ${userDataObj.saldo ? userDataObj.saldo.toFixed(2) + " €" : ""}`,
+          });
         }
 
       } catch (error) {
