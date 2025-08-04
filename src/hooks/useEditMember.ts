@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Address, BankInfo } from '@/types/society';
 import { toast } from '@/hooks/use-toast';
 import { useLanguage } from '@/context/LanguageContext';
+import { memberApi } from '@/services/apiService';
 
 export const useEditMember = (
   setPersonalInfo: React.Dispatch<React.SetStateAction<any>>,
@@ -39,58 +40,110 @@ export const useEditMember = (
   };
 
   // Handler for saving bank info
-  const handleSaveBankInfo = (updatedBankInfo: BankInfo) => {
-    setBankInfo(updatedBankInfo);
-    setIsBankInfoEdit(false);
-    setEditField("");
-    
-    toast({
-      title: t("society.edit.success"),
-      description: t("society.edit.success.description"),
-    });
+  const handleSaveBankInfo = async (updatedBankInfo: BankInfo) => {
+    try {
+      // Call API to update bank info
+      const response = await memberApi.updateBankInfo(updatedBankInfo);
+
+      if (response.success || response) {
+        // Update local state only if API call succeeds
+        setBankInfo(updatedBankInfo);
+        setIsBankInfoEdit(false);
+        setEditField("");
+
+        toast({
+          title: t("society.edit.success"),
+          description: t("society.edit.success.description"),
+        });
+      } else {
+        throw new Error(response.message || "Update failed");
+      }
+    } catch (error: any) {
+      console.error("Error updating bank info:", error);
+      toast({
+        title: t("society.edit.error"),
+        description: error.message || "Banka bilgileri güncellenirken hata oluştu.",
+        variant: "destructive",
+      });
+    }
   };
 
   // Handler for saving address info
-  const handleSaveAddress = (updatedAddress: Address) => {
-    // Update address data state
-    setAddressData(updatedAddress);
-    
-    // Format the address for display
-    const formattedAddress = `${updatedAddress.street} ${updatedAddress.houseNumber}, ${updatedAddress.postalCode} ${updatedAddress.city}`;
-    
-    // Update the formatted address in personalInfo
-    setPersonalInfo(prev => ({ 
-      ...prev, 
-      address: formattedAddress 
-    }));
-    
-    setIsAddressEdit(false);
-    setEditField("");
-    
-    toast({
-      title: t("society.edit.success"),
-      description: t("society.edit.success.description"),
-    });
+  const handleSaveAddress = async (updatedAddress: Address) => {
+    try {
+      // Call API to update address
+      const response = await memberApi.updateAddress(updatedAddress);
+
+      if (response.success || response) {
+        // Update address data state only if API call succeeds
+        setAddressData(updatedAddress);
+
+        // Format the address for display
+        const formattedAddress = `${updatedAddress.street} ${updatedAddress.houseNumber}, ${updatedAddress.postalCode} ${updatedAddress.city}`;
+
+        // Update the formatted address in personalInfo
+        setPersonalInfo(prev => ({
+          ...prev,
+          address: formattedAddress
+        }));
+
+        setIsAddressEdit(false);
+        setEditField("");
+
+        toast({
+          title: t("society.edit.success"),
+          description: t("society.edit.success.description"),
+        });
+      } else {
+        throw new Error(response.message || "Update failed");
+      }
+    } catch (error: any) {
+      console.error("Error updating address:", error);
+      toast({
+        title: t("society.edit.error"),
+        description: error.message || "Adres bilgileri güncellenirken hata oluştu.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!editField) return;
 
-    // Update the appropriate field based on category
-    if (["fullName", "email", "phone"].includes(editField)) {
-      setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
+    try {
+      // Prepare data for API call
+      const updateData = { [editField]: editValue };
+
+      // Call API to update personal info
+      const response = await memberApi.updateProfile(updateData);
+
+      if (response.success || response) {
+        // Update the appropriate field based on category only if API call succeeds
+        if (["fullName", "email", "phone"].includes(editField)) {
+          setPersonalInfo(prev => ({ ...prev, [editField]: editValue }));
+        }
+
+        // Show success toast
+        toast({
+          title: t("society.edit.success"),
+          description: t("society.edit.success.description"),
+        });
+
+        // Reset edit state
+        setEditField("");
+        setEditValue("");
+        setIsAddressEdit(false);
+      } else {
+        throw new Error(response.message || "Update failed");
+      }
+    } catch (error: any) {
+      console.error("Error updating personal info:", error);
+      toast({
+        title: t("society.edit.error"),
+        description: error.message || "Kişisel bilgiler güncellenirken hata oluştu.",
+        variant: "destructive",
+      });
     }
-
-    // Show success toast
-    toast({
-      title: t("society.edit.success"),
-      description: t("society.edit.success.description"),
-    });
-
-    // Reset edit state
-    setEditField("");
-    setEditValue("");
-    setIsAddressEdit(false);
   };
 
   return {

@@ -481,6 +481,10 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Bilgileriniz başarıyla güncellendi.",
     de: "Ihre Informationen wurden erfolgreich aktualisiert."
   },
+  "society.edit.error": {
+    tr: "Güncelleme Hatası",
+    de: "Aktualisierungsfehler"
+  },
   
   // Form validation messages
   "validation.required": {
