@@ -150,16 +150,16 @@ export const authApi = {
 export const memberApi = {
   getProfile: () =>
     apiService.get(API_ENDPOINTS.members.profile),
-    
+
   updateProfile: (data: any) =>
-    apiService.put(API_ENDPOINTS.members.updateProfile, data),
-    
+    apiService.post(API_ENDPOINTS.members.updateProfile, data),
+
   updateAddress: (data: any) =>
-    apiService.put(API_ENDPOINTS.members.updateAddress, data),
-    
+    apiService.post(API_ENDPOINTS.members.updateAddress, data),
+
   updateBankInfo: (data: any) =>
-    apiService.put(API_ENDPOINTS.members.updateBankInfo, data),
-    
+    apiService.post(API_ENDPOINTS.members.updateBankInfo, data),
+
   getPaymentHistory: (params?: any) =>
     apiService.get(`${API_ENDPOINTS.members.paymentHistory}${params ? `?${new URLSearchParams(params)}` : ''}`),
 };
