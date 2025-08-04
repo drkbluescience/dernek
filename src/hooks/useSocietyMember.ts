@@ -158,17 +158,19 @@ export const useSocietyMember = () => {
         }
 
         // Process payment history from feeMatches if available
-        console.log("🔍 Checking for feeMatches...");
+        console.log("🔍 Step 1: Checking for feeMatches...");
         console.log("🔍 userDataObj.feeMatches exists?", !!(userDataObj.feeMatches));
         console.log("🔍 userDataObj.feeMatches is array?", Array.isArray(userDataObj.feeMatches));
         console.log("🔍 userDataObj.feeMatches length:", userDataObj.feeMatches?.length);
 
         if (userDataObj.feeMatches && Array.isArray(userDataObj.feeMatches)) {
-          console.log("✅ FOUND feeMatches with", userDataObj.feeMatches.length, "items");
+          console.log("✅ Step 2: FOUND feeMatches with", userDataObj.feeMatches.length, "items");
+          console.log("🔍 Step 3: About to call setRawPaymentData...");
 
           // Store raw payment data for detailed display with pagination
           setRawPaymentData(userDataObj.feeMatches);
-          console.log("✅ setRawPaymentData called with", userDataObj.feeMatches.length, "items");
+          console.log("✅ Step 4: setRawPaymentData called with", userDataObj.feeMatches.length, "items");
+          console.log("🔍 Step 5: Current rawPaymentData state should be updated");
 
           // Also create processed payment history for fallback
           const payments = userDataObj.feeMatches.map((fee: any, index: number) => {
@@ -208,6 +210,10 @@ export const useSocietyMember = () => {
           });
 
           setPaymentHistory(payments);
+        } else {
+          console.log("❌ Step 2: feeMatches NOT found or not array");
+          console.log("❌ userDataObj.feeMatches:", userDataObj.feeMatches);
+          console.log("❌ Type:", typeof userDataObj.feeMatches);
         }
 
         // Update society info with contract details
@@ -226,6 +232,11 @@ export const useSocietyMember = () => {
 
     loadUserData();
   }, []);
+
+  // Debug: Check final state before return
+  console.log("🔍 Final state check:");
+  console.log("🔍 rawPaymentData length:", rawPaymentData?.length || 0);
+  console.log("🔍 paymentHistory length:", paymentHistory?.length || 0);
 
   return {
     personalInfo,
