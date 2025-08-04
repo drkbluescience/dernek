@@ -248,6 +248,14 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Sosyal Dayanışma Dernegi",
     de: "Zentrum für Sosziale Unterstützung e.V."
   },
+  "society.welcome": {
+    tr: "Hoş geldiniz",
+    de: "Willkommen"
+  },
+  "society.user": {
+    tr: "Kullanıcı",
+    de: "Benutzer"
+  },
   "society.description": {
     tr: "Avrupa’ya Türk işgücü ile birlikte, başta Almanya olmak üzere Avrupa ülkelerinde özellikle dini ve sosyal ihtiyaçların karşılanabilmesi, karşılaşılan güçlüklerin üstesinden gelinebilmesi için dernekler kuruldu. ",
     de: "Eine Freiwilligenorganisation, die sich der Unterstützung der Gemeinschaft durch verschiedene soziale Dienstleistungen widmet."

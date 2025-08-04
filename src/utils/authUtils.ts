@@ -105,7 +105,7 @@ const fetchUserDataAfterLogin = async (token: string) => {
       const updatedUser = {
         ...currentUser,
         ...userDataObj,
-        name: userDataObj.name || userDataObj.fullName || currentUser.name || "Kullanıcı"
+        name: userDataObj.name || userDataObj.fullName || userDataObj.briefname || currentUser.name || "Kullanıcı"
       };
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
