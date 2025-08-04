@@ -157,6 +157,16 @@ export const useSocietyMember = () => {
           }
         }
 
+
+
+        // Update society info with contract details
+        setSocietyInfo({
+          name: "Zentrum für Soziale Unterstützung e.V.",
+          founded: "1991",
+          members: 0, // Not available in API
+          description: `Mitglied seit: ${userDataObj.startderMitgliedschaft || ""}\nVertragsnummer: ${userDataObj.vertragsnummer || ""}\nAktueller Saldo: ${userDataObj.saldo ? userDataObj.saldo.toFixed(2) + " €" : ""}`,
+        });
+
         // Process payment history from feeMatches if available
         console.log("🔍 Step 1: Checking for feeMatches...");
         console.log("🔍 userDataObj.feeMatches exists?", !!(userDataObj.feeMatches));
@@ -170,59 +180,21 @@ export const useSocietyMember = () => {
           // Store raw payment data for detailed display with pagination
           setRawPaymentData(userDataObj.feeMatches);
           console.log("✅ Step 4: setRawPaymentData called with", userDataObj.feeMatches.length, "items");
-          console.log("🔍 Step 5: Current rawPaymentData state should be updated");
 
           // Also create processed payment history for fallback
-          const payments = userDataObj.feeMatches.map((fee: any, index: number) => {
-            // Determine amount and status
-            let amount = "0.00 €";
-            let status = "Offen";
-
-            if (fee.soll && fee.soll > 0) {
-              amount = `${fee.soll.toFixed(2)} €`;
-              status = "Offen"; // Debit means payment is due
-            } else if (fee.haben && fee.haben > 0) {
-              amount = `${fee.haben.toFixed(2)} €`;
-              status = "Bezahlt"; // Credit means payment received
-            }
-
-            // Determine payment type
-            let type = "Mitgliedsbeitrag";
-            if (fee.fk_Gebuehren_Id) {
-              switch (fee.fk_Gebuehren_Id) {
-                case 1: type = "Anmeldegebühr"; break;
-                case 32: type = "Jahresbeitrag"; break;
-                case 38: type = "Monatsbeitrag"; break;
-                case 54: type = "Sondergebühr"; break;
-                case 60: type = "Verwaltungsgebühr"; break;
-                case 66: type = "Bearbeitungsgebühr"; break;
-                default: type = `Gebühr (ID: ${fee.fk_Gebuehren_Id})`;
-              }
-            }
-
-            return {
-              id: fee.id || `payment-${index}`,
-              date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
-              amount: amount,
-              type: type,
-              status: status
-            };
-          });
+          const payments = userDataObj.feeMatches.map((fee: any, index: number) => ({
+            id: fee.id || `payment-${index}`,
+            date: fee.datum ? new Date(fee.datum).toLocaleDateString('de-DE') : "",
+            amount: fee.soll ? `${fee.soll} €` : (fee.haben ? `${fee.haben} €` : "0 €"),
+            type: `Gebühr ${fee.fk_Gebuehren_Id || 'N/A'}`,
+            status: fee.haben > 0 ? "Bezahlt" : "Offen"
+          }));
 
           setPaymentHistory(payments);
+          console.log("✅ Step 5: setPaymentHistory called with", payments.length, "items");
         } else {
           console.log("❌ Step 2: feeMatches NOT found or not array");
-          console.log("❌ userDataObj.feeMatches:", userDataObj.feeMatches);
-          console.log("❌ Type:", typeof userDataObj.feeMatches);
         }
-
-        // Update society info with contract details
-        setSocietyInfo({
-          name: "Zentrum für Soziale Unterstützung e.V.",
-          founded: "1991",
-          members: 0, // Not available in API
-          description: `Mitglied seit: ${userDataObj.startderMitgliedschaft || ""}\nVertragsnummer: ${userDataObj.vertragsnummer || ""}\nAktueller Saldo: ${userDataObj.saldo ? userDataObj.saldo.toFixed(2) + " €" : ""}`,
-        });
 
       } catch (error) {
         console.error("Error loading user data:", error);
