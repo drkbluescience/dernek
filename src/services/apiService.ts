@@ -212,3 +212,26 @@ export const documentApi = {
     return apiService.post(API_ENDPOINTS.documents.sendEmail, formData);
   },
 };
+
+// Email API methods
+export const emailApi = {
+  // Send welcome email after successful registration
+  sendWelcomeEmail: (userData: { email: string; name: string; memberNumber?: string }) =>
+    apiService.post(API_ENDPOINTS.emails.welcome, userData),
+
+  // Send email verification
+  sendVerificationEmail: (data: { email: string; verificationToken?: string }) =>
+    apiService.post(API_ENDPOINTS.emails.verification, data),
+
+  // Send admin notification about new registration
+  sendAdminNotification: (userData: { email: string; name: string; memberNumber?: string; registrationData?: any }) =>
+    apiService.post(API_ENDPOINTS.emails.adminNotification, userData),
+
+  // Send document request email
+  sendDocumentRequest: (data: { email: string; name: string; missingDocuments: string[] }) =>
+    apiService.post(API_ENDPOINTS.emails.documentRequest, data),
+
+  // Send registration confirmation email
+  sendRegistrationConfirmation: (userData: { email: string; name: string; memberNumber?: string; registrationData?: any }) =>
+    apiService.post(API_ENDPOINTS.emails.registrationConfirmation, userData),
+};

@@ -37,6 +37,15 @@ export const API_ENDPOINTS = {
     refreshToken: 'auth/refresh-token'
   },
 
+  // Email Services
+  emails: {
+    welcome: 'emails/welcome',
+    verification: 'emails/verification',
+    adminNotification: 'emails/admin-notification',
+    documentRequest: 'emails/document-request',
+    registrationConfirmation: 'emails/registration-confirmation'
+  },
+
   // Members
   members: {
     profile: 'Userdata',

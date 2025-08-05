@@ -1,6 +1,6 @@
 
 import { toast } from "@/components/ui/use-toast";
-import { authApi, apiService, memberApi } from "@/services/apiService";
+import { authApi, apiService, memberApi, emailApi } from "@/services/apiService";
 import { isDevelopment } from "@/config/api";
 
 // Define an interface for our user data
@@ -148,6 +148,32 @@ export const registerUser = async (userData: Record<string, any>) => {
       // Fetch user data after successful registration
       await fetchUserDataAfterLogin(authData.token);
 
+      // Send registration emails
+      try {
+        const emailData = {
+          email: userData.email || authData.user.email,
+          name: userData.firstName && userData.lastName ?
+                `${userData.firstName} ${userData.lastName}` :
+                authData.user.name || "Yeni Üye",
+          memberNumber: authData.user.memberNumber,
+          registrationData: userData
+        };
+
+        // Send welcome email to user
+        await emailApi.sendWelcomeEmail(emailData);
+
+        // Send admin notification
+        await emailApi.sendAdminNotification(emailData);
+
+        // Send registration confirmation
+        await emailApi.sendRegistrationConfirmation(emailData);
+
+        console.log("✅ Registration emails sent successfully");
+      } catch (emailError: any) {
+        console.error("⚠️ Email sending failed:", emailError);
+        // Don't fail registration if email fails
+      }
+
       return { success: true, message: "Registration successful" };
     }
 
@@ -253,9 +279,14 @@ const registerUserMock = (userData: Record<string, any>) => {
       mockUsers.push(newUser);
       localStorage.setItem("currentUser", JSON.stringify(newUser));
 
+      // Simulate email sending in mock mode
+      console.log("📧 Mock: Sending welcome email to:", newUser.email);
+      console.log("📧 Mock: Sending admin notification for new member:", newUser.name);
+      console.log("📧 Mock: Sending registration confirmation to:", newUser.email);
+
       toast({
         title: "Kayıt Başarılı",
-        description: "Hesabınız başarıyla oluşturuldu!",
+        description: "Hesabınız başarıyla oluşturuldu! Onay e-postası gönderildi.",
       });
 
       resolve({ success: true, message: "Registration successful" });
