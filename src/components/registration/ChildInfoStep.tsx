@@ -170,22 +170,52 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                             )}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent 
-                          className="w-auto p-0" 
-                          align="start" 
+                        <PopoverContent
+                          className="w-auto p-0"
+                          align="start"
                           side="bottom"
                           sideOffset={4}
                         >
-                          <Calendar
-                            mode="single"
-                            selected={child.birthDate || undefined}
-                            onSelect={(date) => handleChildChange(child.id, 'birthDate', date)}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                            className="p-3 pointer-events-auto"
-                          />
+                          <div className="p-3 space-y-3">
+                            {/* Quick Year Selector for Children */}
+                            <div className="flex gap-2">
+                              <div className="flex-1">
+                                <Label className="text-xs text-muted-foreground mb-1 block">Yıl</Label>
+                                <Select
+                                  value={child.birthDate ? child.birthDate.getFullYear().toString() : ""}
+                                  onValueChange={(year) => {
+                                    const currentDate = child.birthDate || new Date();
+                                    const newDate = new Date(parseInt(year), currentDate.getMonth(), currentDate.getDate());
+                                    handleChildChange(child.id, 'birthDate', newDate);
+                                  }}
+                                >
+                                  <SelectTrigger className="h-8 text-sm">
+                                    <SelectValue placeholder="Yıl seç" />
+                                  </SelectTrigger>
+                                  <SelectContent className="max-h-[200px]">
+                                    {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+                                      <SelectItem key={year} value={year.toString()}>
+                                        {year}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+
+                            {/* Calendar */}
+                            <Calendar
+                              mode="single"
+                              selected={child.birthDate || undefined}
+                              onSelect={(date) => handleChildChange(child.id, 'birthDate', date)}
+                              disabled={(date) =>
+                                date > new Date() || date < new Date("1900-01-01")
+                              }
+                              month={child.birthDate ? new Date(child.birthDate.getFullYear(), child.birthDate.getMonth()) : new Date()}
+                              initialFocus
+                              className="pointer-events-auto"
+                            />
+                          </div>
                         </PopoverContent>
                       </Popover>
                     </div>

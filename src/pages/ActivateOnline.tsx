@@ -14,6 +14,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -165,15 +172,45 @@ const ActivateOnline = () => {
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
+                        <div className="p-3 space-y-3">
+                          {/* Year Selector */}
+                          <div className="flex gap-2">
+                            <div className="flex-1">
+                              <FormLabel className="text-xs text-muted-foreground mb-1 block">Yıl</FormLabel>
+                              <Select
+                                value={field.value ? field.value.getFullYear().toString() : ""}
+                                onValueChange={(year) => {
+                                  const currentDate = field.value || new Date();
+                                  const newDate = new Date(parseInt(year), currentDate.getMonth(), currentDate.getDate());
+                                  field.onChange(newDate);
+                                }}
+                              >
+                                <SelectTrigger className="h-8 text-sm">
+                                  <SelectValue placeholder="Yıl seç" />
+                                </SelectTrigger>
+                                <SelectContent className="max-h-[200px]">
+                                  {Array.from({ length: new Date().getFullYear() - 1900 + 1 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+                                    <SelectItem key={year} value={year.toString()}>
+                                      {year}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+
+                          {/* Calendar */}
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            month={field.value ? new Date(field.value.getFullYear(), field.value.getMonth()) : new Date()}
+                            initialFocus
+                          />
+                        </div>
                       </PopoverContent>
                     </Popover>
                     <FormMessage />

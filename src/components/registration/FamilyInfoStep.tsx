@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue 
+  SelectValue
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
@@ -54,6 +54,27 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
     spouseReligion: initialData.spouseReligion || "",
   });
 
+  // Date picker state
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState<number>(
+    formData.spouseBirthDate ? formData.spouseBirthDate.getFullYear() : currentYear - 30
+  );
+  const [selectedMonth, setSelectedMonth] = useState<number>(
+    formData.spouseBirthDate ? formData.spouseBirthDate.getMonth() : 0
+  );
+
+  // Generate year options (from 1900 to current year)
+  const yearOptions = Array.from(
+    { length: currentYear - 1900 + 1 },
+    (_, i) => currentYear - i
+  );
+
+  // Month names in Turkish
+  const monthNames = [
+    "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+  ];
+
   // Update spouse gender when user gender changes
   useEffect(() => {
     if (userGender && !initialData.spouseGender) {
@@ -74,7 +95,33 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
   };
 
   const handleDateChange = (date: Date | undefined) => {
+    if (date) {
+      setSelectedYear(date.getFullYear());
+      setSelectedMonth(date.getMonth());
+    }
     setFormData((prev) => ({ ...prev, spouseBirthDate: date }));
+  };
+
+  const handleYearChange = (year: string) => {
+    const yearNum = parseInt(year);
+    setSelectedYear(yearNum);
+
+    // Update the date if we have a current selection
+    if (formData.spouseBirthDate) {
+      const newDate = new Date(yearNum, formData.spouseBirthDate.getMonth(), formData.spouseBirthDate.getDate());
+      setFormData((prev) => ({ ...prev, spouseBirthDate: newDate }));
+    }
+  };
+
+  const handleMonthChange = (month: string) => {
+    const monthNum = parseInt(month);
+    setSelectedMonth(monthNum);
+
+    // Update the date if we have a current selection
+    if (formData.spouseBirthDate) {
+      const newDate = new Date(formData.spouseBirthDate.getFullYear(), monthNum, formData.spouseBirthDate.getDate());
+      setFormData((prev) => ({ ...prev, spouseBirthDate: newDate }));
+    }
   };
 
   const handleHasSpouseChange = (checked: boolean) => {
@@ -180,22 +227,71 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent 
-                  className="w-auto p-0" 
+                <PopoverContent
+                  className="w-auto p-0"
                   align="start"
                   side="bottom"
                   sideOffset={4}
                 >
-                  <Calendar
-                    mode="single"
-                    selected={formData.spouseBirthDate}
-                    onSelect={handleDateChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    initialFocus
-                    className="p-3 pointer-events-auto"
-                  />
+                  <div className="p-3 space-y-3">
+                    {/* Year and Month Selectors */}
+                    <div className="flex gap-2">
+                      <div className="flex-1">
+                        <Label className="text-xs text-muted-foreground mb-1 block">Yıl</Label>
+                        <Select
+                          value={selectedYear.toString()}
+                          onValueChange={handleYearChange}
+                        >
+                          <SelectTrigger className="h-8 text-sm">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="max-h-[200px]">
+                            {yearOptions.map((year) => (
+                              <SelectItem key={year} value={year.toString()}>
+                                {year}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="flex-1">
+                        <Label className="text-xs text-muted-foreground mb-1 block">Ay</Label>
+                        <Select
+                          value={selectedMonth.toString()}
+                          onValueChange={handleMonthChange}
+                        >
+                          <SelectTrigger className="h-8 text-sm">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {monthNames.map((month, index) => (
+                              <SelectItem key={index} value={index.toString()}>
+                                {month}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    {/* Calendar */}
+                    <Calendar
+                      mode="single"
+                      selected={formData.spouseBirthDate}
+                      onSelect={handleDateChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
+                      month={new Date(selectedYear, selectedMonth)}
+                      onMonthChange={(month) => {
+                        setSelectedYear(month.getFullYear());
+                        setSelectedMonth(month.getMonth());
+                      }}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </div>
                 </PopoverContent>
               </Popover>
             </div>
