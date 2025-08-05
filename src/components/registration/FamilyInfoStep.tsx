@@ -28,7 +28,7 @@ interface FamilyInfoStepProps {
 }
 
 const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const isMarried = initialData.maritalStatus === "married";
   const [hasSpouse, setHasSpouse] = useState(isMarried && initialData.hasSpouse !== false);
   
@@ -185,35 +185,35 @@ const FamilyInfoStep = ({ initialData, onSubmit }: FamilyInfoStepProps) => {
             checked={hasSpouse}
             onCheckedChange={handleHasSpouseChange}
           />
-          <Label 
-            htmlFor="hasSpouse" 
+          <Label
+            htmlFor="hasSpouse"
             className="text-sm font-medium cursor-pointer"
           >
-            Eşimin bilgilerini eklemek istiyorum
+            {t("registration.family.provide.info")}
           </Label>
         </div>
 
         {hasSpouse && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="spouseFirstName">Eş Adı:</Label>
+              <Label htmlFor="spouseFirstName">{t("registration.family.spouse.firstName")}:</Label>
               <Input
                 id="spouseFirstName"
                 value={formData.spouseFirstName}
                 onChange={handleChange}
-                placeholder="Eşin adı"
+                placeholder={t("registration.family.spouse.firstName.placeholder")}
                 required={hasSpouse}
                 className="auth-input"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="spouseLastName">Eş Soyadı:</Label>
+              <Label htmlFor="spouseLastName">{t("registration.family.spouse.lastName")}:</Label>
               <Input
                 id="spouseLastName"
                 value={formData.spouseLastName}
                 onChange={handleChange}
-                placeholder="Eşin soyadı"
+                placeholder={t("registration.family.spouse.lastName.placeholder")}
                 required={hasSpouse}
                 className="auth-input"
               />

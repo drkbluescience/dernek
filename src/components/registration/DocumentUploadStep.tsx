@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface DocumentUploadStepProps {
   initialData: Record<string, any>;
@@ -10,11 +11,12 @@ interface DocumentUploadStepProps {
 }
 
 const DocumentUploadStep = ({ initialData, onSubmit }: DocumentUploadStepProps) => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     idDocument: initialData.idDocument || null,
     idDocumentName: initialData.idDocumentName || ""
   });
-  
+
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,12 +24,12 @@ const DocumentUploadStep = ({ initialData, onSubmit }: DocumentUploadStepProps) 
     
     if (file) {
       if (file.size > 10 * 1024 * 1024) { // 10MB limit
-        alert("Dosya boyutu 10MB'dan büyük olamaz!");
+        alert(t("registration.documents.file.size.error"));
         return;
       }
-      
+
       if (!['application/pdf', 'image/jpeg', 'image/jpg'].includes(file.type)) {
-        alert("Sadece PDF veya JPG formatları desteklenmektedir!");
+        alert(t("registration.documents.file.type.error"));
         return;
       }
       
@@ -64,7 +66,7 @@ const DocumentUploadStep = ({ initialData, onSubmit }: DocumentUploadStepProps) 
     <form id="form-documents" onSubmit={handleSubmit}>
       <div className="space-y-6">
         <div className="space-y-4">
-          <Label className="block mb-2">Kimlik Belgesi Yükleyin</Label>
+          <Label className="block mb-2">{t("registration.documents.id.upload")}</Label>
           
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
             <input
@@ -87,12 +89,12 @@ const DocumentUploadStep = ({ initialData, onSubmit }: DocumentUploadStepProps) 
                   htmlFor="idDocument"
                   className="cursor-pointer inline-block"
                 >
-                  <Button 
-                    type="button" 
+                  <Button
+                    type="button"
                     variant="outline"
                     className="mt-2"
                   >
-                    Değiştir
+                    {t("registration.documents.file.change")}
                   </Button>
                 </Label>
               </div>
@@ -102,9 +104,9 @@ const DocumentUploadStep = ({ initialData, onSubmit }: DocumentUploadStepProps) 
                 className="cursor-pointer flex flex-col items-center"
               >
                 <Upload className="h-12 w-12 text-gray-400 mb-2" />
-                <span className="text-society-purple font-medium text-lg">Dosya seçin</span>
-                <p className="text-sm text-gray-500 mt-1">veya sürükleyip bırakın</p>
-                <p className="text-xs text-gray-400 mt-4">Maksimum dosya boyutu: 10 MB</p>
+                <span className="text-society-purple font-medium text-lg">{t("registration.documents.file.select")}</span>
+                <p className="text-sm text-gray-500 mt-1">{t("registration.documents.file.drag")}</p>
+                <p className="text-xs text-gray-400 mt-4">{t("registration.documents.file.size.limit")}</p>
                 <p className="text-xs text-gray-400">Desteklenen formatlar: PDF ve JPG</p>
               </Label>
             )}

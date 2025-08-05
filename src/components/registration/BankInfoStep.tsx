@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BankInfoStepProps {
   initialData: Record<string, any>;
@@ -10,6 +11,7 @@ interface BankInfoStepProps {
 }
 
 const BankInfoStep = ({ initialData, onSubmit }: BankInfoStepProps) => {
+  const { t } = useLanguage();
   const [provideBankInfo, setProvideBankInfo] = useState(initialData.provideBankInfo !== false);
   const [formData, setFormData] = useState({
     provideBankInfo: initialData.provideBankInfo !== false,
@@ -38,7 +40,7 @@ const BankInfoStep = ({ initialData, onSubmit }: BankInfoStepProps) => {
     
     // If providing bank info, ensure SEPA mandate is accepted
     if (formData.provideBankInfo && !formData.acceptSepaMandate) {
-      alert("Lütfen SEPA-Lastschriftmandat'ı kabul ediniz.");
+      alert(t("registration.bank.sepa.required"));
       return;
     }
     
@@ -50,22 +52,21 @@ const BankInfoStep = ({ initialData, onSubmit }: BankInfoStepProps) => {
       <div className="space-y-6">
         <div className="bg-amber-50 border border-amber-200 p-4 rounded-md mb-6">
           <p className="text-amber-800 text-sm">
-            Bu adım opsiyoneldir. Banka bilgilerinizi şimdi eklemek istemiyorsanız, atlamak için sayfanın altındaki 
-            "Atla" düğmesine tıklayabilirsiniz. Daha sonra istediğiniz zaman hesap ayarlarınızdan ekleyebilirsiniz.
+            {t("registration.bank.optional.info")}
           </p>
         </div>
-      
+
         <div className="flex items-center space-x-2 mb-6">
-          <Checkbox 
-            id="provideBankInfo" 
+          <Checkbox
+            id="provideBankInfo"
             checked={provideBankInfo}
             onCheckedChange={(checked) => handleCheckboxChange("provideBankInfo", !!checked)}
           />
-          <Label 
-            htmlFor="provideBankInfo" 
+          <Label
+            htmlFor="provideBankInfo"
             className="text-sm font-medium cursor-pointer"
           >
-            Banka bilgilerimi eklemek istiyorum
+            {t("registration.bank.provide.info")}
           </Label>
         </div>
 
@@ -75,24 +76,24 @@ const BankInfoStep = ({ initialData, onSubmit }: BankInfoStepProps) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="accountHolder">Hesap Sahibi:</Label>
+                <Label htmlFor="accountHolder">{t("registration.bank.accountHolder")}:</Label>
                 <Input
                   id="accountHolder"
                   value={formData.accountHolder}
                   onChange={handleChange}
-                  placeholder="Tam ad"
+                  placeholder={t("registration.bank.accountHolder.placeholder")}
                   required={provideBankInfo}
                   className="auth-input"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bankName">Banka Adı:</Label>
+                <Label htmlFor="bankName">{t("registration.bank.bankName")}:</Label>
                 <Input
                   id="bankName"
                   value={formData.bankName}
                   onChange={handleChange}
-                  placeholder="Banka adı"
+                  placeholder={t("registration.bank.bankName.placeholder")}
                   required={provideBankInfo}
                   className="auth-input"
                 />
@@ -125,30 +126,27 @@ const BankInfoStep = ({ initialData, onSubmit }: BankInfoStepProps) => {
 
             <div className="mt-6 p-4 bg-gray-100 rounded-lg border">
               <p className="text-sm text-gray-700 mb-4">
-                İşbu belge ile derneğimize, üyelik aidatını yukarıda belirttiğim hesaptan 
-                SEPA otomatik ödeme talimatı ile tahsil etmesi için yetki veriyorum. 
-                Aynı zamanda, bankama derneğimiz tarafından hesabıma borç kaydedilen 
-                ödemeleri onaylama talimatı veriyorum.
+                {t("registration.bank.sepa.mandate.text")}
               </p>
               <div className="flex items-start space-x-2">
-                <Checkbox 
-                  id="acceptSepaMandate" 
+                <Checkbox
+                  id="acceptSepaMandate"
                   checked={formData.acceptSepaMandate}
                   onCheckedChange={(checked) => handleCheckboxChange("acceptSepaMandate", !!checked)}
                   className="mt-1"
                 />
-                <Label 
-                  htmlFor="acceptSepaMandate" 
+                <Label
+                  htmlFor="acceptSepaMandate"
                   className="text-sm font-medium cursor-pointer"
                 >
-                  SEPA otomatik ödeme talimatını kabul ediyorum
+                  {t("registration.bank.sepa.mandate.accept")}
                 </Label>
               </div>
             </div>
           </>
         ) : (
           <div className="text-center p-6 bg-gray-50 rounded-lg">
-            <p className="text-gray-500">Banka bilgisi eklemeyi seçmediniz. Devam etmek için İleri düğmesine tıklayın.</p>
+            <p className="text-gray-500">{t("registration.bank.no.info.message")}</p>
           </div>
         )}
       </div>

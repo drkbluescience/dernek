@@ -938,6 +938,118 @@ export const translations: Record<string, Record<Language, string>> = {
   "registration.address.foreign.village2.placeholder": {
     tr: "Mahalle/Semt adı",
     de: "Stadtviertel/Bezirk"
+  },
+
+  // Bank Info Fields
+  "registration.bank.optional.info": {
+    tr: "Bu adım opsiyoneldir. Banka bilgilerinizi şimdi eklemek istemiyorsanız, atlamak için sayfanın altındaki \"Atla\" düğmesine tıklayabilirsiniz. Daha sonra istediğiniz zaman hesap ayarlarınızdan ekleyebilirsiniz.",
+    de: "Dieser Schritt ist optional. Wenn Sie Ihre Bankdaten jetzt nicht hinzufügen möchten, können Sie auf die Schaltfläche \"Überspringen\" am Ende der Seite klicken. Sie können sie später jederzeit in Ihren Kontoeinstellungen hinzufügen."
+  },
+  "registration.bank.provide.info": {
+    tr: "Banka bilgilerimi eklemek istiyorum",
+    de: "Ich möchte meine Bankdaten hinzufügen"
+  },
+  "registration.bank.accountHolder": {
+    tr: "Hesap Sahibi",
+    de: "Kontoinhaber"
+  },
+  "registration.bank.accountHolder.placeholder": {
+    tr: "Tam ad",
+    de: "Vollständiger Name"
+  },
+  "registration.bank.bankName": {
+    tr: "Banka Adı",
+    de: "Bankname"
+  },
+  "registration.bank.bankName.placeholder": {
+    tr: "Banka adı",
+    de: "Name der Bank"
+  },
+  "registration.bank.sepa.required": {
+    tr: "Lütfen SEPA-Lastschriftmandat'ı kabul ediniz.",
+    de: "Bitte akzeptieren Sie das SEPA-Lastschriftmandat."
+  },
+  "registration.bank.sepa.mandate.text": {
+    tr: "İşbu belge ile derneğimize, üyelik aidatını yukarıda belirttiğim hesaptan SEPA otomatik ödeme talimatı ile tahsil etmesi için yetki veriyorum. Aynı zamanda, bankama derneğimiz tarafından hesabıma borç kaydedilen ödemeleri onaylama talimatı veriyorum.",
+    de: "Mit diesem Dokument ermächtige ich unseren Verein, den Mitgliedsbeitrag von dem oben angegebenen Konto per SEPA-Lastschriftverfahren einzuziehen. Gleichzeitig weise ich meine Bank an, die von unserem Verein auf mein Konto gebuchten Zahlungen zu genehmigen."
+  },
+  "registration.bank.sepa.mandate.accept": {
+    tr: "SEPA otomatik ödeme talimatını kabul ediyorum",
+    de: "Ich akzeptiere das SEPA-Lastschriftmandat"
+  },
+  "registration.bank.no.info.message": {
+    tr: "Banka bilgisi eklemeyi seçmediniz. Devam etmek için İleri düğmesine tıklayın.",
+    de: "Sie haben sich entschieden, keine Bankdaten hinzuzufügen. Klicken Sie auf die Schaltfläche Weiter, um fortzufahren."
+  },
+
+  // Document Upload Fields
+  "registration.documents.id.upload": {
+    tr: "Kimlik Belgesi Yükleyin",
+    de: "Ausweisdokument hochladen"
+  },
+  "registration.documents.file.select": {
+    tr: "Dosya seçin",
+    de: "Datei auswählen"
+  },
+  "registration.documents.file.drag": {
+    tr: "veya sürükleyip bırakın",
+    de: "oder per Drag & Drop"
+  },
+  "registration.documents.file.size.limit": {
+    tr: "Maksimum dosya boyutu: 10 MB",
+    de: "Maximale Dateigröße: 10 MB"
+  },
+  "registration.documents.file.change": {
+    tr: "Değiştir",
+    de: "Ändern"
+  },
+  "registration.documents.file.size.error": {
+    tr: "Dosya boyutu 10MB'dan büyük olamaz!",
+    de: "Die Dateigröße darf 10 MB nicht überschreiten!"
+  },
+  "registration.documents.file.type.error": {
+    tr: "Sadece PDF veya JPG formatları desteklenmektedir!",
+    de: "Nur PDF- oder JPG-Formate werden unterstützt!"
+  },
+
+  // Family Info Fields
+  "registration.family.provide.info": {
+    tr: "Eşimin bilgilerini eklemek istiyorum",
+    de: "Ich möchte die Daten meines Ehepartners hinzufügen"
+  },
+  "registration.family.spouse.firstName": {
+    tr: "Eş Adı",
+    de: "Vorname des Ehepartners"
+  },
+  "registration.family.spouse.firstName.placeholder": {
+    tr: "Eşin adı",
+    de: "Vorname Ihres Ehepartners"
+  },
+  "registration.family.spouse.lastName": {
+    tr: "Eş Soyadı",
+    de: "Nachname des Ehepartners"
+  },
+  "registration.family.spouse.lastName.placeholder": {
+    tr: "Eşin soyadı",
+    de: "Nachname Ihres Ehepartners"
+  },
+
+  // Children Info Fields
+  "registration.children.provide.info": {
+    tr: "Çocuklarımın bilgilerini eklemek istiyorum",
+    de: "Ich möchte die Daten meiner Kinder hinzufügen"
+  },
+  "registration.children.child": {
+    tr: "Çocuk",
+    de: "Kind"
+  },
+  "registration.children.firstName.placeholder": {
+    tr: "Çocuğun adı",
+    de: "Vorname des Kindes"
+  },
+  "registration.children.lastName.placeholder": {
+    tr: "Çocuğun soyadı",
+    de: "Nachname des Kindes"
   }
 };
 

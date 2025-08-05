@@ -37,7 +37,7 @@ interface ChildInfoStepProps {
 }
 
 const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [hasChildren, setHasChildren] = useState(initialData.hasChildren !== false);
   const [children, setChildren] = useState<Child[]>(
     initialData.children || [
@@ -110,11 +110,11 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
             checked={hasChildren}
             onCheckedChange={handleHasChildrenChange}
           />
-          <Label 
-            htmlFor="hasChildren" 
+          <Label
+            htmlFor="hasChildren"
             className="text-sm font-medium cursor-pointer"
           >
-            Çocuklarımın bilgilerini eklemek istiyorum
+            {t("registration.children.provide.info")}
           </Label>
         </div>
 
@@ -124,7 +124,7 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
               <Card key={child.id} className="mb-4 border border-gray-200">
                 <CardHeader className="flex flex-row items-center justify-between pb-2 pt-4 px-6">
                   <CardTitle className="text-lg font-medium">
-                    Çocuk {index + 1}
+                    {t("registration.children.child")} {index + 1}
                   </CardTitle>
                   <Button
                     type="button"
@@ -139,24 +139,24 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                 <CardContent className="pt-0 px-6 pb-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor={`firstName-${child.id}`}>Ad:</Label>
+                      <Label htmlFor={`firstName-${child.id}`}>{t("registration.personal.firstName")}:</Label>
                       <Input
                         id={`firstName-${child.id}`}
                         value={child.firstName}
                         onChange={(e) => handleChildChange(child.id, 'firstName', e.target.value)}
-                        placeholder="Çocuğun adı"
+                        placeholder={t("registration.children.firstName.placeholder")}
                         required={hasChildren}
                         className="auth-input"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor={`lastName-${child.id}`}>Soyad:</Label>
+                      <Label htmlFor={`lastName-${child.id}`}>{t("registration.personal.lastName")}:</Label>
                       <Input
                         id={`lastName-${child.id}`}
                         value={child.lastName}
                         onChange={(e) => handleChildChange(child.id, 'lastName', e.target.value)}
-                        placeholder="Çocuğun soyadı"
+                        placeholder={t("registration.children.lastName.placeholder")}
                         required={hasChildren}
                         className="auth-input"
                       />

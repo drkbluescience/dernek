@@ -88,35 +88,35 @@ const ForeignAddressForm = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignVillage">Mahalle:</Label>
+        <Label htmlFor="foreignVillage">{t("registration.address.foreign.village2")}:</Label>
         <Input
           id="foreignVillage"
           value={formData.foreignVillage}
           onChange={handleChange}
-          placeholder="Mahalle"
+          placeholder={t("registration.address.foreign.village2.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignVillage2">Köy/Kasaba:</Label>
+        <Label htmlFor="foreignVillage2">{t("registration.address.foreign.village")}:</Label>
         <Input
           id="foreignVillage2"
           value={formData.foreignVillage2}
           onChange={handleChange}
-          placeholder="Köy/Kasaba"
+          placeholder={t("registration.address.foreign.village.placeholder")}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignMobile">Cep Telefonu:</Label>
+        <Label htmlFor="foreignMobile">{t("registration.address.mobile")}:</Label>
         <Input
           id="foreignMobile"
           value={formData.foreignMobile}
           onChange={handleChange}
-          placeholder="Cep telefonu"
+          placeholder={t("registration.address.mobile.placeholder")}
           required={isRequired}
           className="auth-input"
         />
