@@ -91,7 +91,7 @@ const MemberInfoAccordion = ({
         </AccordionContent>
       </AccordionItem>
 
-      {/* Document Upload Section */}
+      {/* Document Upload Section - LAST ITEM */}
       <AccordionItem value="documents">
         <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted rounded-b-lg">
           {t("society.tab.documents")}
