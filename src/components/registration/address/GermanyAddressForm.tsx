@@ -1,6 +1,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface GermanyAddressFormProps {
   formData: {
@@ -23,97 +24,99 @@ const GermanyAddressForm = ({
   handleChange,
   isRequired,
 }: GermanyAddressFormProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-2">
-        <Label htmlFor="street">Sokak/Cadde:</Label>
+        <Label htmlFor="street">{t("registration.address.street")}:</Label>
         <Input
           id="street"
           value={formData.street}
           onChange={handleChange}
-          placeholder="Sokak/Cadde adı"
+          placeholder={t("registration.address.street.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="houseNumber">Kapı No:</Label>
+        <Label htmlFor="houseNumber">{t("registration.address.houseNumber")}:</Label>
         <Input
           id="houseNumber"
           value={formData.houseNumber}
           onChange={handleChange}
-          placeholder="Kapı/Daire no"
+          placeholder={t("registration.address.houseNumber.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="postalCode">Posta Kodu:</Label>
+        <Label htmlFor="postalCode">{t("registration.address.postalCode")}:</Label>
         <Input
           id="postalCode"
           value={formData.postalCode}
           onChange={handleChange}
-          placeholder="Posta kodu"
+          placeholder={t("registration.address.postalCode.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="city">Şehir:</Label>
+        <Label htmlFor="city">{t("registration.address.city")}:</Label>
         <Input
           id="city"
           value={formData.city}
           onChange={handleChange}
-          placeholder="Şehir"
+          placeholder={t("registration.address.city.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="district">İlçe:</Label>
+        <Label htmlFor="district">{t("registration.address.district")}:</Label>
         <Input
           id="district"
           value={formData.district}
           onChange={handleChange}
-          placeholder="İlçe"
+          placeholder={t("registration.address.district.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="phone">Telefon:</Label>
+        <Label htmlFor="phone">{t("registration.address.phone")}:</Label>
         <Input
           id="phone"
           value={formData.phone}
           onChange={handleChange}
-          placeholder="Telefon numarası"
+          placeholder={t("registration.address.phone.placeholder")}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="mobile">Cep Telefonu:</Label>
+        <Label htmlFor="mobile">{t("registration.address.mobile")}:</Label>
         <Input
           id="mobile"
           value={formData.mobile}
           onChange={handleChange}
-          placeholder="Cep telefonu"
+          placeholder={t("registration.address.mobile.placeholder")}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">E-posta:</Label>
+        <Label htmlFor="email">{t("registration.address.email")}:</Label>
         <Input
           id="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="E-posta adresi"
+          placeholder={t("registration.address.email.placeholder")}
           className="auth-input"
         />
       </div>

@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GermanyAddressForm from "./address/GermanyAddressForm";
 import ForeignAddressForm from "./address/ForeignAddressForm";
 import useAddressForm from "./address/useAddressForm";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface AddressStepProps {
   initialData: Record<string, any>;
@@ -10,6 +11,7 @@ interface AddressStepProps {
 }
 
 const AddressStep = ({ initialData, onSubmit }: AddressStepProps) => {
+  const { t } = useLanguage();
   const { formData, handleChange, handleSelectChange, handleAddressTypeChange } = useAddressForm(initialData);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,14 +21,14 @@ const AddressStep = ({ initialData, onSubmit }: AddressStepProps) => {
 
   return (
     <form id="form-address" onSubmit={handleSubmit}>
-      <Tabs 
-        defaultValue={formData.addressType} 
-        className="w-full" 
+      <Tabs
+        defaultValue={formData.addressType}
+        className="w-full"
         onValueChange={handleAddressTypeChange}
       >
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="germany">Almanya'da İkamet</TabsTrigger>
-          <TabsTrigger value="foreign">Yurtdışı İkamet</TabsTrigger>
+          <TabsTrigger value="germany">{t("registration.address.germany")}</TabsTrigger>
+          <TabsTrigger value="foreign">{t("registration.address.foreign")}</TabsTrigger>
         </TabsList>
         
         {/* Almanya Adresi */}

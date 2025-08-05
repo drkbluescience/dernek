@@ -788,6 +788,156 @@ export const translations: Record<string, Record<Language, string>> = {
   "registration.year.select": {
     tr: "Yıl seç",
     de: "Jahr auswählen"
+  },
+
+  // Personal Info Fields
+  "registration.personal.firstName": {
+    tr: "Ad",
+    de: "Vorname"
+  },
+  "registration.personal.firstName.placeholder": {
+    tr: "Adınız",
+    de: "Ihr Vorname"
+  },
+  "registration.personal.lastName": {
+    tr: "Soyad",
+    de: "Nachname"
+  },
+  "registration.personal.lastName.placeholder": {
+    tr: "Soyadınız",
+    de: "Ihr Nachname"
+  },
+  "registration.personal.birthPlace": {
+    tr: "Doğum Yeri",
+    de: "Geburtsort"
+  },
+  "registration.personal.birthPlace.placeholder": {
+    tr: "Doğum yeriniz",
+    de: "Ihr Geburtsort"
+  },
+  "registration.personal.birthName": {
+    tr: "Kızlık Soyadı",
+    de: "Geburtsname"
+  },
+  "registration.personal.birthName.placeholder": {
+    tr: "Kızlık soyadınız",
+    de: "Ihr Geburtsname"
+  },
+  "registration.personal.motherName": {
+    tr: "Anne Adı",
+    de: "Name der Mutter"
+  },
+  "registration.personal.motherName.placeholder": {
+    tr: "Anne adı",
+    de: "Name Ihrer Mutter"
+  },
+  "registration.personal.fatherName": {
+    tr: "Baba Adı",
+    de: "Name des Vaters"
+  },
+  "registration.personal.fatherName.placeholder": {
+    tr: "Baba adı",
+    de: "Name Ihres Vaters"
+  },
+
+  // Address Fields
+  "registration.address.germany": {
+    tr: "Almanya'da İkamet",
+    de: "Wohnhaft in Deutschland"
+  },
+  "registration.address.foreign": {
+    tr: "Yurtdışı İkamet",
+    de: "Wohnhaft im Ausland"
+  },
+  "registration.address.street": {
+    tr: "Sokak/Cadde",
+    de: "Straße"
+  },
+  "registration.address.street.placeholder": {
+    tr: "Sokak/Cadde adı",
+    de: "Straßenname"
+  },
+  "registration.address.houseNumber": {
+    tr: "Kapı No",
+    de: "Hausnummer"
+  },
+  "registration.address.houseNumber.placeholder": {
+    tr: "Kapı/Daire no",
+    de: "Hausnummer/Wohnung"
+  },
+  "registration.address.postalCode": {
+    tr: "Posta Kodu",
+    de: "Postleitzahl"
+  },
+  "registration.address.postalCode.placeholder": {
+    tr: "Posta kodu",
+    de: "PLZ"
+  },
+  "registration.address.city": {
+    tr: "Şehir",
+    de: "Stadt"
+  },
+  "registration.address.city.placeholder": {
+    tr: "Şehir adı",
+    de: "Stadtname"
+  },
+  "registration.address.district": {
+    tr: "İlçe",
+    de: "Stadtteil"
+  },
+  "registration.address.district.placeholder": {
+    tr: "İlçe adı",
+    de: "Stadtteil"
+  },
+  "registration.address.phone": {
+    tr: "Telefon",
+    de: "Telefon"
+  },
+  "registration.address.phone.placeholder": {
+    tr: "Telefon numarası",
+    de: "Telefonnummer"
+  },
+  "registration.address.mobile": {
+    tr: "Cep Telefonu",
+    de: "Mobiltelefon"
+  },
+  "registration.address.mobile.placeholder": {
+    tr: "Cep telefonu numarası",
+    de: "Mobiltelefonnummer"
+  },
+  "registration.address.email": {
+    tr: "E-posta",
+    de: "E-Mail"
+  },
+  "registration.address.email.placeholder": {
+    tr: "E-posta adresiniz",
+    de: "Ihre E-Mail-Adresse"
+  },
+
+  // Foreign Address Fields
+  "registration.address.foreign.region": {
+    tr: "Bölge/Eyalet",
+    de: "Region/Bundesland"
+  },
+  "registration.address.foreign.region.placeholder": {
+    tr: "Bölge/Eyalet adı",
+    de: "Region/Bundesland"
+  },
+  "registration.address.foreign.village": {
+    tr: "Köy/Kasaba",
+    de: "Dorf/Gemeinde"
+  },
+  "registration.address.foreign.village.placeholder": {
+    tr: "Köy/Kasaba adı",
+    de: "Dorf/Gemeinde"
+  },
+  "registration.address.foreign.village2": {
+    tr: "Mahalle/Semt",
+    de: "Stadtviertel/Bezirk"
+  },
+  "registration.address.foreign.village2.placeholder": {
+    tr: "Mahalle/Semt adı",
+    de: "Stadtviertel/Bezirk"
   }
 };
 

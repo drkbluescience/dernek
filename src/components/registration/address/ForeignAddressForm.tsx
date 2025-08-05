@@ -1,6 +1,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ForeignAddressFormProps {
   formData: {
@@ -17,68 +18,70 @@ interface ForeignAddressFormProps {
   isRequired: boolean;
 }
 
-const ForeignAddressForm = ({ 
-  formData, 
-  handleChange, 
-  isRequired 
+const ForeignAddressForm = ({
+  formData,
+  handleChange,
+  isRequired
 }: ForeignAddressFormProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-2">
-        <Label htmlFor="foreignStreet">Sokak/Cadde:</Label>
+        <Label htmlFor="foreignStreet">{t("registration.address.street")}:</Label>
         <Input
           id="foreignStreet"
           value={formData.foreignStreet}
           onChange={handleChange}
-          placeholder="Sokak/Cadde adı"
+          placeholder={t("registration.address.street.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignHouseNumber">Kapı No:</Label>
+        <Label htmlFor="foreignHouseNumber">{t("registration.address.houseNumber")}:</Label>
         <Input
           id="foreignHouseNumber"
           value={formData.foreignHouseNumber}
           onChange={handleChange}
-          placeholder="Kapı/Daire no"
+          placeholder={t("registration.address.houseNumber.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignPostalCode">Posta Kodu:</Label>
+        <Label htmlFor="foreignPostalCode">{t("registration.address.postalCode")}:</Label>
         <Input
           id="foreignPostalCode"
           value={formData.foreignPostalCode}
           onChange={handleChange}
-          placeholder="Posta kodu"
+          placeholder={t("registration.address.postalCode.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignCity">Şehir:</Label>
+        <Label htmlFor="foreignCity">{t("registration.address.city")}:</Label>
         <Input
           id="foreignCity"
           value={formData.foreignCity}
           onChange={handleChange}
-          placeholder="Şehir"
+          placeholder={t("registration.address.city.placeholder")}
           required={isRequired}
           className="auth-input"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="foreignRegion">İlçe:</Label>
+        <Label htmlFor="foreignRegion">{t("registration.address.foreign.region")}:</Label>
         <Input
           id="foreignRegion"
           value={formData.foreignRegion}
           onChange={handleChange}
-          placeholder="İlçe"
+          placeholder={t("registration.address.foreign.region.placeholder")}
           required={isRequired}
           className="auth-input"
         />

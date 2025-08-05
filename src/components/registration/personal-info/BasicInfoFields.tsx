@@ -1,6 +1,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BasicInfoFieldsProps {
   firstName: string;
@@ -21,15 +22,17 @@ const BasicInfoFields = ({
   validationProps,
   errors,
 }: BasicInfoFieldsProps) => {
+  const { t } = useLanguage();
+
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="firstName">Ad:</Label>
+        <Label htmlFor="firstName">{t("registration.personal.firstName")}:</Label>
         <Input
           id="firstName"
           value={firstName}
           onChange={handleChange}
-          placeholder="Adınız"
+          placeholder={t("registration.personal.firstName.placeholder")}
           required
           className={`auth-input ${errors?.firstName ? "border-red-500" : ""}`}
           {...(validationProps ? validationProps("firstName") : {})}
@@ -37,12 +40,12 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="lastName">Soyad:</Label>
+        <Label htmlFor="lastName">{t("registration.personal.lastName")}:</Label>
         <Input
           id="lastName"
           value={lastName}
           onChange={handleChange}
-          placeholder="Soyadınız"
+          placeholder={t("registration.personal.lastName.placeholder")}
           required
           className={`auth-input ${errors?.lastName ? "border-red-500" : ""}`}
           {...(validationProps ? validationProps("lastName") : {})}
@@ -50,12 +53,12 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="birthPlace">Doğum Yeri:</Label>
+        <Label htmlFor="birthPlace">{t("registration.personal.birthPlace")}:</Label>
         <Input
           id="birthPlace"
           value={birthPlace}
           onChange={handleChange}
-          placeholder="Doğum yeriniz"
+          placeholder={t("registration.personal.birthPlace.placeholder")}
           required
           className={`auth-input ${errors?.birthPlace ? "border-red-500" : ""}`}
           {...(validationProps ? validationProps("birthPlace") : {})}
@@ -63,12 +66,12 @@ const BasicInfoFields = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="birthName">Kızlık Soyadı:</Label>
+        <Label htmlFor="birthName">{t("registration.personal.birthName")}:</Label>
         <Input
           id="birthName"
           value={birthName}
           onChange={handleChange}
-          placeholder="Kızlık soyadınız"
+          placeholder={t("registration.personal.birthName.placeholder")}
           className="auth-input"
           {...(validationProps ? validationProps("birthName") : {})}
         />
