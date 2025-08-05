@@ -62,19 +62,19 @@ const Settings = () => {
                   <SelectItem value="light">
                     <div className="flex items-center gap-2">
                       <Sun className="h-4 w-4 text-orange-500" />
-                      <span>Light</span>
+                      <span>{t("settings.theme.light")}</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="dark">
                     <div className="flex items-center gap-2">
                       <Moon className="h-4 w-4 text-blue-400" />
-                      <span>Dark</span>
+                      <span>{t("settings.theme.dark")}</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="system">
                     <div className="flex items-center gap-2">
                       <Monitor className="h-4 w-4 text-slate-500" />
-                      <span>System</span>
+                      <span>{t("settings.theme.system")}</span>
                     </div>
                   </SelectItem>
                 </SelectContent>
@@ -100,7 +100,7 @@ const Settings = () => {
             
             {/* Language */}
             <div className="flex items-center justify-between">
-              <Label>Dil / Sprache</Label>
+              <Label>{t("settings.language")}</Label>
               <LanguageSwitcher />
             </div>
           </CardContent>

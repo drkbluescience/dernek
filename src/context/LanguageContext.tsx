@@ -1050,6 +1050,24 @@ export const translations: Record<string, Record<Language, string>> = {
   "registration.children.lastName.placeholder": {
     tr: "Çocuğun soyadı",
     de: "Nachname des Kindes"
+  },
+
+  // Settings page
+  "settings.theme.light": {
+    tr: "Açık",
+    de: "Hell"
+  },
+  "settings.theme.dark": {
+    tr: "Koyu",
+    de: "Dunkel"
+  },
+  "settings.theme.system": {
+    tr: "Sistem",
+    de: "System"
+  },
+  "settings.language": {
+    tr: "Dil / Sprache",
+    de: "Sprache / Dil"
   }
 };
 
