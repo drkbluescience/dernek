@@ -176,7 +176,9 @@ const ActivateOnline = () => {
                           {/* Year Selector */}
                           <div className="flex gap-2">
                             <div className="flex-1">
-                              <FormLabel className="text-xs text-muted-foreground mb-1 block">Yıl</FormLabel>
+                              <FormLabel className="text-xs text-muted-foreground mb-1 block">
+                                {t("registration.year")}
+                              </FormLabel>
                               <Select
                                 value={field.value ? field.value.getFullYear().toString() : ""}
                                 onValueChange={(year) => {
@@ -186,7 +188,7 @@ const ActivateOnline = () => {
                                 }}
                               >
                                 <SelectTrigger className="h-8 text-sm">
-                                  <SelectValue placeholder="Yıl seç" />
+                                  <SelectValue placeholder={t("registration.year.select")} />
                                 </SelectTrigger>
                                 <SelectContent className="max-h-[200px]">
                                   {Array.from({ length: new Date().getFullYear() - 1900 + 1 }, (_, i) => new Date().getFullYear() - i).map((year) => (

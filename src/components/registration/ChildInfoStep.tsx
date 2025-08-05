@@ -20,6 +20,7 @@ import { format } from "date-fns";
 import { CalendarIcon, Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Child {
   id: string;
@@ -36,12 +37,34 @@ interface ChildInfoStepProps {
 }
 
 const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
+  const { language } = useLanguage();
   const [hasChildren, setHasChildren] = useState(initialData.hasChildren !== false);
   const [children, setChildren] = useState<Child[]>(
     initialData.children || [
       { id: '1', firstName: '', lastName: '', birthPlace: '', birthDate: null, gender: '' }
     ]
   );
+
+  // Get localized labels
+  const getLabels = () => {
+    if (language === 'de') {
+      return {
+        birthDate: "Geburtsdatum:",
+        year: "Jahr",
+        selectYear: "Jahr auswählen",
+        selectDate: "Datum auswählen (Tag.Monat.Jahr)"
+      };
+    }
+    // Default to Turkish
+    return {
+      birthDate: "Doğum Tarihi:",
+      year: "Yıl",
+      selectYear: "Yıl seç",
+      selectDate: "Tarih seçin (Gün.Ay.Yıl)"
+    };
+  };
+
+  const labels = getLabels();
 
   const handleHasChildrenChange = (checked: boolean) => {
     setHasChildren(checked);
@@ -152,7 +175,7 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor={`birthDate-${child.id}`}>Doğum Tarihi:</Label>
+                      <Label htmlFor={`birthDate-${child.id}`}>{labels.birthDate}</Label>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -166,7 +189,7 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                             {child.birthDate ? (
                               format(child.birthDate, "dd.MM.yyyy")
                             ) : (
-                              "Tarih seçin (Gün.Ay.Yıl)"
+                              labels.selectDate
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -180,7 +203,7 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                             {/* Quick Year Selector for Children */}
                             <div className="flex gap-2">
                               <div className="flex-1">
-                                <Label className="text-xs text-muted-foreground mb-1 block">Yıl</Label>
+                                <Label className="text-xs text-muted-foreground mb-1 block">{labels.year}</Label>
                                 <Select
                                   value={child.birthDate ? child.birthDate.getFullYear().toString() : ""}
                                   onValueChange={(year) => {
@@ -190,7 +213,7 @@ const ChildInfoStep = ({ initialData, onSubmit }: ChildInfoStepProps) => {
                                   }}
                                 >
                                   <SelectTrigger className="h-8 text-sm">
-                                    <SelectValue placeholder="Yıl seç" />
+                                    <SelectValue placeholder={labels.selectYear} />
                                   </SelectTrigger>
                                   <SelectContent className="max-h-[200px]">
                                     {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map((year) => (

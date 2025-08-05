@@ -778,6 +778,16 @@ export const translations: Record<string, Record<Language, string>> = {
   "document.upload.message.required": {
     tr: "Mesaj detayları gereklidir.",
     de: "Nachrichtendetails sind erforderlich."
+  },
+
+  // Date picker translations
+  "registration.year": {
+    tr: "Yıl",
+    de: "Jahr"
+  },
+  "registration.year.select": {
+    tr: "Yıl seç",
+    de: "Jahr auswählen"
   }
 };
 

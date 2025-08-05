@@ -18,6 +18,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BirthDateFieldProps {
   birthDate: Date | null;
@@ -25,6 +26,7 @@ interface BirthDateFieldProps {
 }
 
 const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
+  const { language } = useLanguage();
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number>(
     birthDate ? birthDate.getFullYear() : currentYear - 30
@@ -39,11 +41,22 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
     (_, i) => currentYear - i
   );
 
-  // Month names in Turkish
-  const monthNames = [
-    "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
-  ];
+  // Month names based on selected language
+  const getMonthNames = () => {
+    if (language === 'de') {
+      return [
+        "Januar", "Februar", "März", "April", "Mai", "Juni",
+        "Juli", "August", "September", "Oktober", "November", "Dezember"
+      ];
+    }
+    // Default to Turkish
+    return [
+      "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+      "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ];
+  };
+
+  const monthNames = getMonthNames();
 
   const handleYearChange = (year: string) => {
     const yearNum = parseInt(year);
@@ -75,9 +88,30 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
     onDateChange(date);
   };
 
+  // Get localized labels
+  const getLabels = () => {
+    if (language === 'de') {
+      return {
+        birthDate: "Geburtsdatum:",
+        year: "Jahr",
+        month: "Monat",
+        dayMonthYear: "(Tag.Monat.Jahr)"
+      };
+    }
+    // Default to Turkish
+    return {
+      birthDate: "Doğum Tarihi:",
+      year: "Yıl",
+      month: "Ay",
+      dayMonthYear: "(Gün.Ay.Yıl)"
+    };
+  };
+
+  const labels = getLabels();
+
   return (
     <div className="space-y-2">
-      <Label htmlFor="birthDate">Doğum Tarihi:</Label>
+      <Label htmlFor="birthDate">{labels.birthDate}</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -88,7 +122,7 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {birthDate ? format(birthDate, "dd.MM.yyyy") : "(Gün.Ay.Yıl)"}
+            {birthDate ? format(birthDate, "dd.MM.yyyy") : labels.dayMonthYear}
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -101,7 +135,7 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
             {/* Year and Month Selectors */}
             <div className="flex gap-2">
               <div className="flex-1">
-                <Label className="text-xs text-muted-foreground mb-1 block">Yıl</Label>
+                <Label className="text-xs text-muted-foreground mb-1 block">{labels.year}</Label>
                 <Select
                   value={selectedYear.toString()}
                   onValueChange={handleYearChange}
@@ -120,7 +154,7 @@ const BirthDateField = ({ birthDate, onDateChange }: BirthDateFieldProps) => {
               </div>
 
               <div className="flex-1">
-                <Label className="text-xs text-muted-foreground mb-1 block">Ay</Label>
+                <Label className="text-xs text-muted-foreground mb-1 block">{labels.month}</Label>
                 <Select
                   value={selectedMonth.toString()}
                   onValueChange={handleMonthChange}
