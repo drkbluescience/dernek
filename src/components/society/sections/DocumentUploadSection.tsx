@@ -127,13 +127,7 @@ const DocumentUploadSection: React.FC<DocumentUploadSectionProps> = ({ onUpload 
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <FileText className="h-5 w-5 text-society-purple" />
-          {t("document.upload.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email Field */}
           <div className="space-y-2">

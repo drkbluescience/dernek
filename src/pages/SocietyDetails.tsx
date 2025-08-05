@@ -16,6 +16,7 @@ import EditDialog from "@/components/society/EditDialog";
 import LogoutButton from "@/components/society/LogoutButton";
 import { useSocietyMember } from "@/hooks/useSocietyMember";
 import { useEditMember } from "@/hooks/useEditMember";
+import { documentApi } from "@/services/apiService";
 
 const SocietyDetails = () => {
   const navigate = useNavigate();
@@ -84,13 +85,15 @@ const SocietyDetails = () => {
     console.log("📤 Gönderilen veri:", data);
 
     try {
-      // TODO: API integration for document upload
-      // const response = await documentApi.upload(data);
+      // Real API call to send document via email
+      const response = await documentApi.sendDocumentEmail({
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        file: data.file
+      });
 
-      // Simulate API call for now
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      console.log("✅ Document upload başarılı");
+      console.log("✅ Document upload başarılı:", response);
 
       toast({
         title: t("document.upload.success"),
@@ -99,6 +102,14 @@ const SocietyDetails = () => {
 
     } catch (error: any) {
       console.error("❌ Document upload hatası:", error);
+
+      // Show user-friendly error message
+      toast({
+        title: t("document.upload.error"),
+        description: error.message || t("document.upload.error.description"),
+        variant: "destructive",
+      });
+
       throw error;
     }
   };

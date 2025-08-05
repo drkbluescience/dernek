@@ -197,4 +197,18 @@ export const documentApi = {
     
   deleteDocument: (documentId: string) =>
     apiService.delete(API_ENDPOINTS.documents.delete(documentId)),
+
+  // Send document via email
+  sendDocumentEmail: (data: { email: string; subject: string; message: string; file?: File }) => {
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('subject', data.subject);
+    formData.append('message', data.message);
+
+    if (data.file) {
+      formData.append('file', data.file);
+    }
+
+    return apiService.post(API_ENDPOINTS.documents.sendEmail, formData);
+  },
 };

@@ -69,7 +69,8 @@ export const API_ENDPOINTS = {
   documents: {
     list: 'documents',
     upload: 'documents/upload',
-    delete: (id: string) => `documents/${id}`
+    delete: (id: string) => `documents/${id}`,
+    sendEmail: 'documents/send-email'
   },
   
   // Admin
