@@ -41,6 +41,8 @@ const MemberInfoAccordion = ({
 }: MemberInfoAccordionProps) => {
   const { t, language } = useLanguage();
 
+
+
   // Added key with language to force re-render when language changes
   return (
     <Accordion type="single" collapsible className="w-full" key={`accordion-${language}`}>
