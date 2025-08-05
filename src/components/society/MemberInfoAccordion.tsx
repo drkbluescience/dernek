@@ -10,6 +10,7 @@ import PersonalInfoSection from "./sections/PersonalInfoSection";
 import FamilyInfoSection from "./sections/FamilyInfoSection";
 import BankInfoSection from "./sections/BankInfoSection";
 import PaymentHistorySection from "./sections/PaymentHistorySection";
+import DocumentUploadSection from "./sections/DocumentUploadSection";
 import { useLanguage } from "@/context/LanguageContext";
 import { PersonalInfo, FamilyInfo, BankInfo, Payment } from "@/types/society";
 
@@ -23,6 +24,7 @@ interface MemberInfoAccordionProps {
   onEditAddress: () => void;
   rawFamilyData?: any[];
   rawPaymentData?: any[];
+  onDocumentUpload?: (data: any) => Promise<void>;
 }
 
 const MemberInfoAccordion = ({
@@ -34,7 +36,8 @@ const MemberInfoAccordion = ({
   onEditBankInfo,
   onEditAddress,
   rawFamilyData,
-  rawPaymentData
+  rawPaymentData,
+  onDocumentUpload
 }: MemberInfoAccordionProps) => {
   const { t, language } = useLanguage();
 
@@ -85,6 +88,16 @@ const MemberInfoAccordion = ({
         </AccordionTrigger>
         <AccordionContent className="pt-0">
           <PaymentHistorySection paymentHistory={paymentHistory} rawPaymentData={rawPaymentData} />
+        </AccordionContent>
+      </AccordionItem>
+
+      {/* Document Upload Section */}
+      <AccordionItem value="documents">
+        <AccordionTrigger className="hover:no-underline font-medium py-3 px-4 bg-muted rounded-b-lg">
+          {t("society.tab.documents")}
+        </AccordionTrigger>
+        <AccordionContent className="pt-0">
+          <DocumentUploadSection onUpload={onDocumentUpload} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

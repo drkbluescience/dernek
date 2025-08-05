@@ -296,6 +296,10 @@ export const translations: Record<string, Record<Language, string>> = {
     tr: "Ödeme Geçmişi",
     de: "Zahlungsverlauf"
   },
+  "society.tab.documents": {
+    tr: "Evrak Gönder",
+    de: "Dokument senden"
+  },
   "society.founded": {
     tr: "Kuruluş",
     de: "Gegründet"
@@ -692,6 +696,88 @@ export const translations: Record<string, Record<Language, string>> = {
   "pwa.offline.message": {
     tr: "Çevrimdışı mod aktif",
     de: "Offline-Modus aktiv"
+  },
+
+  // Document Upload Section
+  "document.upload.title": {
+    tr: "Evrak Gönder",
+    de: "Dokument senden"
+  },
+  "document.upload.email": {
+    tr: "E-posta",
+    de: "E-Mail"
+  },
+  "document.upload.email.placeholder": {
+    tr: "E-posta adresinizi girin",
+    de: "Geben Sie Ihre E-Mail-Adresse ein"
+  },
+  "document.upload.subject": {
+    tr: "Konu",
+    de: "Betreff"
+  },
+  "document.upload.subject.placeholder": {
+    tr: "Konu başlığını girin",
+    de: "Geben Sie den Betreff ein"
+  },
+  "document.upload.message": {
+    tr: "Mesaj Detayları",
+    de: "Nachrichtendetails"
+  },
+  "document.upload.message.placeholder": {
+    tr: "Mesajınızı detaylı olarak yazın...",
+    de: "Schreiben Sie Ihre Nachricht detailliert..."
+  },
+  "document.upload.file": {
+    tr: "Dosya",
+    de: "Datei"
+  },
+  "document.upload.file.placeholder": {
+    tr: "Dosya yüklemek için tıklayın veya sürükleyin",
+    de: "Klicken oder ziehen Sie eine Datei zum Hochladen"
+  },
+  "document.upload.file.select": {
+    tr: "Dosya Seç",
+    de: "Datei auswählen"
+  },
+  "document.upload.file.types": {
+    tr: "PDF, DOC, DOCX, JPG, PNG, TXT dosyaları desteklenir",
+    de: "PDF, DOC, DOCX, JPG, PNG, TXT Dateien werden unterstützt"
+  },
+  "document.upload.submit": {
+    tr: "Gönder",
+    de: "Senden"
+  },
+  "document.upload.submitting": {
+    tr: "Gönderiliyor...",
+    de: "Wird gesendet..."
+  },
+  "document.upload.success": {
+    tr: "Başarılı",
+    de: "Erfolgreich"
+  },
+  "document.upload.success.description": {
+    tr: "Evrakınız başarıyla gönderildi.",
+    de: "Ihr Dokument wurde erfolgreich gesendet."
+  },
+  "document.upload.error": {
+    tr: "Hata",
+    de: "Fehler"
+  },
+  "document.upload.error.description": {
+    tr: "Evrak gönderilirken bir hata oluştu.",
+    de: "Beim Senden des Dokuments ist ein Fehler aufgetreten."
+  },
+  "document.upload.email.required": {
+    tr: "E-posta adresi gereklidir.",
+    de: "E-Mail-Adresse ist erforderlich."
+  },
+  "document.upload.subject.required": {
+    tr: "Konu başlığı gereklidir.",
+    de: "Betreff ist erforderlich."
+  },
+  "document.upload.message.required": {
+    tr: "Mesaj detayları gereklidir.",
+    de: "Nachrichtendetails sind erforderlich."
   }
 };
 

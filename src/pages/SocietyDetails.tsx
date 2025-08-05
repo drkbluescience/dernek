@@ -79,7 +79,29 @@ const SocietyDetails = () => {
     navigate("/");
   };
 
+  const handleDocumentUpload = async (data: any) => {
+    console.log("📄 Document upload başlatıldı:");
+    console.log("📤 Gönderilen veri:", data);
 
+    try {
+      // TODO: API integration for document upload
+      // const response = await documentApi.upload(data);
+
+      // Simulate API call for now
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      console.log("✅ Document upload başarılı");
+
+      toast({
+        title: t("document.upload.success"),
+        description: t("document.upload.success.description"),
+      });
+
+    } catch (error: any) {
+      console.error("❌ Document upload hatası:", error);
+      throw error;
+    }
+  };
 
   if (!user) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -115,6 +137,7 @@ const SocietyDetails = () => {
           onEditAddress={handleEditAddress}
           rawFamilyData={rawFamilyData}
           rawPaymentData={rawPaymentData}
+          onDocumentUpload={handleDocumentUpload}
         />
 
         {/* Edit Dialog */}
