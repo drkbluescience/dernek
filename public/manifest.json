@@ -1,60 +1,60 @@
 {
   "name": "Zentrum für Soziale Unterstützung e.V.",
   "short_name": "ZSU Dernek",
-  "description": "Sosyal Dayanışma Dernegi Mobil Uygulaması",
-  "start_url": "/",
+  "description": "Zentrum für Soziale Unterstützung e.V. (ZSU) sosyal dayanışma derneği mobil uygulaması. Üye bilgilerinizi görüntüleyin, ödeme geçmişinizi takip edin ve dernek hizmetlerine kolayca erişin.",
+  "start_url": "/dernek/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#8B5CF6",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "/dernek/",
   "lang": "tr",
   "categories": ["social", "utilities", "productivity"],
   "icons": [
     {
-      "src": "/icons/icon-72x72.svg",
+      "src": "/dernek/icons/icon-72x72.svg",
       "sizes": "72x72",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-96x96.svg",
+      "src": "/dernek/icons/icon-96x96.svg",
       "sizes": "96x96",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-128x128.svg",
+      "src": "/dernek/icons/icon-128x128.svg",
       "sizes": "128x128",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-144x144.svg",
+      "src": "/dernek/icons/icon-144x144.svg",
       "sizes": "144x144",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-152x152.svg",
+      "src": "/dernek/icons/icon-152x152.svg",
       "sizes": "152x152",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-192x192.svg",
+      "src": "/dernek/icons/icon-192x192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-384x384.svg",
+      "src": "/dernek/icons/icon-384x384.svg",
       "sizes": "384x384",
       "type": "image/svg+xml",
       "purpose": "maskable any"
     },
     {
-      "src": "/icons/icon-512x512.svg",
+      "src": "/dernek/icons/icon-512x512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "maskable any"
@@ -65,10 +65,10 @@
       "name": "Üye Bilgileri",
       "short_name": "Profil",
       "description": "Üye bilgilerini görüntüle",
-      "url": "/society-details",
+      "url": "/dernek/society-details",
       "icons": [
         {
-          "src": "/icons/icon-96x96.png",
+          "src": "/dernek/icons/icon-96x96.svg",
           "sizes": "96x96"
         }
       ]
@@ -77,10 +77,10 @@
       "name": "Ödeme Geçmişi",
       "short_name": "Ödemeler",
       "description": "Ödeme geçmişini görüntüle",
-      "url": "/society-details?tab=payment",
+      "url": "/dernek/society-details?tab=payment",
       "icons": [
         {
-          "src": "/icons/icon-96x96.png",
+          "src": "/dernek/icons/icon-96x96.svg",
           "sizes": "96x96"
         }
       ]
